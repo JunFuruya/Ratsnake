@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "My Extension",
+  "version": "0.0.1",
+
+  "default_locale": "en",
+  "description": "This module just show the index page",
+
+  "browser_action": {
+    "default_icon": {
+      "1": "icon.png"
+    },
+    "default_popup": "./html/index.html"
+  },
+  // "page_action": {...},
+  
+  //*** ココから桑原大先生の draw.io ***
+  "permissions": ["contextMenus", "tabs", "http://*/*", "https://*/*"],
+  "background": {
+      "scripts": ["./js/draw.io.open.js"]
+  },
+  //*** draw.io ココまで***
+
+  "author": "Jun Furuya"
+}

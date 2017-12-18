@@ -22,3 +22,5 @@ class BaseService:
         
         for url in url_list:
             prit(url)
+
+
