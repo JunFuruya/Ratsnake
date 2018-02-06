@@ -63,7 +63,7 @@ class Todo:
 if __name__ == '__main__':
   print("start")
   
-  root_path = "c:\\Users\\junfuruya\\vms\\dmama-dev\\repository\\dmama-webapp"
+  root_path = "c:\\Users"
   todo_object = Todo()
   todo_object.searchFiles(root_path)
   curl_text = todo_object.getText()
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
   # slack に POST する
   post_data = 'マルチバイト'
-  target_url = 'https://hooks.slack.com/services/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'
+  target_url = 'https://sample.com'
   print(post_data)
   # windows10 64bit だと pucurl を pip install できないため httprequest
   headers = {'Content-type': 'application/json'}
