@@ -1,9 +1,10 @@
-import slackbot
+from slackbot.bot import Bot
 
 class Slackbot:
-    def execute:
-        pass
+    def execute(self):
+        bot = Bot()
+        bot.run()
 
-
-if __name__ = "__main__":
-    Slackbot.execute()
+if __name__ == "__main__":
+    slackbot = Slackbot()
+    slackbot.execute()
