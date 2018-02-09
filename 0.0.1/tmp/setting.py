@@ -11,7 +11,6 @@ PLUGINS = [
 ERRORS_TO = None
 
 # API_TOKEN = '###token###'
-API_TOKEN = "xoxb-311785645746-itL3AmTqveYxccbbpRbdd9JP"
 
 '''
 Setup a comma delimited list of aliases that the bot will respond to.
