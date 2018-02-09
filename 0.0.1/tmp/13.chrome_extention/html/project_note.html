@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="../css/common.css"/>
+  <script src="../js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="../js/project_note.js"></script>
+</head>
+<body>
+  <header>
+    ままのわ資料
+    <section class="description">
+      <p>アイコンをクリックすると、新しいタブでそのテーマのページを全て開きます。</p>
+      <ul id="event_button_ul"></ul>
+    </section>
+  </header>
+
+  <section>
+    <h2>リンク</h2>
+    <section>
+      <table id="links">
+        <tbody>
+          <tr>
+            <th>連絡・仕様調整</th>
+            <td><a href="https://mail.google.com/mail/#inbox" target="_blank">gmail</a></td>
+            <td><a href="https://gooblogteam.slack.com" target="_blank">slack@レゾナント</a></td>
+            <td><a href="https://aqua-city-plusfor.slack.com/messages/D7YB3CBD4/" target="_blank">slack@P4</a></td>
+            <td><a href="https://oshietegoo.backlog.jp" target="_blank">Backlog</a></td>
+            <td><a href="https://calendar.google.com/calendar/render?action=VIEW&eid=MTQ5NjYyNDY3ODU2NCBqZnVydXlhLnA0QG0&ctok=amZ1cnV5YS5wNEBnbWFpbC5jb20#main_7" target="_blank">google calendar</a></td>
+          </tr>
+          <tr>
+            <th>共有フォルダ</th>
+            <td><a id="" href="https://drive.google.com/drive/folders/0ByzsJ8huuAGGOXNrSENGd2lSQk0" target="_blank">庶務</a></td>
+            <td><a id="" href="https://drive.google.com/drive/folders/0ByzsJ8huuAGGQnpyWkoxaXROak0" target="_blank">業務</a></td>
+            <td><a id="" href="https://drive.google.com/drive/folders/0B17R2pbNQpGXZFBhQXNMYW4xOFE" target="_blank">開発フォルダ</a></td>
+          </tr>
+          <tr>
+            <th>外部開発ツール</th>
+            <td><a href="https://github.com/JunFuruya" target="_blank">Github</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp" target="_blank">ままのわリポジトリ</a></td>
+            <td><a href="http://dev.mng.mama000.goo.ne.jp/swaggerui/" target="_blank">swagger ui</a></td>
+            <td><a href="https://www.draw.io/" target="_blank">draw.io</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/FrontAPI%E9%96%8B%E7%99%BA%E3%81%AE%E6%B5%81%E3%82%8C#ci%E7%92%B0%E5%A2%83%E3%83%80%E3%83%83%E3%82%B7%E3%83%A5%E3%83%9C%E3%83%BC%E3%83%89" target="_blank">CIダッシュボードのログイン情報</a></td>
+          </tr>
+          <tr>
+            <th>メトリクス、外部サービス</th>
+            <td><a href="https://graph.ms.pf.goo.ne.jp/list/site/api.mama000.goo.ne.jp" target="_blank">Growth Forcast</a></td>
+            <td><a href="https://service.monitor.pf.goo.ne.jp/zabbix/screens.php?sid=8c071eec04599089&form_refresh=1" target="_blank">zabbix</a></td>
+            <td><a href="http://kibana.ms.pf.goo.ne.jp/?#/dashboard/mysql_slow_query.dmama-10.pro.linechart.dashboard?_g=(refreshInterval:(display:Off,pause:!f,section:0,value:0),time:(from:now-1d,mode:relative,to:now))&_a=(filters:!(),panels:!((col:1,id:dmama-slow-query-line-chart,row:1,size_x:12,size_y:3,type:visualization),(col:1,columns:!(_source),id:mysql_slow_query.dmama-10.pro,row:4,size_x:12,size_y:4,sort:!('@timestamp',desc),type:search)),query:(query_string:(analyze_wildcard:!t,query:'*')),title:mysql_slow_query.dmama-10.pro.linechart.dashboard)" target="_blank">Kibana</a></td>
+            <td><a href="http://dev.ci.mama000.goo.ne.jp/" target="_blank">ConcourseCI dashboard</a>
+              <!-- user: dmama password: mama! -->
+            <td><a href="https://batch.oshiete.goo.ne.jp/" target="_blank">Jenkins</a></td>
+            <td><a href="https://www.amazon.com/ap/signin?openid.assoc_handle=aws&openid.return_to=https%3A%2F%2Fsignin.aws.amazon.com%2Foauth%3Fcoupled_root%3Dtrue%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Fs3.console.aws.amazon.com%252Fs3%252Fhome%253Fregion%253Dus-east-1%2526state%253DhashArgs%252523%2526isauthcode%253Dtrue%26client_id%3Darn%253Aaws%253Aiam%253A%253A015428540659%253Auser%252Fs3&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&action=&disableCorpSignUp=&clientContext=&marketPlaceId=&poolName=&authCookies=&pageId=aws.login&siteState=registered%2CJA_JP&accountStatusPolicy=P1&sso=&openid.pape.preferred_auth_policies=MultifactorPhysical&openid.pape.max_auth_age=120&openid.ns.pape=http%3A%2F%2Fspecs.openid.net%2Fextensions%2Fpape%2F1.0&server=%2Fap%2Fsignin%3Fie%3DUTF8&accountPoolAlias=&forceMobileApp=0&language=JA_JP&forceMobileLayout=0&awsEmail=dmama-sys%40nttr.co.jp" target="_blank">AWSコンソール</a></td>
+            <td><a href="https://repro.io/apps/731x0qd8/dashboard" target="_blank">Repro dashboard</a></td>
+            <td><a href="https://oshietegoo.backlog.jp/wiki/MAMA/Home%2F%E9%81%8B%E7%94%A8%E3%83%BB%E4%BF%9D%E5%AE%88%2F%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%83%BBML#loom-header-4" target="_blank">外部アカウント一覧</a></td>
+          </tr>
+          <tr>
+            <th>開発サーバ環境</th>
+            <td><a href="https://stg06.api.mama000.goo.ne.jp/" target="_blank">個人@stage</a></td>
+            <td><a href="http://dev12.monitor.mama000.goo.ne.jp/" target="_blank">個人@dev</a></td>
+            <td><a href="http://vagrant:10080/api/v1/mamanowa/me" target="_blank">API@local</a></td>
+            <td><a href="http://monitor.vagrant:10080/api/v1/mamanowa/me" target="_blank">投稿監視ツール@local</a></td>
+          </tr>
+          <tr>
+            <th>インフラ設計書</th>
+            <td><a href="https://www.draw.io/#Hnttresonant%2Fdmama%2Fmaster%2Fdocs%2Fsystem%2Fsystem.xml" target="_blank">インフラ構成図</a></td>
+            <td><a href="https://github.com/nttresonant/dmama/tree/master/docs/system/system.xml" target="_blank">システム構成図</a></td>
+            <td><a href="https://ticket.pf.goo.ne.jp/" target="_blank">南砂クラウド 利用者向けWiki</a></td>
+            <td><a href="https://oshietegoo.backlog.jp/view/MAMA-44" target="_blank">stage環境 stg環境一覧</a></td>
+            <td><a href="https://oshietegoo.backlog.jp/view/MAMA-69#loom-header-4" target="_blank">商用環境</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AE%E5%89%B2%E3%82%8A%E5%BD%93%E3%81%A6#web" target="_blank">南砂アカウント一覧</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E5%8D%97%E7%A0%82VM%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%E6%89%8B%E9%A0%86" target="_blank">南砂VM開発環境構築手順</a></td>
+          </tr>
+          <tr>
+            <th>開発共通</th>
+            <td><a href="https://docs.google.com/document/d/13owdCoLLmIDdDAapUUCoqi1uBBg1pknT3VAl7yI-WKU/edit" target="_blank">開発スタートアップ</a></td>
+            <td><a href="https://xwa200.goo.ne.jp/wiki/oshiete/" target="_blank">開発者PukiWiki</a></td>
+            <td><a href="https://oshietegoo.backlog.jp/view/MAMA-3" target="_blank">ままのわ ディレクトリ構成</a></td>
+            <td><a href="https://docs.google.com/document/d/1JFxzTgz6gijy8cot8NM7BeJ01-Qxt1I6x5RHHiZs8GA/edit" target="_blank">詳細設計の補足</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki" target="_blank">開発Github Wiki</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/" target="_blank">環境構築手順</a>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E5%AE%9F%E8%A3%85%E3%81%AE%E6%B5%81%E3%82%8C" target="_blank">実装の流れ</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E3%81%BE%E3%81%BE%E3%81%AE%E3%82%8F%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%28dmama-dev-Box%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%29-%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97%E6%89%8B%E9%A0%86" target="_blank">vagrant イメージ-セットアップ手順</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E3%82%AF%E3%83%A9%E3%82%B9%E3%81%AE%E5%91%BD%E5%90%8D" target="_blank">クラスの命名規則</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E3%83%AC%E3%83%93%E3%83%A5%E3%83%BC%E4%BE%9D%E9%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" target="_blank">レビュー</a></td>
+          </tr>
+          <tr>
+            <th>API開発設計書</th>
+            <td><a href="https://docs.google.com/spreadsheets/d/1oSwmwG1q5zl9vwlIYjk-PD9iLfaS2_OQmInfrdrQfQQ/edit#gid=1019876598" target="_blank">URL一覧</a></td>
+            <td><a href="https://docs.google.com/spreadsheets/d/1uCj7opyYEA7GSjWKxUm-qv3De2FAiC84YaBIZqQaZc4/edit#gid=926917931" target="_blank">機能・工数一覧</a></td>
+            <td><a href="https://docs.google.com/spreadsheets/d/1HSQRev_tzu1j4y3z4Tnk6bbV5AkmpBnKhoTf08RuOB8/edit#gid=1510856897" target="_blank">機能一覧（API・バッチ）</a></td>
+            <td><a href="https://docs.google.com/spreadsheets/d/1bMzLFvemIFDwKITwUsxRzR5kY7kvyyEKsatmwTbVXf4/edit#gid=167305890" target="_blank">エンティティ一覧</a></td>
+          </tr>
+          <tr>
+            <th>Web版設計書関連</th>
+            <td><a href="https://docs.google.com/spreadsheets/d/1sa_Rke34KkAEy1Mh3R6Ws6GmOOUqyG0z6rCYMP_L2Mo/edit#gid=0" target="_blank">画面一覧</a></td>
+            <td><a href="https://docs.google.com/spreadsheets/d/17YxkBgw-TcpadvXjogJvyGMgzASo6cjYF-hs3g5fIjE/edit#gid=0" target="_blank">質問票</a></td>
+          </tr>
+          <tr>
+            <th>参考プロジェクト</th>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E3%81%BE%E3%81%BE%E3%81%AE%E3%82%8F%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83(dmama-dev-Box%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8)-TIPS" target="_blank">参考</a></td>
+            <td><a href="https://github.com/nttresonant/dmama-webapp/wiki/%E4%BE%8B%E5%A4%96%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6" target="_blank">例外について</a></td>
+            <td><a href="https://github.com/oshietegoo/i18n-front" target="_blank">訪日</a></td>
+            <td><a href="https://dev.api.oshiete.goo.ne.jp/docs/" target="_blank">QAコネクトAPIドキュメント</a></td>
+          </tr>
+          <tr>
+            <th>phpunit</th>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </section>
+
+  <section id="main">
+    <section class="column">
+      <h1>日々のとど</h1>
+      <section>
+        <h2>簡易とど</h2>
+        <section>
+          <textarea id="quick_memo" cols="60" rows="20">
+https://oshietegoo.backlog.jp/view/MAMA-697
+
+提供されるデータ
+データ形式：CSV形式
+データ内容：バナーID,連携パラメータ,#化アカウント識別子,応募通番,
+
+提示したいデータ
+データ形式：CSV形式
+データ内容：エントリー日時,#化アカウント識別子,付与するポイント数(0,10,100)
+
+課題？備忘？
+欠損データの復元
+
+https://oshietegoo.backlog.jp/view/MAMA-732
+
+
+バナーID ← 受領データに含まれる
+user_id（連携パラメータから変換） ← 渡されたバナーIDを持ったキャンペーンに参加しているユーザIDを取得する。レコード数＝キャンペーン数✕サブID（月）✕ユーザ数
+#化アカウント識別子 ← 受領データに含まれる
+応募日時 ← 受領データに含まれる
+
+
+
+・抽出方法
+・初ハート、3月末まで変更しても影響ないか調べる。
+
+
+
+①「抽出方法案」をブラッシュアップして、「抽出手順」にしてください。
+②tempテーブルもブラッシュアップ
+　最低限、初ハートと１００ゲットで分かれるとは思いますが、前月分のデータを残しておくのかどうか、など。もう少し設計を詰めてください。
+③「アウトプット仕様」の項を追加
+　・ファイル形式（CSV?　EXCEL？）
+　・カラム定義
+　・受け渡し方法、期限
+　などを決めて欲しいです。
+
+
+
+
+https://oshietegoo.backlog.jp/view/MAMA-749
+
+①CMP基盤DBに応募実績がある、現在有効なユーザであること。
+②キャンペーン期間内にニックネームエントリーしており、かつ集計対象期間内に初めてハートを付けていること。
+③キャンペーン期間内に初めてのハートを付けており、かつ集計対象期間内にニックネームエントリーが完了していること。
+④集計対象期間は、下記の通りであること。
+
+11月にニックネーム登録&初ハートして、12月にCMPエントリーした人がポイント対象にならなくなってしまいます。
+今の①〜④の条件だと、11月にニックネーム登録&初ハートして、12月にキャンペーンエントリーした人がポイント対象として抽出できないような・・
+
+
+
+          </textarea>
+        </section>
+      </section>
+      <section>
+        <h2>HipChat立ち上げ</h2>
+      </section>
+      <section>
+        <h2>git pull</h2>
+        <ul class="console">
+          <li>
+            C:\Users\junfuruya\vms\dmama-dev<br/>
+            C:\Users\junfuruya\vms\dmama-dev\repository\dmama-webapp<br/>
+            C:\Users\junfuruya\vms\dmama-dev\repository\dmama
+            <span class="">$</span>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>vagrant</h2>
+        <section>
+         【仮想環境起動】
+          <p class="console">
+            $ cd "C:\Users\junfuruya\vms\dmama-dev"<br/>
+            $ vagrant up
+          </p>
+          virtualbox を起動する
+
+         【Vagrant 再起動@vagrant】
+          <p class="console">
+            $ cd /home/vagrant/repository/dmama/docker/allinone/<br/>
+            $ sudo docker-compose down<br/>
+            $ sudo docker-compose up -d
+          </p>
+
+         【Vagrant にrootでログイン】
+          <p class="console">
+            $ sudo docker exec -it allinone bash
+          </p>
+
+         【artisanコマンドや、WEB開発を使うための毎日のお勤め】
+          <p class="console">
+            $ export APP_ENV=development<br/>
+            $ export SERVER_TYPE=front<br/>
+            $ export SERVER_TYPE=monitor<br/>
+            $ export FRONT_TYPE=web<br/>
+            <br/>
+            $ cd /repository/dmama-webapp/<br/>
+            <br/>
+            $ php artisan config:cache<br/>
+            <br/>
+            $ export CONF_DEVELOPMENT_ASSET_SERVER_NAME=vagrant
+          </p>
+        </section>
+        <section>
+          ■MySQL dump
+          <p class="console">
+            $ cd /repository/dmama-webapp/<br/>
+            # mysqldump -uroot -B test > dump_20170510.dmp<br/>
+            # mysql -uroot -D test < /repository/dmama-webapp/tests/sql/dump/dmama_stg_web_dev.dump<br/>
+            # mysql -uroot -D test < ./tests/sql/dump/20171024_campaign.dmp<br/>
+            # mysql -uroot -D test < ./tests/sql/dump/20171026_campaign.dmp # キャンペーン、テストデータ投入前<br/>
+          </p>
+
+          <a href="C:\Users\junfuruya\vms\dmama-dev\repository\dmama-webapp">ここに配置する</a>
+          <a href="C:\Users\junfuruya\Desktop\現場メモ\71.mysqldump\">Backup</a>
+        </section>
+      </section>
+      <section>
+        <h2>アクセストークン</h2>
+        <section>
+         【ユーザIDあり】
+          X-Access-Token
+          <textarea>
+            eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLm9zaGlldGUuZ29vLm5lLmpwXC8iLCJhdWQiOiJjbGllbnRfaWRfYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoiLCJzdWIiOjEyMywiZXhwIjoxNTI0ODMwNzY1fQ.bYO6bbea7cNxUYvk5YDZoRXPt3nyii8DMEU0TYlRW-CxroKdK2d42SokBR2Y6dJ2ytTeBvdFMPfJGWguh8CSHpDxKg6EmH2oAoy2yxOoCcd1sSOrt371uDTFTQqX-AntqdwBmufWExZkLtpRmKEXGrifVx3Lxw37lEhv1xClJOQqhK7LU-izbXv8SogRHtYew8IXDzGoSlDFSM5jDYMO0X1DQvEu3FHtJFffJw6AJWhwKPtJ87PQlKMrHk70hjeRN8y0opOt2AmnrQWplVhWEwJTdsoIt9VP5vwaCjf0TFudg5VQc9UCR3ACVdUXnY3UdJnCAji0Es_VsAZPD4IVNg
+          </textarea>
+
+         【ユーザIDなし】
+          X-Access-Token
+          <textarea>
+            eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLm9zaGlldGUuZ29vLm5lLmpwXC8iLCJhdWQiOiJjbGllbnRfaWRfYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoiLCJzdWIiOm51bGwsImV4cCI6MTUyNjQzNjk2M30.KzlMbiHM66P9gTMGsTGpAHfYBA7_X46w8R-bLGcNyy9u3Ygo78D_5DY-6g2Tj0qkTY6Shc_ZNObm8TqfI7xJNdMz5kNbhQ7xIA_BFDlTjIvox1WXcVin1dIG3BlF7N23DqOcjN0lUmiUno_jqmakIGwOv7sqS9Zd7LB2k2R6mCmj6mSQpcSKrPCjMFLGaoedOZJrL3fw7rBAuwnEtDAWZrlOQ38o5scYBorajaq4mzxf26coLfT20QhAXkpj3ee5sBStIpjjSnvTDDiILNj8J_rm_QyXrh0pnpAxt4wu5TcEcuUUAct8xcDaZktORrhuSizqgAYcqNcWy2NknN6kOQ
+          </textarea>
+
+          X-Mamanowa-Android-Version
+          7.0
+        </section>
+      </section>
+      <section>
+        <h2>Artisan</h2>
+        <p class="console">
+          $ cd /home/vagrant/repository/dmama-webapp/artisan<br/>
+          $ php artisan route:clear
+        </p>
+      </section>
+      <section>
+       <h2>Redis</h2>
+        <section>
+          <a href="https://github.com/nttresonant/dmama-webapp/pull/89">Redisを利用するための設定修正はこちらです。</a><br/>
+          監視ツール側はこれで動作しているそうです。<br/>
+          <br/>
+          設定ファイルの他、セッション関連クラスの修正も必要です。<br/>
+          cache.php, database.php, PhpSessionServiceProvider.php を参考にしてください。<br/>
+          database.phpにredis接続設定を書いて、cache.phpでredisを指定する、といった形になります。<br/>
+          <br/>
+          今開発で使っている↓の設定変更が必要です。<br/>
+          config_environment/front/development<br/>
+          config_environment/front/testing<br/>
+          <br/>
+          まずはキャッシュ設定の部分だけ先にmasterにマージできるよう、設定変更だけでPull requestを作っていただけますでしょうか。<br/>
+
+          <p class="console">
+            # which redis-server<br/>
+            /usr/bin/redis-server
+          </p>
+
+          起動<br/>
+          <p class="console">
+            # reids-server
+          </p>
+
+          設定<br/>
+          <p class="console">
+            # vi /repository/dmama/docker/allinone/conf/redis/redis.conf.org
+          </p>
+        </section>
+      </section>
+      <section>
+        <h2>ローカルフォルダ</h2>
+        <section>
+          <a href="C:\Users\junfuruya\vms\dmama-dev\repository\dmama\docs\web_api">ままのわdraw.ioリポジトリ@local</a>
+          <a href="C:\Users\junfuruya\vms\oshietegoo\repository\oshietegoo">おしえて！リポジトリ@local</a>
+        </section>
+      </section>
+      <section>
+        <h1>実装の参考</h1>
+        <section>
+          <a href="https://github.com/oshietegoo/i18n-front/blob/master/app/UserInterface/Http/Controller/Api/FrontApiArticleController.php#L78">実装例</a><br/>
+          <a href="https://github.com/nttresonant/dmama-webapp/wiki/%E9%96%8B%E7%99%BA%E3%81%AE%E6%B5%81%E3%82%8C#%E3%83%90%E3%83%AA%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E4%BD%9C%E6%88%90">バリデータの実装について</a><br/>
+          ■コントローラクラスの命名について<br/>
+          エンドポイントが /posts のとき<br/>
+          コントローラは FrontApiPostsController となります。<br/>
+          /posts/list, /posts/{post_id}/details なども全て FrontApiPostsController となり、メソッドが別れるようになります。<br/>
+          ルート設定・コントローラクラス・メソッドの命名規則について以下に記載しました。<br/>
+          https://github.com/nttresonant/dmama-webapp/wiki/%E9%96%8B%E7%99%BA%E3%81%AE%E6%B5%81%E3%82%8C#%E3%8...
+        </section>
+      </section>
+      <section>
+        <h2>レゾナント社内ルール</h2>
+        <a href="http://10.230.5.100/web/guest/ja/websys/webArch/mainFrame.cgi">スキャナー</a>
+        <a href="https://drive.google.com/drive/folders/0ByzsJ8huuAGGbTdXLUJ2ZWhPNVk">スキャナー利用方法</a>
+        <p class="console">
+          $ mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev
+        </p>
+        <table>
+          <tbody>
+            <tr>
+              <td>無線LAN</td>
+              <td>古谷さん（新規）</td>
+              <td>192.168.16.210</td>
+            </tr>
+            <tr>
+              <td>sourceIP</td><td>153.156.71.88</td>
+            </tr>
+            <tr>
+              <td>DefaultGW</td>
+              <td>192.168.16.1</td>
+            </tr>
+            <tr>
+              <td>DNSサーバ(1)</td>
+              <td>202.234.232.6</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>221.113.139.250</td>
+            </tr>
+            <tr>
+              <td>SSID(11g/n)</td>
+              <td>shibaura-ses-wifi</td>
+            </tr>
+            <tr>
+              <td>SSID(11a/n)</td>
+              <td>shibaura-ses-wifi-a</td>
+            </tr>
+          </tbody>
+        </table>
+
+        パスワードは毎月、月初のどこかのタイミングで変更されます。
+        パスワード以下のルールで決定された文字列です
+        暦 + 年（a=>@、 i=>1 に変換、先頭大文字）
+
+        例: 2017年3月のパスワード Y@yo12017
+
+        ■社内ルール
+        リリース可能時間帯
+        平日（休前日を除く）9:30～15:00
+
+        ■新規参画時の情報
+        菅野さん
+          sh_kanno@plusfor.co.jp
+        Googleアカウント作成：
+          jfuruya.p4@gmail.com
+        Githubアカウント：
+          https://github.com/JunFuruya
+          https://github.com/oshietegoo/oshietegoo
+          https://github.com/nttresonant/dmama
+          https://github.com/nttresonant/dmama-webapp
+
+        Slack：gooblogteam.slack.com
+        HipChat： https://oshietegoo.hipchat.com/home
+        Backlog：
+          https://oshietegoo.backlog.jp
+          https://oshietegoo.backlog.jp/projects/DEV
+          https://oshietegoo.backlog.jp/projects/MAMA
+
+        ユーザID： jun_furuya
+        パスワード： KvPmUqeB
+
+        Microsoft Office365
+          jun_furuya@plusfor.onmicrosoft.com
+          gugu_run25
+
+        アカウント種別  : 南砂クラウド利用者アカウント
+        ユーザ名        : jfuruya.p4@gmail.com
+        パスワード      : msuS3zW0
+        Linuxアカウント : p4-furuya
+
+        SSH踏み台サーバ：
+          ssh.ms.pf.goo.ne.jp
+          ※申請した公開鍵に対応した秘密鍵をご利用ください
+
+        南砂クラウド
+          アカウント種別  : 南砂クラウド利用者アカウント
+          ユーザ名        : jfuruya.p4@gmail.com
+          パスワード      : msuS3zW0
+          Linuxアカウント : p4-furuya
+
+        SSH踏み台サーバ：
+          ssh.ms.pf.goo.ne.jp
+          ※申請した公開鍵に対応した秘密鍵をご利用ください
+
+        ■HipChat
+          s/hoge/fuga/
+          /available
+          /away
+          /dnd
+
+        SSH：作成済み、公開鍵を菅野さんに送付済み。
+        git client: Git+TortoiseGit
+
+        プリンタ：ドライバダウンロード＋インストール済＋カード認証設定済
+        windows update： 完了
+        勤務表共有設定：対応済み。
+        ESET：アクティベート完了。データベース更新がこける…
+        MS Office：Officeインストール済み
+
+        フォルダ内のほかの文書を読む
+        02.新規入場者開発環境構築
+      </section>
+    </section>
+
+    <section class="column right">
+      <h1>製造時のルール</h1>
+
+      <section>
+        <p class="console">
+          $ vagrant box add base C:\Users\junfuruya\boxes\base.box
+        </p>
+      </section>
+      <section>
+        <h2>providor</h2>
+        /Front/Application/Provider/AppServiceProvider.php
+      </section>
+      <section>
+        <h2>TODO書き方</h2>
+        // TODO 対応バージョン 何をすべきかひとことで MAMA-XXX 〜〜〜〜
+        // なぜ今すぐできないのかなど
+      </section>
+      <section>
+        <h2>例外処理</h2>
+        コントローラでの例外処理
+        APIでエラーを返戻する際、コントローラでUIHttpXxxxxExceptionを投げていただいていますが、下層の例外をcatchしてUIHttpXxxxxExceptionを投げる時、
+
+        <p class="console">
+        } catch (\Exception $e) {
+          throw new UIHttpInternalServerErrorException($e);
+        </p>
+
+        という感じでキャッチした例外を渡すよう、お願いいたします。$e をキャッチしていない場合は何も渡さなくて大丈夫です。
+        <a href="https://github.com/nttresonant/dmama-webapp/pull/128">参考</a>
+      </section>
+      <section>
+        <h2>phpunit</h2>
+        ■Laravel TestUnit
+        継承するクラスは下記のようにFrontBaseApiControllerTestクラスから継承してください。
+        https://github.com/nttresonant/dmama-webapp/pull/35/files#diff-4a19f23538a741aef264be719ac12909
+        テスト対象は主にコントローラーで下記の『JSONと一致するか確実に検証』のところを参考にしてもらえればよいとおもいます。
+        https://readouble.com/laravel/5.1/ja/testing.html
+
+        それぞれのunittestのメソッドは@testアノテーションをつけて
+        public function index_記事の一覧を表示すること()
+        public function action名_てすとの内容を日本語で記載()
+
+        <p class="console">
+          $ /usr/bin/env php vendor/phpunit/phpunit/phpunit
+        </p>
+
+        ■テスト実行@vagrant
+        <p class="console">
+          [root@366e8f66b2a2 dmama-webapp]# ./vendor/phpunit/phpunit/phpunit -version
+        </p>
+
+        テスト実行コマンド
+        <p class="console">
+          $ ./vendor/phpunit/phpunit/phpunit ./tests/app/Front/UserInterface/Http/Controller/Api/FrontApiMeControllerTest.php
+        </p>
+
+        unit testで使用するnamespaceですがcomposerで
+        <p class="console">
+          "psr-4": {<br/>
+            "App\\": "app/",<br/>
+              "Tests\\": "tests/app"<br/>
+          },
+        </p>
+        
+        と定義されているので
+        dmama-webapp/tests/app/Front/UserInterface/Http/Controller/Api/FrontApiXXXTest.php
+        の場合のnamespaceは
+        namespace Tests\Front\UserInterface\Http\Controller\Api;
+        になりますのでご注意ください。
+        namespace Tests\api\Front\UserInterface\Http\Controller\Api;
+        のようにapiは不要です！
+
+        ■テストヘルパ
+        tests/app/Common/Helper/CacheHelper.php
+        tests/app/Common/Helper/DbHelper.php
+        tests/app/Common/Helper/RedisHelper.php
+
+        ■monitorテスト用の設定
+        export APP_ENV=testing
+        export CONF_TESTING_DB_MASTER_HOST=localhost
+        export CONF_TESTING_DB_MASTER_DB=test
+        export CONF_TESTING_DB_MASTER_USER=root
+        export CONF_TESTING_DB_MASTER_PASSWORD=""
+        export CONF_TESTING_DB_SLAVE_HOST=localhost
+        export CONF_TESTING_DB_SLAVE_DB=test
+        export CONF_TESTING_DB_SLAVE_USER=root
+        export CONF_TESTING_DB_SLAVE_PASSWORD=""
+
+        # /usr/bin/env php vendor/phpunit/phpunit/phpunit -c phpunit_monitor.xml
+
+        ■テストについて説明
+        "C:\Users\junfuruya\vms\dmama-dev\repository\dmama-webapp\tests\app\Front\UserInterface\Http\Controller\Api\FrontApiSampleControllerTest.php"
+      </section>
+      <section>
+        <a href="https://drive.google.com/drive/folders/0B76HuNpWZRlgMHpEQUFYMEd6VVU?usp=sharing">進捗遅れ棚卸</a>
+      </section>
+      <section>
+        <h2>手元のphpunitが失敗する件</h2>
+        <section>
+          コンテナ環境にログインして /etc/php.ini を開いて memory_limit を検索して
+          memory_limit = 1G
+          と設定の書き換えてください！
+        </section>
+      </section>
+      <section>
+        <h2>コンソールコマンド</h2>
+        <section>
+          クラス作成
+          $ php artisan make:console HogeCommand
+          /vender/Laravel/framework/src/Illuminate/Foundation/Console/AppNameCommand.php ← list コマンドに必要
+          /vender/Laravel/framework/src/Illuminate/Foundation/Console/ConfigCacheCommand.php ← config:cache コマンドでenvファイルのキャッシュ更新に必要
+          /vender/Laravel/framework/src/Illuminate/Foundation/Console/ConsoleMakeCommand.php ← make:console コマンド利用に必要
+          /vender/Laravel/framework/src/Illuminate/Foundation/Console/JobMakeCommand.php ← make:job コマンド利用に必要
+
+          × # php artisan command:push_notification
+          ○ # php artisan queue:listen push_notification
+        </section>
+      </section>
+      <section>
+        <h2>Trait作り方</h2>
+        <section>
+          app/Common/UserInterface/Http/Traits/RestTrait.php:namespace App\Common\UserInterface\Http\Traits;
+          app/Common/UserInterface/Http/Traits/RestTrait.php:trait RestTrait
+        </section>
+      </section>
+
+      <section>
+        <h2>そしてデバッグ便利</h2>
+        ini_set( 'display_errors', 1);
+        ini_set( 'xdebug.max_nesting_level', 9999 );
+      </section>
+
+      <section>
+        SSH key 生成
+        $ ssh-keygen -yf /Users/hoge/private_key > public_key<br/>
+        $ ssh-keygen -yf C:\Users\junfuruya\.vagrant.d\boxes\base\0\virtualbox\private_key > public_key
+      </section>
+
+      <section>
+        <h2>Push通知</h2>
+        $ export ENDPOINT=https://marketing.repro.io/v1/push/2xo5dww4/deliver/
+        $ export MARKETING_TOKEN=c3509b0e-ccea-42ec-bb59-314c923f1ed6
+
+        $ curl ${ENDPOINT} \
+        --verbose \
+        --request POST \
+        --header "X-Repro-Token: ${MARKETING_TOKEN}" \
+        --header "Accept: application/json" \
+        --header "Content-Type: application/json" \
+        --data-binary "$(cat ~/repro-test.json)"
+
+        $ vi ~/repro-test.json
+
+        {
+          "audience": {
+            "user_ids": [
+              "214"
+            ]
+          },
+          "notification": {
+            "sound":"default.wav",
+            "custom_payload": "{\"aps\":{\"alert\":\"ままのわ\",\"sound\":\"default\"},\"notification\":{\"notification_id\":\"通知ID\",\"user\":{\"user\":{\"user_id\":\"ユーザID\",\"nickname\":\"ニックネーム\"},\"user_meta\":{\"profile_image_url\":\"プロフィール画像URL\"}},\"event_id\":\"1：コメントした/2：補足した.etc\",\"post_id\":\"2\",\"type\":\"投稿タイプ\",\"body\":\"★メッセージ本文をここで指定する。★\",\"sending_date\":\"2017-05-18T06:57:24.585Z\",\"already_read\":\"既読状態（0：未読、1：既読）\"}}"
+          }
+        }
+
+        ID: 14
+
+        商用環境でのPUSH通知試験
+        $ /home/k5ito/repro-push.sh 18
+
+        worker Logファイル（push通知）
+        Stg環境は /var/log/laravel-worker.log
+
+        ただ今回の対応でPush通知のログをアプリケーションのログとして出すようにしているのでstorage/logs配下で確認できます。
+        `$ grep “Push Notification Success” /home/g-dmama-10_app/vhost/stg.api.mama000.goo.ne.jp/storage/logs/app-2017-10-25.log | wc -l
+        28` 今日は28件のPush通知が成功しています。
+
+        Google Drive 「 共有アイテム > 開発チーム > 20170201mama > 09. アプリ > 20170519_PUSH受信試験用 」
+        <a href="https://github.com/nttresonant/dmama-webapp/pull/392">PUSH通知設計書</a>
+      </section>
+      <section>
+        <a href="https://docs.google.com/spreadsheets/d/1VZDpUtBW-XMX1gBqkCk0aH0QPB-nxRYjDPJa1ra_b3Y/edit#gid=0">バックログ課題整理</a>
+      </section>
+      <section>
+        staging環境でインデックスとエクスプレインを試す方法
+        @dmama-10-dev-api-001]$ mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev_k5ito
+        MariaDB [dmama_dev_k5ito]> CREATE INDEX ～
+        MariaDB [dmama_dev_k5ito]> EXPLAIN SELECT ～
+      </section>
+      <section>
+        <a href="https://docs.google.com/document/d/1yUqgaj8A8FG6fZusG7addUTfPhSSmVlEmmECzgBKCfQ/edit">ランキング基本設計</a
+        ・Ph1検討時のコンセプトは、MAMA-37に整理されている
+        ・今回要件のヒアリングと、具体的な方式検討、プログラム設計への橋渡しが目的
+      </section>
+      <section>
+        <h2><a href="https://drive.google.com/drive/folders/0B76HuNpWZRlgWEoxdkp0d29UT0U">WEB版のメモ</a>
+        ドコモの希望でWEB版ドメインは、 `www.mamanowa.mamatenna.jp`
+        <a href="https://drive.google.com/open?id=0B76HuNpWZRlgM1VGMGRTV2dhQjg">gantter</a>
+        ※Gantter for Google Driveのプラグインが必要だとおもいます。
+        ※参考サイト
+        <a href="https://liginc.co.jp/web/tool/other-tool/85492">1</a>
+        <a href="https://chrome.google.com/webstore/detail/gantter-for-google-drive/himomacamcpodhkahelbnmaddladgjgo?...">2</a>
+      </section>
+      <section>
+        <a href="https://drive.google.com/open?id=1FM_HDQ6YfeH53HJ4iQB75krnYiL0XicGwPP7Y5UJWMo">進捗確認</a>
+      </section>
+      <section>
+        <a href="https://docs.google.com/spreadsheets/d/1IDjc7PzzWyZJxFE_bVXtgeycU_K95lR3wsQAtnLPNuE/edit#gid=0">Web版質問表</a>
+        質問表注意点
+        記入は、各自でおねがいします。以下の点に注意してください。
+        <ul>
+          <li>同様の質問がすでに出ていないか？</li>
+          <li>相手が読んでわかる文章か？（エンジニアでない方もいます）</li>
+          <li>言葉遣い</li>
+        </ul>
+      </section>
+      <section>
+        <a href="https://github.com/nttresonant/dmama-webapp/wiki#web%E7%89%88%E9%96%8B%E7%99%BA%E3%81%AE%E6%B5%81%E3...">Web版開発について、wikiに現在想定している流れ</a>
+        <a href="https://github.com/nttresonant/dmama-webapp/pull/491">サンプル実装</a>
+        <a href="https://docs.google.com/spreadsheets/d/1gqIChVa2QXYAuDxQtSnUD6YvW4ZyfK2FQFzDJCSmq7A/edit#gid=764363665">各パーツの担当者</a>
+        <a href="https://docs.google.com/presentation/d/1np5oq_PoubMzuLirxEoerDxgO7MYi_hb2LqfLuiFimY/edit#slide=id.g24119d1917_0_0">TOP項目定義書</a>
+        <a href="https://github.com/nttresonant/dmama-webapp/pull/505">共通部分のblade分割</a>
+
+        実装着手が間近に迫ってはいますが特にコントローラやビューの実装のあたりを見て、何か改善できそうなところがあればお知らせください。
+        https://github.com/nttresonant/dmama-webapp/blob/feature/web/MAMA-480/app/Front/UserInterface/Http/C...
+        https://github.com/nttresonant/dmama-webapp/tree/feature/web/MAMA-480
+
+        app/Front/UserInterface/Http/Controller/Pc/FrontPcTopController.php
+      </section>
+      <section>
+          <a href="https://github.com/nttresonant/dmama-webapp/wiki/DB%E3%82%B9%E3%82%AD%E3%83%BC%E3%83%9E%E3%81%AE%E5%A4%89%E6%9B%B4">DB定義変更の際のER図変更と実際のスキーマ反映のタイミング（案）</a>
+
+          web版開発
+          <a href="https://docs.google.com/spreadsheets/d/19llR8z7c_AZY7cwg9WeAqWrCEtxtqfkj8hcc48BJYJk/edit#gid=0">URLリスト</a>
+          <a href="https://docs.google.com/document/d/1jFKpRWA8un6oZI1PPpXwjzvbQnVrNrcutexSrxRNYnI/edit">単体テストについて</a>
+        </section>
+      </section>
+      <section>
+        進捗確認
+        <textarea>
+@HiWakasugi 
+１．作業中のチケットについて
+（１）問題発生の有無
+（２）完了日の目途
+２．新たに着手したチケットを教えてください。（ウォッチに入れます）
+３．その他相談事項など
+        </textarea>
+
+        テンプレ
+        <textarea>
+@HiWakasugi 
+１．作業中のチケットについて
+（１）問題発生の有無
+    →MAMA-723 特になし
+    →MAMA-732 特になし
+    →MAMA-750 特になし
+（２）完了日の目途
+    →MAMA-723 作業完了、feature/web/master2 ブランチにマージ済み
+    →MAMA-732 11/29
+    →MAMA-750 11/29
+    
+２．新たに着手したチケットを教えてください。（ウォッチに入れます）
+    →MAMA-732 [API][CMP]ポイント獲得対象ユーザの抽出
+    →MAMA-750 [API][CMP]被ハート（100ハート）、ポイント獲得対象ユーザの照合・抽出
+    
+３．その他相談事項など
+    →なし
+        </textarea>
+	
+      </section>
+      <section>
+        <h1>メモ</h1>
+        <p class="console">
+          $ git cherry-pick 546de2cc727fcae02646c6af637f401e4238feef<br/>
+          $ curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/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<br/>
+          $ curl -X POST -H 'Content-type: application/json' --data '{"text":"curlで投稿テスト、こんにちは、世界！"}' https://hooks.slack.com/services/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<br/>
+        </p>
+        <section style="display: none;">
+
+          $ranking = ['3982' => "15", '3009' => "20", '4023' => "25", '4401' => "35",
+                      '234' => "40", '4012' => "45", '4090' => "50", '3838' => "55", '3302' => "60",
+                      '3656' => "65", '4199' => "70", '4321' => "75", '3998' => "80"];
+
+
+ client_id_abcdefghijklmnopqrstuvwxyz | client_secret_abcdefghijklmnopqrstuvwxyz |      1 |        31536000 | 2017-04-27 17:15:00 
+
+コメントいっぱい投稿
+SELECT DISTINCT post_id, caption, comment_count, mama_comments.user_id FROM mama_posts INNER JOIN mama_comments USING(post_id) WHERE delete_flag = 0 AND comment_count > 30;
+
++---------+--------------------------------------+---------------+---------+
+| post_id | caption                              | comment_count | user_id |
++---------+--------------------------------------+---------------+---------+
+|    1191 | kansa                                |           602 |    5310 |
+|    1191 | kansa                                |           602 |     306 |
+|    2233 | ぐるど さんのつぶやき                |            34 |   10054 |
+|    2233 | ぐるど さんのつぶやき                |            34 |   10077 |
+|    2233 | ぐるど さんのつぶやき                |            34 |    6986 |
+|    2233 | ぐるど さんのつぶやき                |            34 |    6942 |
+|    2254 | Iosからすたんぷ                      |            31 |    6942 |
+|    2233 | ぐるど さんのつぶやき                |            34 |   10088 |
+|    2254 | Iosからすたんぷ                      |            31 |   10088 |
+|    2254 | Iosからすたんぷ                      |            31 |   10078 |
+|    2254 | Iosからすたんぷ                      |            31 |   10077 |
+|    2264 | 通報確認                             |            51 |    6942 |
+|    2264 | 通報確認                             |            51 |   10100 |
+|    4216 | てすたー15 さんのつぶやき            |           103 |   10243 |
+|    4216 | てすたー15 さんのつぶやき            |           103 |   10268 |
+|    4235 | てすたー21 さんのつぶやき            |            31 |   10243 |
+|    4235 | てすたー21 さんのつぶやき            |            31 |   10281 |
+|    4283 | g071801 さんのつぶやき               |            34 |   10329 |
+|    4283 | g071801 さんのつぶやき               |            34 |   10425 |
+|    4283 | g071801 さんのつぶやき               |            34 |   10359 |
+|    4283 | g071801 さんのつぶやき               |            34 |   10364 |
++---------+--------------------------------------+---------------+---------+
+21 rows in set (0.00 sec)
+
+admin_user_id
+
+MariaDB [test]> SELECT * FROM monitor_admin_users;
++---------------+------+--------------+-------------+---------------------+---------------------+
+| admin_user_id | type | goo_id       | delete_flag | created_at          | updated_at          |
++---------------+------+--------------+-------------+---------------------+---------------------+
+|             1 |    1 | skanno22     |           0 | 2017-06-22 17:28:41 | 2017-06-22 17:28:41 |
+|             2 |    1 | k5ito        |           0 | 2017-06-27 13:04:04 | 2017-06-27 13:04:04 |
+|             3 |    1 | taku_ito0421 |           0 | 2017-06-27 13:04:11 | 2017-06-27 13:04:11 |
+|             4 |    1 | chame190     |           0 | 2017-06-27 13:04:11 | 2017-06-27 13:04:11 |
+|             5 |    1 | hss-s-une002 |           0 | 2017-06-27 13:04:11 | 2017-06-27 13:04:11 |
+|             6 |    1 | testmj92     |           0 | 2017-06-27 13:04:11 | 2017-06-27 13:04:11 |
+|             7 |    1 | ayaka0679    |           0 | 2017-06-27 13:04:11 | 2017-06-27 13:04:11 |
++---------------+------+--------------+-------------+---------------------+---------------------+
+        </section>
+      </section>
+    </section>
+  </section>
+  <footer>
+    &copy; 2017
+  </footer>
+</body>
+</html>

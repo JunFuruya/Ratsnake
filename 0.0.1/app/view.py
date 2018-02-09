@@ -6,6 +6,7 @@ from tkinter import Tk, ttk
 class BaseView:
     window = None
     panel_frame = None
+    view_params = []
     
     title = "BaseView"
     
@@ -33,3 +34,5 @@ class BaseView:
         self.title = title
         self.panel_frame.config(text = self.title)
 
+    def setViewParams(self, params):
+        self.view_params = params

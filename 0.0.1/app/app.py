@@ -3,23 +3,22 @@
 import config
 import controller
 import values
-import view
 
 class App:
+    controller = None
+    view = None
     controllers = []
     
     def __init__(self):
       self.controllers.insert(values.screenIdValue.DEFAULT(), controller.IndexController())
       self.controllers.insert(values.screenIdValue.GOOGLE_SEARCH(), controller.GoogleSearchController())
 
-    @staticmethod
-    def execute():
-        print('execute')
-        
-        objView = view.BaseView()
+    def execute(self):
+        print('execute')        
+        self.changeScreen(values.screenIdValue.DEFAULT())
      
     def changeScreen(self, screenId):
-        controller = self.controllers[screenId]
-        view = self.views[screenId]
-        view.setViewParams(controller.getViewParams())
+        self.controller = self.controllers[screenId]
+        self.view = self.controller.getView()
+        self.view.setViewParams(controller.getViewParams())
     
