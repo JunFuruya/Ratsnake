@@ -12,11 +12,12 @@ class App:
     def __init__(self):
       self.controllers.insert(values.screenIdValue.DEFAULT(), controller.IndexController())
       self.controllers.insert(values.screenIdValue.GOOGLE_SEARCH(), controller.GoogleSearchController())
-
+    
     def execute(self):
-        print('execute')        
+        print('execute')
+        
         self.changeScreen(values.screenIdValue.DEFAULT())
-     
+    
     def changeScreen(self, screenId):
         self.controller = self.controllers[screenId]
         self.view = self.controller.getView()
