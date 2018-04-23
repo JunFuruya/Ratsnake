@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+</head>
+<body>
+  <table>
+    <th>id</th>
+    <th>サイト名</th>
+    <th>URL</th>
+    % for link in link_list:
+    <tr>
+      % for item in link:
+      <td>{{item}}</td>
+      % end
+    </tr>
+    % end
+  </table>
+</body>
+</html>
