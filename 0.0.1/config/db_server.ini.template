@@ -1,7 +1,6 @@
 [MySQL]
-Host = ''
-Port = 3306
-Name = ''
-User = ''
-Pass = ''
-
+Host     = localhost
+Port     = 3306
+Name     = hideout
+User     =
+Password =

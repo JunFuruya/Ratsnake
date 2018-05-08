@@ -10,7 +10,7 @@
 - python 3.6.1
 - pip 9.0.1
 - bottle 0.12.13
-- Jinja2-2.10
+- ~~Jinja2-2.10~~
 - pycurl 7.43.0.1
 - slackbot 
 
@@ -28,9 +28,9 @@ Sorry,I am still thinking it...
 
 `$ pip install slackbot`
 
-- jinja2
+- ~~jinja2~~
 
-`$ pip install Jinja2`
+` ~~$ pip install Jinja2~~ `
 
 - pycurl
 

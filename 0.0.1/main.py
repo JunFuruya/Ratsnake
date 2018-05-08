@@ -1,8 +1,9 @@
 #-*- UTF-8 -*-
 
-from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
+# auth_basic を使う場合に、コメントを外す
+#from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
+from bottle import get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
 
-import mysql.connector
 import app.service
 
 config = app.service.configGetService()
@@ -17,24 +18,32 @@ def index():
     #return template(tempalte_path, entity=entity)
     return template(tempalte_path)
 
-@get('/login')
-#@auth_basic(check)
-def login():
-    name = 'login'
-    return template('<html><body>{{name}}</body></html>', name=name)
-
 @get('/admin')
 def link_index():
     tempalte_path = './template/admin/index.html'
     return template(tempalte_path)
 
+@get('/admin/login')
+def admin_login():
+    tempalte_path = './template/admin/login.html'
+    return template(tempalte_path)
+
+@post('/admin/login/complete')
+def admin_login_complete():
+    username = request.forms.get('username')
+    password = request.forms.get('password')
+
+    service = app.service.LoginService()    
+    if(service.is_authenticated(username, password)):
+        redirect('/admin')
+    else:
+        tempalte_path = './template/admin/login.html'
+        #entity
+        return template(tempalte_path)
+        #return template(tempalte_path, entity=entity) TODO: implement error message
+
 @get('/admin/links')
 def link_list():
-    #check_login()
-    sql = 'SELECT * FROM links limit 10'
-
-    #connect = mysql.connector.connect(db=db_name, host=db_host, port=db_port, user=db_user, passwd=db_pass)
-    #cur.execute(sql)
     
     link_list = [
         [1, 'AAA', 'http://aaa.co.jp'],
