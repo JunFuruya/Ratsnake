@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" type="text/css" href="./public/css/common.css"/>
+  <script src="./public/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="./public/js/common.js"></script>
+</head>
+<body>
+  <header>
+    資料
+    <section class="description">
+      <p>ログイン情報を入力してください。</p>
+      <ul id="event_button_ul"></ul>
+    </section>
+  </header>
+
+  <section>
+    <form action="/admin/login/complete" method="POST">
+      <section>
+        <input name="username" type="text" value=""/>
+        <input name="password" type="password" value=""/>
+        <input type="submit" value="ログイン" />
+      </section>
+    </form>
+  </section>
+
+  <section id="main">
+    <section>
+      <section>
+      </section>
+    </section>
+  </section>
+  <footer>
+    &copy; 2018
+  </footer>
+</body>
+</html>

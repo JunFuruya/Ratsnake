@@ -1,88 +1,52 @@
 #-*- UTF-8 -*-
 
-from abc import abstractmethod
 from bs4 import BeautifulSoup
 import configparser
 import urllib3
+import app.repository
 
 '''
 Service Module
 '''
-class Base:
-    '''
-    Base Class
-    '''
-    _web_host = ''
-    _web_port = ''
-    _debug = ''
-    _reloader = ''
+class configGetService():
+    __web_host = ''
+    __web_port = ''
+    __debug = ''
+    __reloader = ''
     #USER='test'
     #PASSWORD='test'
 
-    #google_search_url = 'https://www.google.co.jp/search'
-    #query = '%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0'
-    
     def __init__(self):
         config = configparser.ConfigParser()
         config.read('./config/web_server.ini')
-        self._web_host = config['HOST']['ServerName']
-        self._web_port = config['HOST']['Port']
-        self._debug = config['HOST']['Debug']
-        self._reloader = config['HOST']['Reloader']
-        pass
-
-    @abstractmethod
-    def before_execute(self):
+        self.__web_host = config['HOST']['ServerName']
+        self.__web_port = config['HOST']['Port']
+        self.__debug = config['HOST']['Debug']
+        self.__reloader = config['HOST']['Reloader']
         pass
     
-    @abstractmethod
-    def execute(self):
-        pass
-    
-    @abstractmethod
-    def after_execute(self):
-        pass
-    
-    #def check(user, password):
-        #if (user == USER and password == PASSWORD):
-        #    response.get_cookie('login', 'test')
-        #pass
-
-    #def check_login():
-        #hash = request.get_cookie('login')
-        #if(hash != 'aaa'):
-        #    redirect('/login')
-        #pass
-
-    
-    #def getSearchList(self):
-        #'''
-        #get a search list
-        #'''
-        #html = urllib3.urlopen(google_search_url + '?q=' + query)
-        #soup = BeautifulSoup(html)
-        #url_list = soup.find("a")
-        
-        #for url in url_list:
-        #    prit(url)    
-
-class configGetService(Base):
-    def __init__(self):
-        super().__init__()
-        
     def get_web_host(self):
-        return super()._web_host
+        return self.__web_host
     
     def get_web_port(self):
-        return self._web_port
+        return self.__web_port
     
     def get_debug(self):
-        return self._debug
+        return self.__debug
     
     def get_reloader(self):
-        return self._reloader
+        return self.__reloader
 
-class IdcfCloudStartService(Base):
+class LoginService():
+    __repository = None
+    def __init__(self):
+        self.__repository = app.repository.DbUsersRepository()
+        pass
+        
+    def is_authenticated(self, username, password):
+        return self.__repository.exists(username, password)
+
+class IdcfCloudStartService():
     '''
     control IDCF cloud
     '''
@@ -92,7 +56,7 @@ class IdcfCloudStartService(Base):
     constructor
     '''
     def __init__(self):
-        self.idcf_cloud_repository = IdcfCloudRepository()
+        self.idcf_cloud_repository = ApiIdcfCloudRepository()
         pass
     
     def start():

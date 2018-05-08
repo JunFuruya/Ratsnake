@@ -1,28 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import configparser
-import json
-import os
-import pycurl
-import re
-import requests
 
 '''
-infrastructure module
+file module
 '''
-class Slack:
-    '''
-    manage slack
-    '''
-    def __init__(self, url):
-        self.target_url = url
-    
-    def postMessage(self, message):
-        headers = {'Content-type': 'application/json'}
-        payload = {'text': message}
-        response = requests.post(target_url, data=json.dumps(payload), headers=headers)
-
-class File:
+class File():
     '''
     manage file
     '''
@@ -54,23 +37,3 @@ class File:
 #        self.searchTodos(entry.path)
 
 #    entries.close()
-
-# -*- coding: utf-8 -*-
-
-class IdcfCloudApi:
-    '''
-    manage idcf cloud
-    '''
-    def __init__():
-        self.inifile = configparser.ConfigParser()
-        self.inifile.read('/app/config/idcf_cloud.ini', 'UTF-8')
-        self.url = self.inifile.get('default', 'url')
-        self.server_id = self.inifile.get('default', 'server_id')
-        pass
-    
-    def start_server():
-        pass
-    
-    def stop_server():
-        pass
-
