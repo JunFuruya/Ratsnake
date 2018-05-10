@@ -3,44 +3,27 @@
 from bs4 import BeautifulSoup
 import configparser
 import urllib3
-import app.repository
+import app.repository.api_idcf_cloud_repository
+import app.repository.db_users_repository
+import app.repository.file_web_server_config_repository
 
 '''
 Service Module
 '''
 class configGetService():
-    __web_host = ''
-    __web_port = ''
-    __debug = ''
-    __reloader = ''
-    #USER='test'
-    #PASSWORD='test'
+    __repository = None
 
     def __init__(self):
-        config = configparser.ConfigParser()
-        config.read('./config/web_server.ini')
-        self.__web_host = config['HOST']['ServerName']
-        self.__web_port = config['HOST']['Port']
-        self.__debug = config['HOST']['Debug']
-        self.__reloader = config['HOST']['Reloader']
+        self.__repository = app.repository.file_web_server_config_repository.FileWebServerConfigRepository()
         pass
     
-    def get_web_host(self):
-        return self.__web_host
-    
-    def get_web_port(self):
-        return self.__web_port
-    
-    def get_debug(self):
-        return self.__debug
-    
-    def get_reloader(self):
-        return self.__reloader
+    def get_web_server_config(self):
+        return self.__repository.get_web_server_config()
 
 class LoginService():
     __repository = None
     def __init__(self):
-        self.__repository = app.repository.DbUsersRepository()
+        self.__repository = app.repository.db_users_repository.DbUsersRepository()
         pass
         
     def is_authenticated(self, username, password):
@@ -56,7 +39,7 @@ class IdcfCloudStartService():
     constructor
     '''
     def __init__(self):
-        self.idcf_cloud_repository = ApiIdcfCloudRepository()
+        self.idcf_cloud_repository = app.repository.api_idcf_cloud_repository.ApiIdcfCloudRepository()
         pass
     
     def start():

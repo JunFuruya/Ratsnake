@@ -5,11 +5,31 @@ import configparser
 '''
 file module
 '''
-class File():
-    '''
-    manage file
-    '''
-    # 読み込みなので、第２引数は「r」とする
+class WebServerConfigIniFile():
+    __url = './config/web_server.ini'
+    __config = None
+    
+    def __init__(self):
+        self.__config = configparser.ConfigParser()
+        self.__config.read(self.__url)
+        pass
+    
+    def get_config(self):
+        return self.__config
+    
+class DbServerConfigIniFile():
+    __url = './config/db_server.ini'
+    __config = None
+    
+    def __init__(self):
+        self.__config = configparser.ConfigParser()
+        self.__config.read(self.__url)
+        pass
+    
+    def get_config(self):
+        return self.__config
+
+# 読み込みなので、第２引数は「r」とする
 #    file = open(file_path, 'r', encoding="utf-8")
 
 #    line_num = 1

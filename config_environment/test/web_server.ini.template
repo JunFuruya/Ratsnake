@@ -1,0 +1,6 @@
+[HOST]
+ServerName=localhost
+Port=80
+Debug=True
+Reloader=True
+
