@@ -31,7 +31,7 @@ def admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
-    service = app.service.LoginService()    
+    service = app.service.LoginService()
     if(service.is_authenticated(username, password)):
         redirect('/admin')
     else:
@@ -85,6 +85,6 @@ def callback(path):
 #    return '500error'
 
 if __name__ == "__main__":
-    service = app.service.configGetService()
+    service = app.service.ConfigGetService()
     config = service.get_web_server_config()
     run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())

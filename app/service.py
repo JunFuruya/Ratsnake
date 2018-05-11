@@ -3,18 +3,19 @@
 from bs4 import BeautifulSoup
 import configparser
 import urllib3
-import app.repository.api_idcf_cloud_repository
-import app.repository.db_users_repository
-import app.repository.file_web_server_config_repository
+
+from app.repository import api_idcf_cloud_repository
+from app.repository import db_users_repository
+from app.repository import file_web_server_config_repository
 
 '''
 Service Module
 '''
-class configGetService():
+class ConfigGetService():
     __repository = None
 
     def __init__(self):
-        self.__repository = app.repository.file_web_server_config_repository.FileWebServerConfigRepository()
+        self.__repository = file_web_server_config_repository.FileWebServerConfigRepository()
         pass
     
     def get_web_server_config(self):
@@ -23,7 +24,7 @@ class configGetService():
 class LoginService():
     __repository = None
     def __init__(self):
-        self.__repository = app.repository.db_users_repository.DbUsersRepository()
+        self.__repository = db_users_repository.DbUsersRepository()
         pass
         
     def is_authenticated(self, username, password):
@@ -39,7 +40,7 @@ class IdcfCloudStartService():
     constructor
     '''
     def __init__(self):
-        self.idcf_cloud_repository = app.repository.api_idcf_cloud_repository.ApiIdcfCloudRepository()
+        self.idcf_cloud_repository = api_idcf_cloud_repository.ApiIdcfCloudRepository()
         pass
     
     def start():

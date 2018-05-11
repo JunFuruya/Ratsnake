@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import configparser
 import mysql.connector
+import pprint
 
 '''
 database module
@@ -14,19 +14,19 @@ class DbBase():
     _password = ''
     _configparser = None
     
-    def __init__(self):
-        config = configparser.ConfigParser()
-        config.read('./config/db_server.ini')
+    
+    def __init__(self, config):
+        pprint.pprint(vars(config))
         self._db = config['MySQL']['Name']
         self._host = config['MySQL']['Host']
         self._port = config['MySQL']['Port']
         self._user = config['MySQL']['User']
         self._password = config['MySQL']['Password']
         pass
-    
+
 class DbUsers(DbBase):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, config):
+        super().__init__(config)
         pass
     
     def count(self, username, password):

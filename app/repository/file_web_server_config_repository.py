@@ -1,27 +1,24 @@
 #-*- UTF-8 -*-
 
-import app.entity.config_entity
-import app.infrastructure.config_ini_file
+from app.entity import config_entity
+from app.infrastructure import config_ini_file
 
 '''
 FileWebServerConfigRepository Module
 '''
 class FileWebServerConfigRepository():
-    __file = None
+    __web_config = None
 
     def __init__(self):
-        self.__file = app.infrastructure.config_ini_file.WebServerConfigIniFile();
-        print(self.__file)
+        self.__web_config = config_ini_file.WebServerConfigIniFile();
         pass
     
     def get_web_server_config(self):
-        entity = app.entity.config_entity.WebServerConfigEntity()
-        entity.set_web_host('localhost')
-        entity.set_web_port(8080)
-        entity.set_debug(True)
-        entity.set_reloader(True)
-        #entity.set_web_host(self.__file['HOST']['ServerName'])
-        #entity.set_web_port(self.__file['HOST']['Port'])
-        #entity.set_debug(self.__file['HOST']['Debug'])
-        #entity.set_reloader(self.__file['HOST']['Reloader'])
+        server_name, port, debug, reloader = self.__web_config.get_config();
+
+        entity = config_entity.WebServerConfigEntity()
+        entity.set_web_host(server_name)
+        entity.set_web_port(port)
+        entity.set_debug(debug)
+        entity.set_reloader(reloader)
         return entity
