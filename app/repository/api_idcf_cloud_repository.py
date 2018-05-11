@@ -1,26 +1,11 @@
 #-*- UTF-8 -*-
 
-import app.db
-
 '''
-Repository Module
+ApiIdcfCloudRepository Module
 '''
-class DbUsersRepository():
-    __db = None
-    
-    def __init__(self):
-        self.__db = app.db.DbUsers()
-        pass
-    
-    def exists(self, username, password):
-        if(self.__db.count(username, password) > 0):
-            return True
-        else:
-            return False
-            
 class ApiIdcfCloudRepository():
     '''
-    IdcfCloudRepository
+    ApiIdcfCloudRepository
     '''
     
     def __init__(self):

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import main
 
 class mainTest(unittest.TestCase):
     def test_sample(self):

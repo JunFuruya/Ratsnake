@@ -6,8 +6,6 @@ from bottle import get, post, redirect, request, response, run, static_file, tem
 
 import app.service
 
-config = app.service.configGetService()
-
 @get('/')
 def index():
     # if user has not logged in, redirect to /login
@@ -33,7 +31,7 @@ def admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
-    service = app.service.LoginService()    
+    service = app.service.LoginService()
     if(service.is_authenticated(username, password)):
         redirect('/admin')
     else:
@@ -87,4 +85,6 @@ def callback(path):
 #    return '500error'
 
 if __name__ == "__main__":
+    service = app.service.ConfigGetService()
+    config = service.get_web_server_config()
     run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
