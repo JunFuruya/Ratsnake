@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 import configparser
 import urllib3
 
-from app.repository import api_idcf_cloud_repository
-from app.repository import db_users_repository
-from app.repository import file_web_server_config_repository
+from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
+from app.repository.app_slack_repository import AppSlackRepository
+from app.repository.db_users_repository import DbUsersRepository
+from app.repository.file_web_server_config_repository import FileWebServerConfigRepository
 
 '''
 Service Module
@@ -15,7 +16,7 @@ class ConfigGetService():
     __repository = None
 
     def __init__(self):
-        self.__repository = file_web_server_config_repository.FileWebServerConfigRepository()
+        self.__repository = FileWebServerConfigRepository()
         pass
     
     def get_web_server_config(self):
@@ -24,37 +25,44 @@ class ConfigGetService():
 class LoginService():
     __repository = None
     def __init__(self):
-        self.__repository = db_users_repository.DbUsersRepository()
+        self.__repository = DbUsersRepository()
         pass
         
     def is_authenticated(self, username, password):
         return self.__repository.exists(username, password)
 
+class SlackBotStartService():
+    __slack_bot_repository = None
+    def __init__(self):
+        self.__slack_bot_reposiroty = AppSlackRepository()
+        
+    def run(self):
+        self.__slack_bot_reposiroty.run()
+
 class IdcfCloudStartService():
-    '''
-    control IDCF cloud
-    '''
-    idcf_cloud_repository = None
+    __slack_bot_repository = None
+    __idcf_cloud_repository = None
     
     '''
     constructor
     '''
-    def __init__(self):
-        self.idcf_cloud_repository = api_idcf_cloud_repository.ApiIdcfCloudRepository()
+    def __init__(self, slack_bot_repository):
+        self.__slack_bot_repository = slack_bot_repository
+        self.__api_idcf_cloud_repository = ApiIdcfCloudRepository()
         pass
     
     def start():
         '''
         start server
         '''
-        self.idcf_cloud_repository.start()
+        self.__api_idcf_cloud_repository.start()
         pass
 
     def stop():
         '''
         stop server
         '''
-        self.idcf_cloud_repository.stop()
+        self.__api_idcf_cloud_repository.stop()
         pass
 
     #controller = None

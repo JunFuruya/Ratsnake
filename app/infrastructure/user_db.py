@@ -2,7 +2,6 @@
 
 import mysql.connector
 from app.infrastructure.config_ini_file import DbServerConfigIniFile
-import pprint
 
 '''
 database module

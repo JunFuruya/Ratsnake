@@ -4,7 +4,7 @@
 #from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
 from bottle import get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
 
-import app.service
+from app.service import ConfigGetService, SlackBotStartService
 
 @get('/')
 def index():
@@ -85,6 +85,5 @@ def callback(path):
 #    return '500error'
 
 if __name__ == "__main__":
-    service = app.service.ConfigGetService()
-    config = service.get_web_server_config()
+    config = ConfigGetService().get_web_server_config()
     run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())

@@ -2,15 +2,15 @@
 
 import os
 
-DEBUG = False
+# 20180514 added
+from app.infrastructure.slack_yaml_file import SlackConfigYamlFile
 
-PLUGINS = [
-    'slackbot.plugins',
-]
+aliases, api_token, bit_icon, bot_emoji, debug, default_reply, errors_to, plugins = SlackConfigYamlFile().get_config()
 
-ERRORS_TO = None
-
-# API_TOKEN = '###token###'
+DEBUG = debug
+PLUGINS = plugins
+ERRORS_TO = errors_to
+API_TOKEN = api_token
 
 '''
 Setup a comma delimited list of aliases that the bot will respond to.
@@ -20,7 +20,7 @@ Example: if you set ALIASES='!,$' then a bot which would respond to:
 will now also respond to
 '$ hello'
 '''
-ALIASES = ''
+ALIASES = aliases
 
 '''
 If you use Slack Web API to send messages (with
@@ -30,12 +30,11 @@ RTM API to send messages (with send() or reply()), or if as_user is True
 (default), the used icon comes from bot settings and Icon or Emoji has no
 effect.
 '''
-# BOT_ICON = 'http://lorempixel.com/64/64/abstract/7/'
-# BOT_EMOJI = ':godmode:'
+BOT_ICON = bit_icon
+BOT_EMOJI = bot_emoji
 
 '''Specify a different reply when the bot is messaged with no matching cmd'''
-#DEFAULT_REPLY = None
-DEFAULT_REPLY = "なるほど。わからん。"
+DEFAULT_REPLY = default_reply
 
 for key in os.environ:
     if key[:9] == 'SLACKBOT_':
@@ -55,4 +54,3 @@ try:
     DEFAULT_REPLY = default_reply
 except NameError:
     pass
-
