@@ -4,7 +4,7 @@
 #from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
 from bottle import get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
 
-from app.service import ConfigGetService, SlackBotStartService
+from app.service.web_service import ConfigGetService, SlackBotStartService
 
 @get('/')
 def index():

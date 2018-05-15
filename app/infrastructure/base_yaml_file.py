@@ -2,7 +2,6 @@
 
 import os
 import yaml
-import pprint
 
 class BaseYamlFile():
     __config = None
@@ -23,10 +22,8 @@ class BaseYamlFile():
         elif(app_env == 'TEST'):
             config_folder_path = '../../config_environment/test/'
         self.__config_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), config_folder_path + file_name)
-        pprint.pprint(self.__config_file_path)
         yaml_file = open(self.__config_file_path , "r", encoding="utf-8")
         self.__yaml_data = yaml.load(yaml_file)
-        pprint.pprint(self.__yaml_data)
         yaml_file.close()
         
         return self.__yaml_data

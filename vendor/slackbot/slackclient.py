@@ -14,7 +14,8 @@ from websocket import (
     create_connection, WebSocketException, WebSocketConnectionClosedException
 )
 
-from slackbot.utils import to_utf8
+# 20180515 change include path from "slackbot" to "vendor.slackbot"
+from vendor.slackbot.utils import to_utf8
 
 logger = logging.getLogger(__name__)
 

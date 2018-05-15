@@ -1,7 +1,9 @@
 #coding: UTF-8
 import re
-from slackbot.bot import respond_to
-from slackbot.bot import listen_to
+
+# 20180515 change include path from "slackbot" to "vendor.slackbot"
+from vendor.slackbot.bot import respond_to
+from vendor.slackbot.bot import listen_to
 
 
 @respond_to('hello$', re.IGNORECASE)

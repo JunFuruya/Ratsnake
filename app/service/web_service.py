@@ -40,18 +40,16 @@ class SlackBotStartService():
         self.__slack_bot_reposiroty.run()
 
 class IdcfCloudStartService():
-    __slack_bot_repository = None
     __idcf_cloud_repository = None
     
     '''
     constructor
     '''
-    def __init__(self, slack_bot_repository):
-        self.__slack_bot_repository = slack_bot_repository
+    def __init__(self):
         self.__api_idcf_cloud_repository = ApiIdcfCloudRepository()
         pass
     
-    def start():
+    def start(self):
         '''
         start server
         '''

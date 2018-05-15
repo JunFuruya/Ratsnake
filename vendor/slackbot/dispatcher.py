@@ -8,9 +8,10 @@ import traceback
 from functools import wraps
 
 import six
-from slackbot.manager import PluginsManager
-from slackbot.utils import WorkerPool
-from slackbot import settings
+# 20180515 change include path from "slackbot" to "vendor.slackbot"
+from vendor.slackbot.manager import PluginsManager
+from vendor.slackbot.utils import WorkerPool
+from vendor.slackbot import settings
 
 logger = logging.getLogger(__name__)
 
