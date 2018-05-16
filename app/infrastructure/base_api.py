@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import certifi
 import pycurl
 
 class BaseApi():
@@ -9,14 +10,22 @@ class BaseApi():
         
         pass
     
+    def set_header(self, header):
+        self.__curl.setopt(pycurl.HTTPHEADER, header)
+        pass
+    
     def get(self, url):
+        import pprint
+        pprint.pprint(url)
         self.__curl.setopt(pycurl.URL, url)
+        self.__curl.setopt(pycurl.CAINFO, certifi.where())
         self.__curl.setopt(pycurl.CUSTOMREQUEST, 'GET')
         self.__curl.perform()
         pass
     
     def post(self, url):
         self.__curl.setopt(pycurl.URL, url)
+        self.__curl.setopt(pycurl.CAINFO, certifi.where())
         self.__curl.setopt(pycurl.CUSTOMREQUEST, 'POST')
         self.__curl.perform()
         pass

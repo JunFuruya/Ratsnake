@@ -6,7 +6,7 @@ from app.service.base_service import BaseService
 '''
 Service Module
 '''
-class IdcfCloudStartService(BaseService):
+class IdcfCloudService(BaseService):
     __idcf_cloud_repository = None
     '''
     constructor
@@ -46,3 +46,4 @@ class IdcfCloudStartService(BaseService):
     #    self.controller = self.controllers[screenId]
     #    self.view = self.controller.getView()
     #    self.view.setViewParams(controller.getViewParams())
+
