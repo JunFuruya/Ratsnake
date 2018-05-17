@@ -59,7 +59,7 @@ class IdcfCloudApi(BaseApi):
         import pprint
         pprint.pprint(query_string)
         # create a hash stirng
-        message_digest = hmac.new(bytes(self.__secret_key, ('ascii')), bytes(query_string, 'ascii'), hashlib.sha256).hexdigest()
+        message_digest = hmac.new(bytes(self.__secret_key, 'ascii'), bytes(query_string, 'ascii'), hashlib.sha256).hexdigest()
         # Base64 encode and URL encode
         return urllib.parse.quote(base64.b64encode(message_digest.encode('utf-8')))
     
