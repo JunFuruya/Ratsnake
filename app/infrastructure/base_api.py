@@ -15,8 +15,6 @@ class BaseApi():
         pass
     
     def get(self, url):
-        import pprint
-        pprint.pprint(url)
         self.__curl.setopt(pycurl.URL, url)
         self.__curl.setopt(pycurl.CAINFO, certifi.where())
         self.__curl.setopt(pycurl.CUSTOMREQUEST, 'GET')
