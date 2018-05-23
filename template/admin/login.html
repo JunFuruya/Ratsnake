@@ -6,10 +6,12 @@
 {% block content %}
   <article>
     <form action="/admin/login/complete" method="POST">
+      <section class="error_message">{{ entity.get_error_message() }}
+      </section>
       <section>
         <input name="username" type="text" value=""/>
         <input name="password" type="password" value=""/>
-        <input type="submit" value="ログイン" />
+        <input type="submit" value="Login" />
       </section>
     </form>
   </article>

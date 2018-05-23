@@ -35,6 +35,9 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            
+            # 20180523 add
+            export APP_ENV="TEST"
 
       - save_cache:
           paths:

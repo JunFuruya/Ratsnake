@@ -1,8 +1,10 @@
 #-*- UTF-8 -*-
 
-# auth_basic を使う場合に、コメントを外す
-#from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
-from bottle import get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
+import hashlib
+import hmac
+
+from beaker.middleware import SessionMiddleware
+from bottle import app, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.service.web_service import ConfigGetService
 from app.service.web_service import LoginService
@@ -10,51 +12,80 @@ from app.service.web_service import SlackBotStartService
 
 @get('/')
 def index():
-    # if user has not logged in, redirect to /login
-    # redirect('/login')
-    
+    # TODO: username取得
+    check_login_status('admin')
+        
     #entity = service.get_index_data
     tempalte_path = './template/index.html'
     #return template(tempalte_path, entity=entity)
     return jinja2_template(tempalte_path)
-
+    
 @get('/admin')
 def link_index():
+    # TODO: username取得
+    check_login_status('admin')
+    
+    from app.entity.admin.index_entity import IndexEntity
+    index_entity = IndexEntity()
+    index_entity.set_title('Hideout Login')
+    index_entity.set_description('Hideout Main Page')
+    index_entity.set_notification('This is the index page.')
     tempalte_path = './template/admin/index.html'
-    return jinja2_template(tempalte_path)
+    return jinja2_template(tempalte_path, entity=index_entity)
 
 @get('/admin/login')
 def admin_login():
     service = LoginService()
-    from app.entity.login_entity import LoginEntity
+    # TODO: a factory class should return entity through a service class 
+    from app.entity.admin.login_entity import LoginEntity
     login_entity = LoginEntity()
-    login_entity.set_title('Hideout Login')
-    login_entity.set_description('Please enter your id and password.')
-
+    login_entity.set_title('Hideout Main Page')
+    login_entity.set_description('Hideout Login Page')
+    login_entity.set_notification('Please enter your id and password.')
     tempalte_path = './template/admin/login.html'
     return jinja2_template(tempalte_path, entity=login_entity)
 
+@get('/admin/login/complete')
+def get_admin_login_complete():
+    redirect('/admin/index') # In case that users press F5 key
+    pass
+
 @post('/admin/login/complete')
-def admin_login_complete():
+def post_admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
     service = LoginService()
     if(service.is_authenticated(username, password)):
+        # TODO improve secret_key
+        secret_key = 'secret_key'
+        # TODO: select an appropriate hash algorithm
+        session_key = hmac.new(secret_key.encode('utf-8'), msg='login'.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+        session_value = hmac.new(secret_key.encode('utf-8'), msg=username.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+        
+        session = request.environ.get('beaker.session')
+        session[session_key] = session_value
+        session.save()
+        
+        # TODO: move max_age to config file
+        #max_age = 60 * 60 * 24 * 30 # 1Month
+        #response.set_cookie(cookie_key, cookie_value, max_age=max_age)
         redirect('/admin')
+        
     else:
-        service = LoginService()
-        from app.entity.login_entity import LoginEntity
+        from app.entity.admin.login_entity import LoginEntity
         login_entity = LoginEntity()
         login_entity.set_title('Hideout Login')
-        login_entity.set_description('Please enter your id and password.')
+        login_entity.set_description('Hideout Login Page')
+        login_entity.set_notification('Please enter your id and password.')
+        login_entity.set_error_message('The information is incorrect. Please check the input.')
+        
         tempalte_path = './template/admin/login.html'
-        #TODO: implement error message
         return jinja2_template(tempalte_path, entity=login_entity)
 
 @get('/admin/links')
 def link_list():
-    
+    check_login_status('admins')
     link_list = [
         [1, 'AAA', 'http://aaa.co.jp'],
         [2, 'BBB', 'http://bbb.co.jp'],
@@ -96,6 +127,26 @@ def callback(path):
 #def error(500):
 #    return '500error'
 
+def check_login_status(username):
+    # TODO improve secret_key
+    secret_key = 'secret_key'
+
+    session = request.environ.get('beaker.session')
+    session_key = hmac.new(secret_key.encode('utf-8'), msg='login'.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+    session_value = session.get(session_key)
+
+    # TODO: select an appropriate algorithm
+    hashed_value = hmac.new(secret_key.encode('utf-8'), msg=username.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+    if(session_value != hashed_value):
+        redirect('/admin/login')
+    pass
+
 if __name__ == "__main__":
+    session_opts = {
+        'session.type': 'file',
+        'session.cookie_expires': 300,
+        'session.data_dir': './data',
+        'session.auto': True
+    }
     config = ConfigGetService().get_web_server_config()
-    run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
+    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
