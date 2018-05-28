@@ -1,27 +1,27 @@
-#-*- UTF-8 -*-
-
-import hashlib
-import hmac
+# -*- coding: utf-8 -*-
 
 from beaker.middleware import SessionMiddleware
 from bottle import app, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
+from app.helper.helper import HashHelper
 from app.service.web_service import ConfigGetService
 from app.service.web_service import LoginService
 from app.service.web_service import SlackBotStartService
 
+config = ConfigGetService().get_web_server_config()
+
 @get('/')
-def index():
+def get_index():
     # TODO: username取得
     check_login_status('admin')
         
     #entity = service.get_index_data
     tempalte_path = './template/index.html'
-    #return template(tempalte_path, entity=entity)
+    #return jinja2_template(tempalte_path, entity=entity)
     return jinja2_template(tempalte_path)
     
 @get('/admin')
-def link_index():
+def get_link_index():
     # TODO: username取得
     check_login_status('admin')
     
@@ -34,7 +34,7 @@ def link_index():
     return jinja2_template(tempalte_path, entity=index_entity)
 
 @get('/admin/login')
-def admin_login():
+def get_admin_login():
     service = LoginService()
     # TODO: a factory class should return entity through a service class 
     from app.entity.admin.login_entity import LoginEntity
@@ -50,27 +50,31 @@ def get_admin_login_complete():
     redirect('/admin/index') # In case that users press F5 key
     pass
 
+@get('/admin/logout')
+def get_admin_login_complete():
+    session = request.environ.get('beaker.session')
+    session[HashHelper.hexdigest('login')] = ''
+    session.save()
+    return redirect('/admin/login')
+
 @post('/admin/login/complete')
 def post_admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
+    # TODO:validate the parameters
+    
     service = LoginService()
     if(service.is_authenticated(username, password)):
-        # TODO improve secret_key
-        secret_key = 'secret_key'
-        # TODO: select an appropriate hash algorithm
-        session_key = hmac.new(secret_key.encode('utf-8'), msg='login'.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
-        session_value = hmac.new(secret_key.encode('utf-8'), msg=username.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
-        
         session = request.environ.get('beaker.session')
-        session[session_key] = session_value
+        session['login'] = HashHelper.hexdigest(username)
+        session[HashHelper.hexdigest('login')] = HashHelper.hexdigest(username)
         session.save()
-        
+
         # TODO: move max_age to config file
         #max_age = 60 * 60 * 24 * 30 # 1Month
         #response.set_cookie(cookie_key, cookie_value, max_age=max_age)
-        redirect('/admin')
+        return redirect('/admin')
         
     else:
         from app.entity.admin.login_entity import LoginEntity
@@ -84,7 +88,7 @@ def post_admin_login_complete():
         return jinja2_template(tempalte_path, entity=login_entity)
 
 @get('/admin/links')
-def link_list():
+def get_link_list():
     check_login_status('admins')
     link_list = [
         [1, 'AAA', 'http://aaa.co.jp'],
@@ -95,28 +99,28 @@ def link_list():
     return jinja2_template(tempalte_path, link_list=link_list)
 
 @get('/admin/links/create')
-def link_create():
+def get_link_create():
     html = '<html><body>create</body></html>'
     tempalte_path = './template/admin/links/list.html'
     return jinja2_template(html)
 
 @post('/admin/links/update')
-def link_update():
+def post_link_update():
     html = '<html><body>update</body></html>'
     return jinja2_template(html)
 
 @post('/admin/links/confirm')
-def link_confirm():
+def post_link_confirm():
     html = '<html><body>confirm</body></html>'
     return jinja2_template(html)
 
 @post('/admin/links/complete')
-def link_complete():
+def post_link_complete():
     html = '<html><body>complete</body></html>'
     return jinja2_template(html)
 
 @get('/public/<path:path>')
-def callback(path):
+def get_static_file(path):
     return static_file(path, root='./public/')
 
 #@error(404)
@@ -128,25 +132,19 @@ def callback(path):
 #    return '500error'
 
 def check_login_status(username):
-    # TODO improve secret_key
-    secret_key = 'secret_key'
-
     session = request.environ.get('beaker.session')
-    session_key = hmac.new(secret_key.encode('utf-8'), msg='login'.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
-    session_value = session.get(session_key)
-
-    # TODO: select an appropriate algorithm
-    hashed_value = hmac.new(secret_key.encode('utf-8'), msg=username.encode('utf-8'), digestmod=hashlib.sha256).hexdigest()
+    session_value = session[HashHelper.hexdigest('login')]
+    hashed_value = HashHelper.hexdigest(username)
     if(session_value != hashed_value):
-        redirect('/admin/login')
+        return redirect('/admin/login')
     pass
 
 if __name__ == "__main__":
+    # TODO: create controller classes
     session_opts = {
         'session.type': 'file',
         'session.cookie_expires': 300,
         'session.data_dir': './data',
         'session.auto': True
     }
-    config = ConfigGetService().get_web_server_config()
     run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())

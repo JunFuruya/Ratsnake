@@ -2,8 +2,11 @@
 
 from app.infrastructure.base_yaml_file import BaseYamlFile
 
-class SlackConfigYamlFile(BaseYamlFile):
-    __FILE_NAME = 'slack_config.yaml'
+'''
+Web Server module
+'''
+class WebServerConfigYamlFile(BaseYamlFile):
+    __FILE_NAME = 'web_server.yaml'
     
     def __init__(self):
         super().__init__(self.__FILE_NAME)
