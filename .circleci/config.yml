@@ -15,8 +15,6 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
 
-
-
     working_directory: ~/repo
 
     steps:
@@ -35,9 +33,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            
-            # 20180523 add
-            export APP_ENV="TEST"
 
       - save_cache:
           paths:
@@ -52,6 +47,12 @@ jobs:
       - run:
           name: run tests
           command: |
+            # 20180523 add
+            export APP_ENV=TEST
+            cp -pf /home/circleci/repo/config_environment/test/db_server.ini.template /home/circleci/repo/config_environment/test/db_server.ini
+            cp -pf /home/circleci/repo/config_environment/test/idcf_cloud_config.yaml.template /home/circleci/repo/config_environment/test/idcf_cloud_config.yaml
+            cp -pf /home/circleci/repo/config_environment/test/slack_config.yaml.template /home/circleci/repo/config_environment/test/slack_config.yaml
+            cp -pf /home/circleci/repo/config_environment/test/web_server.yaml.template /home/circleci/repo/config_environment/test/web_server.yaml
             . venv/bin/activate
             python -m unittest tests.main
 
