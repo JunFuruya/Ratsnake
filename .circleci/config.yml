@@ -33,7 +33,7 @@ jobs:
             # 20180523 add
             export APP_ENV="TEST"
             cp -pf /home/circleci/repo/config_environment/test/db_server.ini.template db_server.ini
-            cp -pf /home/circleci/repo/config_environment/test/idcf_cloud.yaml.template idcf_cloud.yaml
+            cp -pf /home/circleci/repo/config_environment/test/idcf_cloud_config.yaml.template idcf_cloud_config.yaml
             cp -pf /home/circleci/repo/config_environment/test/slack_config.yaml.template slack_config.yaml
             cp -pf /home/circleci/repo/config_environment/test/web_server.yaml.template web_server.yaml
             python3 -m venv venv
