@@ -1,5 +1,5 @@
-SERVER_NAME:localhost
-PORT:80
-DEBUG:True
-RELOADER:True
-SECRET_KEY:
+SERVER_NAME : localhost
+PORT : 80
+DEBUG : True
+RELOADER : True
+SECRET_KEY : ""
