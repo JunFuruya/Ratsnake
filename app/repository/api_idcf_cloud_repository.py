@@ -2,12 +2,11 @@
 
 from app.infrastructure.idcf_cloud_api import IdcfCloudApi
 from app.infrastructure.idcf_cloud_yaml_file import IdcfCloudConfigYamlFile
-from app.service.base_service import BaseService
 
 '''
 ApiIdcfCloudRepository Module
 '''
-class ApiIdcfCloudRepository(BaseService):
+class ApiIdcfCloudRepository():
     '''
     ApiIdcfCloudRepository
     '''

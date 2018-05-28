@@ -1,89 +1,150 @@
-#-*- UTF-8 -*-
+# -*- coding: utf-8 -*-
 
-# auth_basic を使う場合に、コメントを外す
-#from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
-from bottle import get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
+from beaker.middleware import SessionMiddleware
+from bottle import app, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
-from app.service.web_service import ConfigGetService, SlackBotStartService
+from app.helper.helper import HashHelper
+from app.service.web_service import ConfigGetService
+from app.service.web_service import LoginService
+from app.service.web_service import SlackBotStartService
+
+config = ConfigGetService().get_web_server_config()
 
 @get('/')
-def index():
-    # if user has not logged in, redirect to /login
-    # redirect('/login')
-    
+def get_index():
+    # TODO: username取得
+    check_login_status('admin')
+        
     #entity = service.get_index_data
     tempalte_path = './template/index.html'
-    #return template(tempalte_path, entity=entity)
-    return template(tempalte_path)
-
+    #return jinja2_template(tempalte_path, entity=entity)
+    return jinja2_template(tempalte_path)
+    
 @get('/admin')
-def link_index():
+def get_link_index():
+    # TODO: username取得
+    check_login_status('admin')
+    
+    from app.entity.admin.index_entity import IndexEntity
+    index_entity = IndexEntity()
+    index_entity.set_title('Hideout Login')
+    index_entity.set_description('Hideout Main Page')
+    index_entity.set_notification('This is the index page.')
     tempalte_path = './template/admin/index.html'
-    return template(tempalte_path)
+    return jinja2_template(tempalte_path, entity=index_entity)
 
 @get('/admin/login')
-def admin_login():
+def get_admin_login():
+    service = LoginService()
+    # TODO: a factory class should return entity through a service class 
+    from app.entity.admin.login_entity import LoginEntity
+    login_entity = LoginEntity()
+    login_entity.set_title('Hideout Main Page')
+    login_entity.set_description('Hideout Login Page')
+    login_entity.set_notification('Please enter your id and password.')
     tempalte_path = './template/admin/login.html'
-    return template(tempalte_path)
+    return jinja2_template(tempalte_path, entity=login_entity)
+
+@get('/admin/login/complete')
+def get_admin_login_complete():
+    redirect('/admin/index') # In case that users press F5 key
+    pass
+
+@get('/admin/logout')
+def get_admin_login_complete():
+    session = request.environ.get('beaker.session')
+    session[HashHelper.hexdigest('login')] = ''
+    session.save()
+    return redirect('/admin/login')
 
 @post('/admin/login/complete')
-def admin_login_complete():
+def post_admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
-    service = app.service.LoginService()
+    # TODO:validate the parameters
+    
+    service = LoginService()
     if(service.is_authenticated(username, password)):
-        redirect('/admin')
+        session = request.environ.get('beaker.session')
+        session['login'] = HashHelper.hexdigest(username)
+        session[HashHelper.hexdigest('login')] = HashHelper.hexdigest(username)
+        session.save()
+
+        # TODO: move max_age to config file
+        #max_age = 60 * 60 * 24 * 30 # 1Month
+        #response.set_cookie(cookie_key, cookie_value, max_age=max_age)
+        return redirect('/admin')
+        
     else:
+        from app.entity.admin.login_entity import LoginEntity
+        login_entity = LoginEntity()
+        login_entity.set_title('Hideout Login')
+        login_entity.set_description('Hideout Login Page')
+        login_entity.set_notification('Please enter your id and password.')
+        login_entity.set_error_message('The information is incorrect. Please check the input.')
+        
         tempalte_path = './template/admin/login.html'
-        #entity
-        return template(tempalte_path)
-        #return template(tempalte_path, entity=entity) TODO: implement error message
+        return jinja2_template(tempalte_path, entity=login_entity)
 
 @get('/admin/links')
-def link_list():
-    
+def get_link_list():
+    check_login_status('admins')
     link_list = [
         [1, 'AAA', 'http://aaa.co.jp'],
         [2, 'BBB', 'http://bbb.co.jp'],
         [3, 'CCC', 'http://ccc.co.jp']
     ]
     tempalte_path = './template/admin/links/list.html'
-    return template(tempalte_path, link_list=link_list)
+    return jinja2_template(tempalte_path, link_list=link_list)
 
 @get('/admin/links/create')
-def link_create():
+def get_link_create():
     html = '<html><body>create</body></html>'
     tempalte_path = './template/admin/links/list.html'
-    return template(html)
+    return jinja2_template(html)
 
 @post('/admin/links/update')
-def link_update():
+def post_link_update():
     html = '<html><body>update</body></html>'
-    return template(html)
+    return jinja2_template(html)
 
 @post('/admin/links/confirm')
-def link_confirm():
+def post_link_confirm():
     html = '<html><body>confirm</body></html>'
-    return template(html)
+    return jinja2_template(html)
 
 @post('/admin/links/complete')
-def link_complete():
+def post_link_complete():
     html = '<html><body>complete</body></html>'
-    return template(html)
+    return jinja2_template(html)
 
 @get('/public/<path:path>')
-def callback(path):
+def get_static_file(path):
     return static_file(path, root='./public/')
 
 #@error(404)
 #def error(404):
 #    return '404error'
-
+    
 #@error(500)
 #def error(500):
 #    return '500error'
 
+def check_login_status(username):
+    session = request.environ.get('beaker.session')
+    session_value = session[HashHelper.hexdigest('login')]
+    hashed_value = HashHelper.hexdigest(username)
+    if(session_value != hashed_value):
+        return redirect('/admin/login')
+    pass
+
 if __name__ == "__main__":
-    config = ConfigGetService().get_web_server_config()
-    run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
+    # TODO: create controller classes
+    session_opts = {
+        'session.type': 'file',
+        'session.cookie_expires': 300,
+        'session.data_dir': './data',
+        'session.auto': True
+    }
+    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())

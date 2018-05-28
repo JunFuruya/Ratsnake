@@ -27,8 +27,6 @@ class IdcfCloudApi(BaseApi):
         # TODO: erase this variable after implementing choosing vm feature
         self.__api_key, self.__endpoint, self.__secret_key, self.__vm_id = idcf_config.get_config()
         
-        import pprint
-        pprint.pprint(self.__endpoint)
         #クラウドIDを検索する
         #getCloudIdentifier
         #GET /client/api?command=getCloudIdentifier{?userid}
@@ -56,8 +54,6 @@ class IdcfCloudApi(BaseApi):
         sorted(params)
         # lowercase the query string, replace '+' for '%20'
         query_string = urllib.parse.urlencode(params).lower().replace('+', '%20')
-        import pprint
-        pprint.pprint(query_string)
         # create a hash stirng
         message_digest = hmac.new(bytes(self.__secret_key, 'ascii'), bytes(query_string, 'ascii'), hashlib.sha256).hexdigest()
         # Base64 encode and URL encode
@@ -116,8 +112,6 @@ class IdcfCloudApi(BaseApi):
         }
 
         params.update({'signature' : self.__get_signature(params)})
-        import pprint
-        pprint.pprint(params)
         super().get(self.__endpoint + '?' + urllib.parse.urlencode(params))
         pass
     

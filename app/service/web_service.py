@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
 import configparser
@@ -30,7 +30,7 @@ class LoginService():
         
     def is_authenticated(self, username, password):
         return self.__repository.exists(username, password)
-
+    
 class SlackBotStartService():
     __slack_bot_repository = None
     def __init__(self):

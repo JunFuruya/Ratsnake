@@ -3,3 +3,4 @@
 *.lnk
 *.pyc
 __pycache__
+data/container_file/*
