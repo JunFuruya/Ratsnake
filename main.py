@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from beaker.middleware import SessionMiddleware
-from bottle import app, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
+from bottle import app, error, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.helper.helper import HashHelper
 from app.service.web_service import ConfigGetService
@@ -123,13 +123,29 @@ def post_link_complete():
 def get_static_file(path):
     return static_file(path, root='./public/')
 
-#@error(404)
-#def error(404):
-#    return '404error'
+@error(404)
+def error404(error):
+    from app.entity.error_entity import ErrorEntity
+    error_entity = ErrorEntity()
+    error_entity.set_http_status(404)
+    error_entity.set_user_error_message('')
+    error_entity.set_title('404 Error')
+    error_entity.set_description('We can\'t find the page. Please check the URL.')
     
-#@error(500)
-#def error(500):
-#    return '500error'
+    tempalte_path = './template/front/error.html'
+    return jinja2_template(tempalte_path, entity=error_entity)
+    
+@error(500)
+def error500(error):
+    from app.entity.error_entity import ErrorEntity
+    error_entity = ErrorEntity()
+    error_entity.set_http_status(500)
+    error_entity.set_user_error_message('')
+    error_entity.set_title('500 Error')
+    error_entity.set_description('Something is wrong. We\'ll fix it as soon as possible.')
+    
+    tempalte_path = './template/front/error.html'
+    return jinja2_template(tempalte_path, entity=error_entity)
 
 def check_login_status(username):
     session = request.environ.get('beaker.session')
