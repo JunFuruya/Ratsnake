@@ -16,10 +16,11 @@ CREATE TABLE IF NOT EXISTS hideout.t_words (
   m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
   m_language_id TINYINT(2) NOT NULL COMMENT '言語ID',
   t_word_spell VARCHAR(50) NOT NULL COMMENT '綴り',
+  t_word_explanation VARCHAR(1000) NOT NULL COMMENT '説明',
   t_word_pronounciation VARCHAR(50) NOT NULL DEFAULT '' COMMENT '発音',
   t_word_is_learned TINYINT(1) NOT NULL DEFAULT 0 COMMENT '習得済みフラグ 0: 未習得、1:習得済み',
   t_word_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
-  t_word_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
+  t_word_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
 ) engine=InnoDB COMMENT='単語';
 
 CREATE TABLE IF NOT EXISTS hideout.m_account_titles (
@@ -35,6 +36,5 @@ CREATE TABLE IF NOT EXISTS hideout.t_journal_entries (
   m_account_title_id INT(4) NOT NULL DEFAULT 0 COMMENT '勘定科目ID 0:未確定',
   m_journal_entry_transaction_date DATETIME NOT NULL COMMENT '取引日付',
   m_journal_entry_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
-  m_journal_entry_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
+  m_journal_entry_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
 ) engine=InnoDB COMMENT='仕訳';
-
