@@ -8,13 +8,13 @@ from app.service.web_service import ConfigGetService
 from app.service.web_service import LoginService
 from app.service.web_service import SlackBotStartService
 
+from app.infrastructure.config_ini_file import DbServerConfigIniFile
+
 config = ConfigGetService().get_web_server_config()
 
 @get('/')
 def get_index():
     # TODO: username取得
-    check_login_status('admin')
-        
     #entity = service.get_index_data
     tempalte_path = './template/index.html'
     #return jinja2_template(tempalte_path, entity=entity)
@@ -36,6 +36,7 @@ def get_link_index():
 @get('/admin/login')
 def get_admin_login():
     service = LoginService()
+
     # TODO: a factory class should return entity through a service class 
     from app.entity.admin.login_entity import LoginEntity
     login_entity = LoginEntity()
@@ -47,7 +48,7 @@ def get_admin_login():
 
 @get('/admin/login/complete')
 def get_admin_login_complete():
-    redirect('/admin/index') # In case that users press F5 key
+    redirect('/admin') # In case that users press F5 key
     pass
 
 @get('/admin/logout')
@@ -62,8 +63,6 @@ def post_admin_login_complete():
     username = request.forms.get('username')
     password = request.forms.get('password')
 
-    # TODO:validate the parameters
-    
     service = LoginService()
     if(service.is_authenticated(username, password)):
         session = request.environ.get('beaker.session')
@@ -73,19 +72,12 @@ def post_admin_login_complete():
 
         # TODO: move max_age to config file
         #max_age = 60 * 60 * 24 * 30 # 1Month
+        # TODO: cookie ログイン状態を保持にチェックをいれた場合のみ
         #response.set_cookie(cookie_key, cookie_value, max_age=max_age)
         return redirect('/admin')
         
     else:
-        from app.entity.admin.login_entity import LoginEntity
-        login_entity = LoginEntity()
-        login_entity.set_title('Hideout Login')
-        login_entity.set_description('Hideout Login Page')
-        login_entity.set_notification('Please enter your id and password.')
-        login_entity.set_error_message('The information is incorrect. Please check the input.')
-        
-        tempalte_path = './template/admin/login.html'
-        return jinja2_template(tempalte_path, entity=login_entity)
+        return redirect('/admin/login')
 
 @get('/admin/links')
 def get_link_list():
@@ -135,7 +127,7 @@ def error404(error):
     tempalte_path = './template/front/error.html'
     return jinja2_template(tempalte_path, entity=error_entity)
     
-@error(500)
+#@error(500)
 def error500(error):
     from app.entity.error_entity import ErrorEntity
     error_entity = ErrorEntity()
@@ -163,4 +155,5 @@ if __name__ == "__main__":
         'session.data_dir': './data',
         'session.auto': True
     }
+
     run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
