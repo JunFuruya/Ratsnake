@@ -1,0 +1,16 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+
+      
+      <a href="/admin/languages">言語一覧へ</a>
+      <form action="/admin/languages/complete" method="POST"><input type="submit" value="登録"/></form>
+      
+    </article>
+{% endblock %}

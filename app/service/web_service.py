@@ -7,6 +7,7 @@ import urllib3
 from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
 from app.repository.app_slack_repository import AppSlackRepository
 from app.repository.db_users_repository import DbUsersRepository
+from app.repository.db_languages_repository import DbLanguagesRepository
 from app.repository.file_web_server_config_repository import FileWebServerConfigRepository
 
 '''
@@ -30,6 +31,36 @@ class LoginService():
         
     def is_authenticated(self, username, password):
         return self.__repository.exists(username, password)
+
+class LanguageListGetService():
+    __repository = None
+    def __init__(self):
+        self.__repository = DbLanguagesRepository()
+        pass
+
+class LanguageGetService():
+    __repository = None
+    def __init__(self):
+        self.__repository = DbLanguagesRepository()
+        pass
+
+class LanguageCreateGetService():
+    __repository = None
+    def __init__(self):
+        self.__repository = DbLanguagesRepository()
+        pass
+
+class LanguageUpdateGetService():
+    __repository = None
+    def __init__(self):
+        self.__repository = DbLanguagesRepository()
+        pass
+
+class LanguageUpdateDeleteService():
+    __repository = None
+    def __init__(self):
+        self.__repository = DbLanguagesRepository()
+        pass
     
 class SlackBotStartService():
     __slack_bot_repository = None

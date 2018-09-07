@@ -1,4 +1,33 @@
-    <nav id="menu">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="author" content="" />
+  <meta name="keyword" content="" />
+  <meta name="description" content="Hideout Main Page" />
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" type="text/css" href="/public/css/common.css"/>
+  <script src="/public/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="/public/js/common.js"></script>
+  <title>Hideout Login</title>
+</head>
+<body>
+  <app.entity.admin.index_entity.IndexEntity object at 0x04205C10>
+    <header>
+    <section id="logo">
+      <a href="">Hideout</a>
+      <span class="breadcrumb">></span>
+      <a href="">管理画面TOP</a>
+      <span id="logout"><a href="/admin/logout">ログアウト</a></span>
+    </section>
+    <section class="description">
+      <p>This is the index page.</p>
+      <ul id="event_button_ul"></ul>
+    </section>
+  </header>
+  <section id="main">
+    
+      <nav id="menu">
       <section class="menu_category">外部開発ツール</section>
       <ul>
         <li>
@@ -23,29 +52,32 @@
       <section class="menu_category">マスタ管理</section>
       <ul>
         <li>
-          <a href="/admin/link_categories">
+          <a href="">
             <section class="menu_label">リンクカテゴリマスタ管理</section>
             <section class="menu_description">リンクを分類するためのカテゴリを登録、編集、削除します。</section>
           </a>
         </li>
         <li>
-          <a href="/admin/links">
+          <a href="">
             <section class="menu_label">リンクマスタ管理</section>
             <section class="menu_description">よく使うリンクを登録、編集、削除します。</section>
           </a>
         </li>
-        <li>
-          <a href="/admin/languages">
-            <section class="menu_label">言語マスタ管理</section>
-            <section class="menu_description">単語帳の言語を登録、編集、削除します。</section>
-          </a>
-        </li>
-        <li>
-          <a href="/admin/words">
-            <section class="menu_label">単語マスタ管理</section>
-            <section class="menu_description">単語帳のデータを登録、編集、削除します。</section>
-          </a>
-        </li>
-
       </ul>
     </nav>
+
+    
+    <article>
+      <h2>Hideout Login</h2>
+      <h3>Index</h3>
+      
+      <a href="/admin/languages">言語一覧へ</a>
+      
+    </article>
+
+  </section>
+    <footer>
+    Copyright &copy; 2018 Jun Furuya All Rights Reserved.
+  </footer>
+</body>
+</html>
