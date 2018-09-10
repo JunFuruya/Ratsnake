@@ -4,9 +4,10 @@ from beaker.middleware import SessionMiddleware
 from bottle import app, error, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.helper.helper import HashHelper
-from app.service.web_service import ConfigGetService
-from app.service.web_service import LoginService
-from app.service.web_service import SlackBotStartService
+from app.controller.language_controller import LanguageController
+
+# TODO そのうち消す
+from app.service.web_service import ConfigGetService, LoginService, SlackBotStartService
 
 from app.infrastructure.config_ini_file import DbServerConfigIniFile
 
@@ -120,77 +121,32 @@ def post_link_complete():
 @get('/admin/languages')
 def get_language_list():
     check_login_status('admin')
-    language_list = [
-        [1, 'AAA', 'http://aaa.co.jp'],
-        [2, 'BBB', 'http://bbb.co.jp'],
-        [3, 'CCC', 'http://ccc.co.jp']
-    ]
-    
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')
-    tempalte_path = './template/admin/languages/list.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    return jinja2_template('./template/admin/languages/list.html', entity=LanguageController().index(request))
 
 @get('/admin/languages/create')
 def get_language_create():
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')
-    html = '<html><body>create</body></html>'
-    tempalte_path = './template/admin/languages/create.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    check_login_status('admin')
+    return jinja2_template('./template/admin/languages/create.html', entity=LanguageController().create(request))
 
 @get('/admin/languages/<language_id>')
 def post_language_detail(language_id):
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')    # TODO テンプレート用意する
-    tempalte_path = './template/admin/languages/detail.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    check_login_status('admin')
+    return jinja2_template('./template/admin/languages/detail.html', entity=LanguageController().detail(request))
 
 @post('/admin/languages/<language_id>')
 def post_language_update(language_id):
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')    # TODO テンプレート用意する
-    tempalte_path = './template/admin/languages/update.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    check_login_status('admin')
+    return jinja2_template('./template/admin/languages/update.html', entity=LanguageController().update(request))
 
 @post('/admin/languages/confirm')
 def post_language_confirm():
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')    # TODO テンプレート用意する
-    tempalte_path = './template/admin/languages/confirm.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    check_login_status('admin')
+    return jinja2_template('./template/admin/languages/confirm.html', entity=LanguageController().confirm(request))
 
 @post('/admin/languages/complete')
 def post_language_complete():
-    # TODO service から返す
-    from app.entity.admin.language_entity import LanguageEntity
-    language_entity = LanguageEntity()
-    language_entity.set_title('言語マスタ')
-    language_entity.set_description('単語帳を作成する言語を登録・編集・削除します。')
-    language_entity.set_notification('This is the index page.')
-    # TODO 中身の処理
-    tempalte_path = './template/admin/languages/complete.html'
-    return jinja2_template(tempalte_path, entity=language_entity)
+    check_login_status('admin')
+    return jinja2_template('./template/admin/languages/complete.html', entity=LanguageController().complete(request))
 
 @get('/admin/words')
 def get_word_list():
