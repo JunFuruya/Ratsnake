@@ -7,9 +7,19 @@
     <article>
       <h2>Hideout Login</h2>
       <h3>Index</h3>
-      
-      <a href="/admin">TOPへ</a>
-      <a href="/admin/languages/create">新規登録</a>
-      
+      <section>
+        <table>
+          <th>ID</th>
+          <th>Word</th>
+          <th>Explanation</th>
+          <tr>
+            <td>{% entity->get_word_id() %}</td>
+            <td>aaa</td>
+            <td>bbb</td>
+          </tr>
+        </table>
+        <a href="/admin">TOPへ</a>
+        <a href="/admin/languages/create">新規登録</a>
+      </section>
     </article>
 {% endblock %}

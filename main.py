@@ -90,9 +90,7 @@ def get_link_list():
 
 @get('/admin/links/create')
 def get_link_create():
-    html = '<html><body>create</body></html>'
-    tempalte_path = './template/admin/links/list.html'
-    return jinja2_template(html)
+    return jinja2_template('./template/admin/links/create.html', entity=LinkController().create(request))
 
 @get('/admin/links/<link_id>')
 def post_link_update(link_id):
@@ -151,14 +149,7 @@ def post_language_complete():
 @get('/admin/words')
 def get_word_list():
     check_login_status('admin')
-    word_list = [
-        [1, 'AAA', 'http://aaa.co.jp'],
-        [2, 'BBB', 'http://bbb.co.jp'],
-        [3, 'CCC', 'http://ccc.co.jp']
-    ]
-    # TODO テンプレート用意する
-    tempalte_path = './template/admin/words/list.html'
-    return jinja2_template(tempalte_path, word_list=word_list)
+    return jinja2_template('./template/admin/words/list.html', entity=LinkController().index(request))
 
 @get('/admin/words/create')
 def get_word_create():

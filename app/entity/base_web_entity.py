@@ -34,8 +34,7 @@ class BaseWebEntity():
 
     def get_error_message(self):
         return self.__error_message
-
-
+    
     def set_records(self, records):
         self.__records = records
         return self

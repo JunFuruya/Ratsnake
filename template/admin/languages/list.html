@@ -14,10 +14,12 @@
       <table>
         <thead></thead>
         <tbody>
+          {% for record in entity.get_records() %}
           <tr>
-            <td>1</td>
-            <td>英語</td>
+            <td>{{ record.get_language_id() }}</td>
+            <td>{{ record.get_language_name() }}</td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </article>
