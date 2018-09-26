@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from beaker.middleware import SessionMiddleware
+# TODO jinja2_template はBaseController に移したので消す
 from bottle import app, error, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.helper.helper import HashHelper
@@ -119,32 +120,42 @@ def post_link_complete():
 @get('/admin/languages')
 def get_language_list():
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/list.html', entity=LanguageController().index(request))
+    return LanguageController().index(request)
 
 @get('/admin/languages/create')
 def get_language_create():
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/create.html', entity=LanguageController().create(request))
+    return LanguageController().create(request)
 
 @get('/admin/languages/<language_id>')
 def post_language_detail(language_id):
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/detail.html', entity=LanguageController().detail(request))
+    return LanguageController().detail(request)
 
 @post('/admin/languages/<language_id>')
 def post_language_update(language_id):
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/update.html', entity=LanguageController().update(request))
+    return LanguageController().update(request)
 
 @post('/admin/languages/confirm')
 def post_language_confirm():
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/confirm.html', entity=LanguageController().confirm(request))
+    return LanguageController().confirm(request)
 
-@post('/admin/languages/complete')
-def post_language_complete():
+@post('/admin/languages/insert')
+def post_language_insert():
     check_login_status('admin')
-    return jinja2_template('./template/admin/languages/complete.html', entity=LanguageController().complete(request))
+    return LanguageController().insert(request)
+
+@post('/admin/languages/')
+def post_language_update():
+    check_login_status('admin')
+    return LanguageController().update(request)
+
+def post_language_delete():
+    check_login_status('admin')
+    return LanguageController().delete(request)
+
 
 @get('/admin/words')
 def get_word_list():

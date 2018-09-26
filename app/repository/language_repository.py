@@ -32,11 +32,9 @@ class LanguageRepository():
         
         return page_entity
 
-    def insert(self, params):
+    def insert(self, user_id, language_name):
         entity = LanguageEntity()
-        entity.set_language_id(self.__db.insert())
-        
-        return entity
+        return entity.set_language_id(self.__db.insert(user_id, language_name))
 
     def update(self, params):
         return self.__db.update()

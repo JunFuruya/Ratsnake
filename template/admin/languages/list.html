@@ -14,7 +14,7 @@
       <table>
         <thead></thead>
         <tbody>
-          {% for record in entity.get_records() %}
+          {% for record in entity.get_language_entity_list() %}
           <tr>
             <td>{{ record.get_language_id() }}</td>
             <td>{{ record.get_language_name() }}</td>
