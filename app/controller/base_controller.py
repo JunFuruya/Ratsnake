@@ -16,4 +16,4 @@ class BaseController():
         pass
 
     def view(self, tempalte_path, entity):
-        return jinja2_template(tempalte_path, entity)
+        return jinja2_template(tempalte_path, entity=entity)

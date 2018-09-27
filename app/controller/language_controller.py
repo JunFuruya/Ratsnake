@@ -1,7 +1,7 @@
 #-*- UTF-8 -*-
 
 from app.controller.base_controller import BaseController
-from app.service.web_service import LanguageService
+from app.service.language_service import LanguageService
 from app.entity.language_entity import LanguageEntity
 
 from app.helper.helper import HashHelper
@@ -14,7 +14,7 @@ class LanguageController(BaseController):
     def __init__(self):
         self.__service = LanguageService()
         self.__title = '言語マスタ'
-        self.__description = '単語帳を作成する言語を登録・編集・削除します。'
+        self.__description = '単語帳を作成する対象の言語を登録・編集・削除します。'
         pass
 
     def index(self, request):
@@ -29,10 +29,9 @@ class LanguageController(BaseController):
         # TODO もっと良い方法を考える
         entity = self.__service.getList(limit, offset)
         # TODO もっと良い方法を考える
-        if(entity is not None):
-            entity.set_title(self.__title)
-            entity.set_description(self.__description)
-            entity.set_notification('This is the index page.')
+        entity.set_title(self.__title)
+        entity.set_description(self.__description)
+        entity.set_notification('This is the index page.')
         
         return self.view('./template/admin/languages/list.html', entity)
     
@@ -56,7 +55,7 @@ class LanguageController(BaseController):
         # TODO validation
         
         session = request.environ.get('beaker.session')
-        session['language_name'] = HashHelper.hexdigest(language_name)
+        session[HashHelper.hexdigest('language_name')] = language_name
         session.save()
         
         print(language_name)
@@ -70,14 +69,14 @@ class LanguageController(BaseController):
 
     def insert(self, request):
         session = request.environ.get('beaker.session')
-        language_name = session.get('language_name', False)
+        language_name = session.get(HashHelper.hexdigest('language_name'), False)
         
         #TODO ログイン時に取得するようにする 
         user_id = 1
         
         # TODO validation
         
-        entity = self.__service.insert(user_id, language_name)
+        entity = self.__service.create(user_id, language_name)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')

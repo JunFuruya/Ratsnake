@@ -42,24 +42,18 @@ class DbBase():
 
     def insert(self, sql, bindings):
         cursor = self.__connection.cursor()
-        cursor.execute(sql, bindings)
-        row = cursor.fetchone()
+        id = cursor.execute(sql, bindings)
         cursor.close()
-        self.__connection.close()
-        return row[0]
+        return id
 
-    def update(self, sql, bindings):
+    def update(self, sql, *bindings):
         cursor = self.__connection.cursor()
-        cursor.execute(sql, bindings)
-        row = cursor.fetchone()
+        success_flg = cursor.execute(sql, bindings)
         cursor.close()
-        self.__connection.close()
-        return row[0]
+        return success_flg
 
-    def delete(self, sql, bindings):
+    def delete(self, sql, *bindings):
         cursor = self.__connection.cursor()
-        cursor.execute(sql, bindings)
-        row = cursor.fetchone()
+        success_flg = cursor.execute(sql, bindings)
         cursor.close()
-        self.__connection.close()
-        return row[0]
+        return success_flg

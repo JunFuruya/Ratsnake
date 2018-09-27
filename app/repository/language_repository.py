@@ -2,7 +2,8 @@
 
 from app.infrastructure.language_db import DbLanguages
 from app.entity.base_web_entity import BaseWebEntity
-from app.entity.admin.language_entity import LanguageEntity
+from app.entity.language_entity import LanguageEntity
+from app.entity.language_list_entity import LanguageListEntity
 
 '''
 Repository Module
@@ -19,18 +20,18 @@ class LanguageRepository():
 
     def findList(self, limit, offset):
         records = self.__db.select(limit, offset)
-        page_entity = BaseWebEntity()
+        list_entity = LanguageListEntity()
         
         entities = []
         for record in records:
             entity = LanguageEntity()
-            entity.set_language_id(records['m_language_id'])
-            entity.set_language_name(records['m_language_name'])
+            entity.set_language_id(record[0])
+            entity.set_language_name(record[1])
             entities.append(entity)
             
-        page_entity.set_records(entities)
+        list_entity.set_language_entity_list(entities)
         
-        return page_entity
+        return list_entity
 
     def insert(self, user_id, language_name):
         entity = LanguageEntity()

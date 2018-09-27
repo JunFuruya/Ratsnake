@@ -21,16 +21,24 @@ class DbLanguages(DbBase):
         return super().selectOne(sql, bindings)
 
     def insert(self, user_id, language_name):
-        sql = 'INSERT INTO m_user_id, m_language_name VALUES(%s, %s);'
+        sql = 'INSERT INTO m_languages(m_user_id, m_language_name) VALUES(%s, %s);'
         bindings = (user_id, language_name)
-        return super().insert(sql, bindings)
+        
+        # TODO 全体的に例外処理を入れる
+        try:
+            id = super().insert(sql, bindings)
+            super().__connection.commit()
+        except:
+            super().__connection.coleback()
+        
+        super().__connection.close()
+        
+        return id
     
     def update(self, language_id, user_id, language_name):
         sql = 'UPDATE m_languages SET m_user_id = %s, m_language_name = %s WHERE m_language_id = %s AND user_id = %s;'
-        bindings = (user_id, language_name, language_id, user_id)
-        return super().update(sql, bindings)
+        return super().update(sql, user_id, language_name, language_id, user_id)
     
     def delete(self, language_id, user_id):
         sql = 'DELETE FROM m_languages WHERE m_language_id = %s AND user_id = %s;'
-        bindings = (language_id, user_id)
-        return super().delete(sql, bindings)
+        return super().delete(sql, language_id, user_id)

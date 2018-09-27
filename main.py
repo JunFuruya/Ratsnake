@@ -29,7 +29,7 @@ def get_link_index():
     # TODO: username取得
     check_login_status('admin')
     
-    from app.entity.admin.index_entity import IndexEntity
+    from app.entity.index_entity import IndexEntity
     index_entity = IndexEntity()
     index_entity.set_title('Hideout Login')
     index_entity.set_description('Hideout Main Page')
@@ -42,7 +42,7 @@ def get_admin_login():
     service = LoginService()
 
     # TODO: a factory class should return entity through a service class 
-    from app.entity.admin.login_entity import LoginEntity
+    from app.entity.login_entity import LoginEntity
     login_entity = LoginEntity()
     login_entity.set_title('Hideout Main Page')
     login_entity.set_description('Hideout Login Page')
@@ -155,7 +155,6 @@ def post_language_update():
 def post_language_delete():
     check_login_status('admin')
     return LanguageController().delete(request)
-
 
 @get('/admin/words')
 def get_word_list():

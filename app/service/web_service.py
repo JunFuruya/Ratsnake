@@ -33,26 +33,6 @@ class LoginService():
     def is_authenticated(self, username, password):
         return self.__repository.exists(username, password)
 
-class LanguageService(BaseService):
-    def __init__(self):
-        self.__reposiroty = LanguageRepository()
-        pass
-
-    def getList(self, limit, oiffset):
-        return self.__reposiroty.findList(limit, oiffset)
-
-    def get(self, language_id):
-        return self.__reposiroty.findList(language_id)
-
-    def create(self, language_id, user_id, language_name):
-        return self.__reposiroty.insert(language_id, user_id, language_name)
-
-    def update(self, language_id, user_id, language_name):
-        return self.__reposiroty.update(language_id, user_id, language_name)
-
-    def delete(self, language_id, user_id, language_name):
-        return self.__reposiroty.delete(language_id, user_id, language_name)
-
 class SlackBotStartService():
     __slack_bot_repository = None
     def __init__(self):
