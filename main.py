@@ -130,12 +130,12 @@ def get_language_create():
 @get('/admin/languages/<language_id>')
 def post_language_detail(language_id):
     check_login_status('admin')
-    return LanguageController().detail(request)
+    return LanguageController().detail(request, language_id)
 
 @post('/admin/languages/<language_id>')
-def post_language_update(language_id):
+def post_language_edit(language_id):
     check_login_status('admin')
-    return LanguageController().update(request)
+    return LanguageController().edit(request, language_id)
 
 @post('/admin/languages/confirm')
 def post_language_confirm():
@@ -147,11 +147,12 @@ def post_language_insert():
     check_login_status('admin')
     return LanguageController().insert(request)
 
-@post('/admin/languages/')
+@post('/admin/languages/update')
 def post_language_update():
     check_login_status('admin')
     return LanguageController().update(request)
 
+@post('/admin/languages/delete')
 def post_language_delete():
     check_login_status('admin')
     return LanguageController().delete(request)
@@ -207,7 +208,7 @@ def error404(error):
     tempalte_path = './template/front/error.html'
     return jinja2_template(tempalte_path, entity=error_entity)
     
-#@error(500)
+error(500)
 def error500(error):
     from app.entity.error_entity import ErrorEntity
     error_entity = ErrorEntity()

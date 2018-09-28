@@ -12,8 +12,8 @@ class LanguageService(BaseService):
     def getList(self, limit, oiffset):
         return self.__reposiroty.findList(limit, oiffset)
 
-    def get(self, language_id):
-        return self.__reposiroty.find(language_id)
+    def get(self, user_id, language_id):
+        return self.__reposiroty.find(user_id, language_id)
 
     def create(self, user_id, language_name):
         return self.__reposiroty.insert(user_id, language_name)
@@ -21,5 +21,5 @@ class LanguageService(BaseService):
     def update(self, language_id, user_id, language_name):
         return self.__reposiroty.update(language_id, user_id, language_name)
 
-    def delete(self, language_id, user_id, language_name):
-        return self.__reposiroty.delete(language_id, user_id, language_name)
+    def delete(self, language_id, user_id):
+        return self.__reposiroty.delete(language_id, user_id)

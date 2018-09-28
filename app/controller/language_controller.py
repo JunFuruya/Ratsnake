@@ -25,7 +25,12 @@ class LanguageController(BaseController):
         # TODO もっと良い方法を考える
         offset = request.query.get('offset')
         offset = offset if offset is not None else 0
-        
+
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = ''
+        session[HashHelper.hexdigest('language_name')] = ''
+        session.save()
+
         # TODO もっと良い方法を考える
         entity = self.__service.getList(limit, offset)
         # TODO もっと良い方法を考える
@@ -35,14 +40,6 @@ class LanguageController(BaseController):
         
         return self.view('./template/admin/languages/list.html', entity)
     
-    def detail(self, request):
-        language_id = request.query.get('language_id')
-        entity = self.__service.get(language_id)
-        entity.set_title(self.__title)
-        entity.set_description(self.__description)
-        entity.set_notification('This is the index page.')
-        return self.view('./template/admin/languages/detail.html', entity)
-    
     def create(self, request):
         entity = LanguageEntity()
         entity.set_title(self.__title)
@@ -50,18 +47,48 @@ class LanguageController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/languages/create.html', entity)
 
-    def confirm(self, request):
-        language_name = request.forms.get('language_name')
+    def detail(self, request, language_id):
+        
+        # TODO user_id 取得する
+        user_id = 1
         # TODO validation
         
         session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = language_id
+        session.save()
+        
+        entity = self.__service.get(user_id, language_id)
+        entity.set_title(self.__title)
+        entity.set_description(self.__description)
+        entity.set_notification('This is the index page.')
+        return self.view('./template/admin/languages/detail.html', entity)
+
+    def edit(self, request, language_id):
+        session = request.environ.get('beaker.session')
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
+        # TODO user_id 取得する
+        user_id = 1
+        
+        entity = self.__service.get(user_id, language_id)
+        entity.set_title(self.__title)
+        entity.set_description(self.__description)
+        entity.set_notification('This is the index page.')
+        return self.view('./template/admin/languages/edit.html', entity)
+    
+    def confirm(self, request):
+        session = request.environ.get('beaker.session')
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
+        language_name = request.forms.get('language_name')
+
+        # TODO validation
+        
         session[HashHelper.hexdigest('language_name')] = language_name
         session.save()
         
-        print(language_name)
         # TODO もっと良い設計があるはず
         entity = LanguageEntity()
         entity.set_title(self.__title)
+        entity.set_language_id(language_id)
         entity.set_language_name(language_name)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
@@ -76,6 +103,11 @@ class LanguageController(BaseController):
         
         # TODO validation
         
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = ''
+        session[HashHelper.hexdigest('language_name')] = ''
+        session.save()
+
         entity = self.__service.create(user_id, language_name)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
@@ -84,17 +116,35 @@ class LanguageController(BaseController):
 
     def update(self, request):
         session = request.environ.get('beaker.session')
-        language_name = session.get('language_name', False)
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
+        language_name = session.get(HashHelper.hexdigest('language_name'), False)
+        #TODO ログイン時に取得するようにする 
+        user_id = 1
         
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = ''
+        session[HashHelper.hexdigest('language_name')] = ''
+        session.save()
+
+        entity = LanguageEntity()
+        entity.set_language_id(self.__service.update(language_id, user_id, language_name))
         entity.set_title(self.__title)
-        entity = self.__service.update(language_id, language_name)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/languages/complete.html', entity)
     
     def delete(self, request):
-        language_id = request.query.get('language_id')
-        entity = self.__service.delete(language_id)
+        language_id = request.forms.get('language_id')
+        #TODO ログイン時に取得するようにする 
+        user_id = 1
+
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = ''
+        session[HashHelper.hexdigest('language_name')] = ''
+        session.save()
+
+        entity = LanguageEntity()
+        entity.set_language_id(self.__service.delete(language_id, user_id))
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')

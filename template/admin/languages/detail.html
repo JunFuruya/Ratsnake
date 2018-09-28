@@ -8,15 +8,10 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      {% if entity.get_language_id() == '' %}
-        {% set action = '/admin/languages/insert' %}
-      {% else %}
-        {% set action = '/admin/languages/update' %}
-      {% endif %}
-      <form action="{{ action }}" method="POST">
+      <form action="/admin/languages/{{ entity.get_language_id() }}" method="POST">
+        {{ entity.get_language_id() }}
         {{ entity.get_language_name() }}
-        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
-        <input type="submit" value="登録"/>
+        <input type="submit" value="編集"/>
       </form>
       <a href="/admin/languages">言語一覧へ</a>
       

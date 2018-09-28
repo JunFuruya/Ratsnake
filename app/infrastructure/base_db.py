@@ -3,6 +3,9 @@
 import mysql.connector
 from app.infrastructure.config_ini_file import DbServerConfigIniFile
 
+# TODO デバッグ方法調べる
+#import pdb; pdb.set_trace()
+
 '''
 database module
 '''
@@ -37,8 +40,8 @@ class DbBase():
         cursor.execute(sql, bindings)
         row = cursor.fetchone()
         cursor.close()
-        self.__connection.close()
-        return row[0]
+
+        return row
 
     def insert(self, sql, bindings):
         cursor = self.__connection.cursor()
@@ -46,14 +49,26 @@ class DbBase():
         cursor.close()
         return id
 
-    def update(self, sql, *bindings):
+    def update(self, sql, bindings):
         cursor = self.__connection.cursor()
         success_flg = cursor.execute(sql, bindings)
         cursor.close()
         return success_flg
 
-    def delete(self, sql, *bindings):
+    def delete(self, sql, bindings):
         cursor = self.__connection.cursor()
         success_flg = cursor.execute(sql, bindings)
         cursor.close()
         return success_flg
+    
+    def commit(self):
+        self.__connection.commit()
+        pass
+        
+    def rollback(self):
+        self.__connection.rollback()
+        pass
+    
+    def close_connetion(self):
+        self.__connection.close()
+        pass
