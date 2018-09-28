@@ -4,12 +4,11 @@
 {% endblock %}
 
 {% block content %}
-{% endblock %}
     <article>
-      <h2>Hideout Login</h2>
-      <h3>Index</h3>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin/languages">言語一覧へ</a>
+      <a href="/admin/words">単語一覧へ</a>
       
     </article>
 {% endblock %}

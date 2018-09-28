@@ -14,6 +14,9 @@ from app.infrastructure.config_ini_file import DbServerConfigIniFile
 
 config = ConfigGetService().get_web_server_config()
 
+###############################################################################
+# 非ログインユーザ用画面
+###############################################################################
 @get('/')
 def get_index():
     # TODO: username取得
@@ -24,6 +27,9 @@ def get_index():
     #return jinja2_template(tempalte_path, entity=entity)
     return jinja2_template(tempalte_path)
     
+###############################################################################
+# 管理画面TOP
+###############################################################################
 @get('/admin')
 def get_link_index():
     # TODO: username取得
@@ -37,6 +43,9 @@ def get_link_index():
     tempalte_path = './template/admin/index.html'
     return jinja2_template(tempalte_path, entity=index_entity)
 
+###############################################################################
+# ログイン、ログアウト
+###############################################################################
 @get('/admin/login')
 def get_admin_login():
     service = LoginService()
@@ -77,6 +86,13 @@ def get_admin_login_complete():
     session.save()
     return redirect('/admin/login')
 
+###############################################################################
+# リンクカテゴリマスタ
+###############################################################################
+
+###############################################################################
+# リンクマスタ
+###############################################################################
 @get('/admin/links')
 def get_link_list():
     check_login_status('admin')
@@ -117,6 +133,9 @@ def post_link_complete():
     html = '<html><body>complete</body></html>'
     return jinja2_template(html)
 
+###############################################################################
+# 言語マスタ
+###############################################################################
 @get('/admin/languages')
 def get_language_list():
     check_login_status('admin')
@@ -157,45 +176,59 @@ def post_language_delete():
     check_login_status('admin')
     return LanguageController().delete(request)
 
+###############################################################################
+# 単語帳
+###############################################################################
 @get('/admin/words')
 def get_word_list():
     check_login_status('admin')
-    return jinja2_template('./template/admin/words/list.html', entity=LinkController().index(request))
+    return WordController().index(request)
 
 @get('/admin/words/create')
 def get_word_create():
-    html = '<html><body>create</body></html>'
-    tempalte_path = './template/admin/words/create.html'
-    return jinja2_template(tempalte_path)
+    check_login_status('admin')
+    return WordController().create(request)
 
-@get('/admin/words/<word_id>')
-def post_word_update(word_id):
-    # TODO テンプレート用意する
-    html = '<html><body>update</body></html>'
-    return jinja2_template(tempalte_path)
+@get('/admin/words/<language_id>')
+def post_word_detail(word_id):
+    check_login_status('admin')
+    return WordController().detail(request, word_id)
 
 @post('/admin/words/<word_id>')
-def post_word_update(word_id):
-    # TODO テンプレート用意する
-    html = '<html><body>update</body></html>'
-    return jinja2_template(html)
+def post_word_edit(word_id):
+    check_login_status('admin')
+    return WordController().edit(request, word_id)
 
 @post('/admin/words/confirm')
 def post_word_confirm():
-    # TODO テンプレート用意する
-    html = '<html><body>confirm</body></html>'
-    return jinja2_template(html)
+    check_login_status('admin')
+    return WordController().confirm(request)
 
-@post('/admin/words/complete')
-def post_word_complete():
-    # TODO テンプレート用意する
-    html = '<html><body>complete</body></html>'
-    return jinja2_template(html)
+@post('/admin/words/insert')
+def post_word_insert():
+    check_login_status('admin')
+    return WordController().insert(request)
 
+@post('/admin/words/update')
+def post_word_update():
+    check_login_status('admin')
+    return WordController().update(request)
+
+@post('/admin/words/delete')
+def post_word_delete():
+    check_login_status('admin')
+    return WordController().delete(request)
+
+###############################################################################
+# 静的ファイル
+###############################################################################
 @get('/public/<path:path>')
 def get_static_file(path):
     return static_file(path, root='./public/')
 
+###############################################################################
+# エラー画面
+###############################################################################
 @error(404)
 def error404(error):
     from app.entity.error_entity import ErrorEntity

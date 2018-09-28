@@ -5,11 +5,20 @@
 
 {% block content %}
     <article>
-      <h2>Hideout Login</h2>
-      <h3>Index</h3>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin/languages">言語一覧へ</a>
-      <form action="/admin/languages/complete" method="POST"><input type="submit" value="登録"/></form>
+      {% if entity.get_word_id() == '' %}
+        {% set action = '/admin/words/insert' %}
+      {% else %}
+        {% set action = '/admin/words/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        {{ entity.get_word_name() }}
+        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
+        <input type="submit" value="登録"/>
+      </form>
+      <a href="/admin/words">単語一覧へ</a>
       
     </article>
 {% endblock %}
