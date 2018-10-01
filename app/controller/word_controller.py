@@ -18,6 +18,12 @@ class WordController(BaseController):
         pass
 
     def index(self, request):
+        # TODO セッションからとる
+        user_id = 1
+        # TODO もっと良い方法を考える
+        language_id = request.query.get('language_id')
+        language_id = language_id if language_id is not None else ''
+        
         # TODO もっと良い方法を考える
         limit = request.query.get('limit')
         limit = limit if limit is not None else 10
@@ -27,25 +33,36 @@ class WordController(BaseController):
         offset = offset if offset is not None else 0
 
         session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = ''
         session[HashHelper.hexdigest('word_id')] = ''
         session[HashHelper.hexdigest('word_name')] = ''
         session.save()
 
         # TODO もっと良い方法を考える
-        entity = self.__service.getList(limit, offset)
+        entity = self.__service.getList(user_id, language_id, limit, offset)
         # TODO もっと良い方法を考える
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
         
-        return self.view('./template/admin/words/list.html', entity)
+        return self.view('./template/admin/words/list.html', entity=entity)
     
     def create(self, request):
+        # TODO もっと良い方法を考える
+        language_id = request.query.get('language_id')
+        language_id = language_id if language_id is not None else ''
+
+        # TODO validation
+        
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = language_id
+        session.save()
+
         entity = wordEntity()
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/create.html', entity)
+        return self.view('./template/admin/words/create.html', entity=entity)
 
     def detail(self, request, word_id):
         
@@ -61,7 +78,7 @@ class WordController(BaseController):
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/detail.html', entity)
+        return self.view('./template/admin/words/detail.html', entity=entity)
 
     def edit(self, request, word_id):
         session = request.environ.get('beaker.session')
@@ -73,7 +90,7 @@ class WordController(BaseController):
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/edit.html', entity)
+        return self.view('./template/admin/words/edit.html', entity=entity)
     
     def confirm(self, request):
         session = request.environ.get('beaker.session')
@@ -92,7 +109,7 @@ class WordController(BaseController):
         entity.set_word_name(word_name)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/confirm.html', entity)
+        return self.view('./template/admin/words/confirm.html', entity=entity)
 
     def insert(self, request):
         session = request.environ.get('beaker.session')
@@ -112,7 +129,7 @@ class WordController(BaseController):
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/complete.html', entity)
+        return self.view('./template/admin/words/complete.html', entity=entity)
 
     def update(self, request):
         session = request.environ.get('beaker.session')
@@ -131,7 +148,7 @@ class WordController(BaseController):
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/complete.html', entity)
+        return self.view('./template/admin/words/complete.html', entity=entity)
     
     def delete(self, request):
         word_id = request.forms.get('word_id')
@@ -148,5 +165,5 @@ class WordController(BaseController):
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
-        return self.view('./template/admin/words/complete.html', entity)
+        return self.view('./template/admin/words/complete.html', entity=entity)
     

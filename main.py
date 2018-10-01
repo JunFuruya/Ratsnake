@@ -6,6 +6,7 @@ from bottle import app, error, get, jinja2_template, post, redirect, request, re
 
 from app.helper.helper import HashHelper
 from app.controller.language_controller import LanguageController
+from app.controller.word_controller import WordController
 
 # TODO そのうち消す
 from app.service.web_service import ConfigGetService, LoginService, SlackBotStartService
@@ -184,7 +185,7 @@ def get_word_list():
     check_login_status('admin')
     return WordController().index(request)
 
-@get('/admin/words/create')
+@post('/admin/words/create')
 def get_word_create():
     check_login_status('admin')
     return WordController().create(request)

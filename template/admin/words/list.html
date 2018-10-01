@@ -8,15 +8,15 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin">TOPへ</a>
-      <a href="/admin/words/create">新規登録</a>
       
       <table>
         <form action="/admin/words" method="POST" name="languages" />
+          <a href="/admin">TOPへ</a>
+          <input type="" action="/admin/words/create" method="POST">新規登録</a>
           <select name="language_id" onchange="JavaScript:document.languages.submit(); ">
-            {{ for language_entity in entity.get_language_list_entity() }}
+            {% for language_entity in entity.get_language_entity_list() %}
             <option value="{{ language_entity.get_language_id() }}">{{ language_entity.get_language_name() }}</option>
-            {{ endfor }}
+            {% endfor %}
           </select>
         </form>
         <thead></thead>
@@ -27,6 +27,7 @@
             <td>{{ entity.get_word_name() }}</td>
             <td>
               <form action="/admin/words/{{ entity.get_word_id() }}" method="GET">
+                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
                 <input type="hidden" name="word_id" value="{{ entity.get_word_id() }}"/>
                 <input type="submit" value="詳細へ" />
                 <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){document.forms[0].action='/admin/words/delete';document.forms[0].method='POST';document.forms[0].submit();}" />

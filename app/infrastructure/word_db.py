@@ -10,9 +10,9 @@ class DbWords(DbBase):
         super().__init__()
         pass
     
-    def select(self, limit, offset):
-        sql = 'SELECT m_word_id, m_word_name FROM m_words limit %s offset %s'
-        bindings = (limit, offset)
+    def select(self, user_id, language_id, limit, offset):
+        sql = 'SELECT t_word_id, t_word_spell, t_word_explanation, t_word_pronounciation, t_word_is_learned, t_word_note FROM t_words WHERE m_user_id = %s AND m_language_id = %s LIMIT %s OFFSET %s'
+        bindings = (user_id, language_id, limit, offset)
         return super().select(sql, bindings)
 
     def selectOne(self, user_id, word_id):

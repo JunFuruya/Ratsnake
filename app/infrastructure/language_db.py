@@ -11,8 +11,14 @@ class DbLanguages(DbBase):
         pass
     
     def select(self, limit, offset):
-        sql = 'SELECT m_language_id, m_language_name FROM m_languages limit %s offset %s'
+        # TODO user_id で絞る
+        sql = 'SELECT m_language_id, m_language_name FROM m_languages limit %s offset %s;'
         bindings = (limit, offset)
+        return super().select(sql, bindings)
+
+    def selectAll(self, user_id):
+        sql = 'SELECT m_language_id, m_language_name FROM m_languages WHERE m_user_id = %s;'
+        bindings = (user_id,)
         return super().select(sql, bindings)
 
     def selectOne(self, user_id, language_id):

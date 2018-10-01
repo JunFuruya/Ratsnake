@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app.service.base_service import BaseService
-from app.repository.Word_repository import WordRepository
+from app.repository.word_repository import WordRepository
 from app.repository.db_user_repository import DbUsersRepository
 
 class WordService(BaseService):
@@ -9,17 +9,17 @@ class WordService(BaseService):
         self.__reposiroty = WordRepository()
         pass
 
-    def getList(self, limit, oiffset):
-        return self.__reposiroty.findList(limit, oiffset)
+    def getList(self, user_id, language_id, limit, offset):
+        return self.__reposiroty.findList(user_id, language_id, limit, offset)
 
-    def get(self, user_id, word_id):
-        return self.__reposiroty.find(user_id, word_id)
+    def get(self, user_id, language_id, word_id):
+        return self.__reposiroty.find(user_id, language_id, word_id)
 
-    def create(self, user_id, word_name):
-        return self.__reposiroty.insert(user_id, word_name)
+    def create(self, user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note):
+        return self.__reposiroty.insert(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
 
-    def update(self, word_id, user_id, word_name):
-        return self.__reposiroty.update(word_id, user_id, word_name)
+    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note):
+        return self.__reposiroty.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
 
-    def delete(self, word_id, user_id):
-        return self.__reposiroty.delete(word_id, user_id)
+    def delete(self, user_id, language_id, word_id):
+        return self.__reposiroty.delete(user_id, language_id, word_id)
