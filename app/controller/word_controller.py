@@ -48,8 +48,11 @@ class WordController(BaseController):
         return self.view('./template/admin/words/list.html', entity=entity)
     
     def create(self, request):
+        # TODO セッションからとる
+        user_id = 1
+
         # TODO もっと良い方法を考える
-        language_id = request.query.get('language_id')
+        language_id = request.forms.get('language_id')
         language_id = language_id if language_id is not None else ''
 
         # TODO validation
@@ -58,7 +61,7 @@ class WordController(BaseController):
         session[HashHelper.hexdigest('language_id')] = language_id
         session.save()
 
-        entity = wordEntity()
+        entity = self.__service.get_language(user_id, language_id)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
@@ -94,26 +97,48 @@ class WordController(BaseController):
     
     def confirm(self, request):
         session = request.environ.get('beaker.session')
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
         word_id = session.get(HashHelper.hexdigest('word_id'), False)
-        word_name = request.forms.get('word_name')
-
+        # TODO user_id 取得する
+        user_id = 1
+        
+        word_spell = request.forms.get('word_spell')
+        word_explanation = request.forms.get('word_explanation')
+        word_pronanciation = request.forms.get('word_pronanciation')
+        word_is_learned = 0
+        word_note = request.forms.get('word_note')
+        
         # TODO validation
         
-        session[HashHelper.hexdigest('word_name')] = word_name
+        
+        session[HashHelper.hexdigest('word_spell')] = word_spell
+        session[HashHelper.hexdigest('word_explanation')] = word_explanation
+        session[HashHelper.hexdigest('word_pronanciation')] = word_pronanciation
+        session[HashHelper.hexdigest('word_is_learned')] = word_is_learned
+        session[HashHelper.hexdigest('word_note')] = word_note
         session.save()
         
         # TODO もっと良い設計があるはず
-        entity = wordEntity()
+        entity = self.__service.get_language(user_id, language_id)
         entity.set_title(self.__title)
         entity.set_word_id(word_id)
-        entity.set_word_name(word_name)
+        entity.set_word_spell(word_spell)
+        entity.set_word_explanation(word_explanation)
+        entity.set_word_pronanciation(word_pronanciation)
+        entity.set_word_is_learned(word_is_learned)
+        entity.set_word_note(word_note)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/confirm.html', entity=entity)
 
     def insert(self, request):
         session = request.environ.get('beaker.session')
-        word_name = session.get(HashHelper.hexdigest('word_name'), False)
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
+        word_spell = session.get(HashHelper.hexdigest('word_spell'), False)
+        word_explanation = session.get(HashHelper.hexdigest('word_explanation'), False)
+        word_pronanciation = session.get(HashHelper.hexdigest('word_pronanciation'), False)
+        word_is_learned = session.get(HashHelper.hexdigest('word_is_learned'), False)
+        word_note = session.get(HashHelper.hexdigest('word_note'), False)
         
         #TODO ログイン時に取得するようにする 
         user_id = 1
@@ -121,11 +146,13 @@ class WordController(BaseController):
         # TODO validation
         
         session = request.environ.get('beaker.session')
+        
+        session[HashHelper.hexdigest('language_id')] = ''
         session[HashHelper.hexdigest('word_id')] = ''
         session[HashHelper.hexdigest('word_name')] = ''
         session.save()
 
-        entity = self.__service.create(user_id, word_name)
+        entity = self.__service.create(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')

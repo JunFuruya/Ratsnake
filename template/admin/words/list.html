@@ -12,7 +12,7 @@
       <table>
         <form action="/admin/words" method="POST" name="languages" />
           <a href="/admin">TOPへ</a>
-          <input type="" action="/admin/words/create" method="POST">新規登録</a>
+          <a onclick="document.languages.action='/admin/words/create';document.languages.submit();" method="POST">新規登録</a>
           <select name="language_id" onchange="JavaScript:document.languages.submit(); ">
             {% for language_entity in entity.get_language_entity_list() %}
             <option value="{{ language_entity.get_language_id() }}">{{ language_entity.get_language_name() }}</option>

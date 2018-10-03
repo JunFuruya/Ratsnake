@@ -7,7 +7,6 @@ import urllib3
 from app.service.base_service import BaseService
 from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
 from app.repository.app_slack_repository import AppSlackRepository
-from app.repository.language_repository import LanguageRepository
 from app.repository.db_user_repository import DbUsersRepository
 from app.repository.file_web_server_config_repository import FileWebServerConfigRepository
 

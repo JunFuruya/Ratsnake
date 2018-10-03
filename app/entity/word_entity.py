@@ -5,7 +5,7 @@ from app.entity.base_web_entity import BaseWebEntity
 class WordEntity(BaseWebEntity):
     __word_id = ''
     __user_id = ''
-    __languate_id = ''
+    __language_name = ''
     __word_spell = ''
     __word_explanation = ''
     __word_pronanciation = ''
@@ -34,17 +34,13 @@ class WordEntity(BaseWebEntity):
     def get_user_id(self):
         return self.__user_id
     
-    def set_languate_id(self, language_id):
-        self.__languate_id = language_id
-        return self
-    
-    def get_languate_id(self):
-        return self.__languate_id
-    
-    def set_languate_id(self, language_id):
-        self.__languate_id = language_id
+    def set_language_name(self, language_name):
+        self.__language_name = language_name
         return self
 
+    def get_language_name(self):
+        return self.__language_name
+    
     def set_word_spell(self, word_spell):
         self.__word_spell = word_spell
         return self

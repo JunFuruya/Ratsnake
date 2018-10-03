@@ -8,10 +8,14 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
+      {{ entity.get_language_name() }}
       <form action="/admin/words/confirm" method="POST">
-        <input type="text" name="word_name" value=""/>
-        <input type="reset" value="リセット"/>
-        <input type="submit" value="確認"/>
+        <input type="text" name="word_spell" value="" />
+        <textarea name="word_explanation"></textarea>
+        <input type="text" name="word_pronanciation" />
+        <textarea name="word_note"></textarea>
+        <input type="reset" value="リセット" />
+        <input type="submit" value="確認" />
       </form>
       <a href="/admin/words">単語一覧へ</a>
       

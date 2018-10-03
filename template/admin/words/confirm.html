@@ -8,13 +8,18 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
+      {{ entity.get_language_name() }}
       {% if entity.get_word_id() == '' %}
         {% set action = '/admin/words/insert' %}
       {% else %}
         {% set action = '/admin/words/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_word_name() }}
+        {{ entity.get_word_spell() }}
+        {{ entity.get_word_explanation() }}
+        {{ entity.get_word_pronanciation() }}
+        {{ entity.get_word_is_learned() }}
+        {{ entity.get_word_note() }}
         <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
         <input type="submit" value="登録"/>
       </form>
