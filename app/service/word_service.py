@@ -20,16 +20,17 @@ class WordService(BaseService):
     def get(self, user_id, language_id, word_id):
         return self.__reposiroty.find(user_id, language_id, word_id)
 
-    def create(self, user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note):
-        return self.__reposiroty.insert(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
+    def create(self, user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
+        return self.__reposiroty.insert(user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
 
-    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note):
-        return self.__reposiroty.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
+    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
+        return self.__reposiroty.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
 
     def delete(self, user_id, language_id, word_id):
         return self.__reposiroty.delete(user_id, language_id, word_id)
 
     def get_language(self, user_id, language_id):
         entity = WordEntity()
-        entity.set_language_name(self.__language_repository.find(user_id, language_id))
+        language_entity = self.__language_repository.find(user_id, language_id)
+        entity.set_language_name(language_entity.get_language_name())
         return entity

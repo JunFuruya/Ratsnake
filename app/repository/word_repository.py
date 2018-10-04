@@ -48,7 +48,7 @@ class WordRepository():
             entity.set_word_id(word_record[0])
             entity.set_word_spell(word_record[1])
             entity.set_word_explanation(word_record[2])
-            entity.set_word_pronanciation(word_record[3])
+            entity.set_word_pronounciation(word_record[3])
             entity.set_word_is_learned(word_record[4])
             entity.set_word_note(word_record[5])
             entities.append(entity)
@@ -57,9 +57,9 @@ class WordRepository():
         
         return list_entity
 
-    def insert(self, user_id, word_name):
+    def insert(self, user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note):
         entity = WordEntity()
-        return entity.set_word_id(self.__word_db.insert(user_id, word_name))
+        return entity.set_word_id(self.__word_db.insert(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note))
 
     def update(self, word_id, user_id, word_name):
         is_success = self.__word_db.update(word_id, user_id, word_name)

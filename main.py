@@ -2,7 +2,7 @@
 
 from beaker.middleware import SessionMiddleware
 # TODO jinja2_template はBaseController に移したので消す
-from bottle import app, error, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
+from bottle import app, error, route, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.helper.helper import HashHelper
 from app.controller.language_controller import LanguageController
@@ -185,40 +185,45 @@ def get_word_list():
     check_login_status('admin')
     return WordController().index(request)
 
-@post('/admin/words/create')
+@get('/admin/languages/<language_id>/words')
+def post_word_list():
+    check_login_status('admin')
+    return WordController().index(request)
+
+@get('/admin/languages/<language_id>/words/create')
 def get_word_create():
     check_login_status('admin')
-    return WordController().create(request)
+    return WordController().create(request, language_id)
 
-@get('/admin/words/<language_id>')
+@get('/admin/languages/<language_id>/words/<word_id>')
 def post_word_detail(word_id):
     check_login_status('admin')
     return WordController().detail(request, word_id)
 
-@post('/admin/words/<word_id>')
-def post_word_edit(word_id):
+@post('/admin/languages/<language_id>/words/<word_id>')
+def post_word_edit(language_id, word_id):
     check_login_status('admin')
-    return WordController().edit(request, word_id)
+    return WordController().edit(request, language_id, word_id)
 
-@post('/admin/words/confirm')
-def post_word_confirm():
+@post('/admin/languages/<language_id>/words/confirm')
+def post_word_confirm(language_id):
     check_login_status('admin')
-    return WordController().confirm(request)
+    return WordController().confirm(request, language_id)
 
-@post('/admin/words/insert')
-def post_word_insert():
+@post('/admin/languages/<language_id>/words/insert')
+def post_word_insert(language_id):
     check_login_status('admin')
-    return WordController().insert(request)
+    return WordController().insert(request, language_id)
 
-@post('/admin/words/update')
-def post_word_update():
+@post('/admin/languages/<language_id>/words/<word_id>/update')
+def post_word_update(language_id, word_id):
     check_login_status('admin')
-    return WordController().update(request)
+    return WordController().update(request, language_id, word_id)
 
-@post('/admin/words/delete')
+@post('/admin/languages/<language_id>/words/<word_id>/delete')
 def post_word_delete():
     check_login_status('admin')
-    return WordController().delete(request)
+    return WordController().delete(request, language_id, word_id)
 
 ###############################################################################
 # 静的ファイル

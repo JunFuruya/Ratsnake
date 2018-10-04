@@ -8,7 +8,7 @@ class WordEntity(BaseWebEntity):
     __language_name = ''
     __word_spell = ''
     __word_explanation = ''
-    __word_pronanciation = ''
+    __word_pronounciation = ''
     __word_is_learned = ''
     __word_note = ''
     __word_created_at = ''
@@ -55,12 +55,12 @@ class WordEntity(BaseWebEntity):
     def get_word_explanation(self):
         return self.__word_explanation
 
-    def set_word_pronanciation(self, word_pronanciation):
-        self.__word_pronanciation = word_pronanciation
+    def set_word_pronounciation(self, word_pronounciation):
+        self.__word_pronounciation = word_pronounciation
         return self
 
-    def get_word_pronanciation(self):
-        return self.__word_pronanciation
+    def get_word_pronounciation(self):
+        return self.__word_pronounciation
 
     def set_word_is_learned(self, word_is_learned):
         self.__word_is_learned = word_is_learned

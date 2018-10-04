@@ -21,9 +21,11 @@ class WordController(BaseController):
         # TODO セッションからとる
         user_id = 1
         # TODO もっと良い方法を考える
-        language_id = request.query.get('language_id')
-        language_id = language_id if language_id is not None else ''
-        
+        language_id = request.forms.get('language_id')
+        session = request.environ.get('beaker.session')
+        ses_language_id = HashHelper.hexdigest('language_id') in session
+        language_id = language_id if language_id is not None else ses_language_id
+
         # TODO もっと良い方法を考える
         limit = request.query.get('limit')
         limit = limit if limit is not None else 10
@@ -31,8 +33,7 @@ class WordController(BaseController):
         # TODO もっと良い方法を考える
         offset = request.query.get('offset')
         offset = offset if offset is not None else 0
-
-        session = request.environ.get('beaker.session')
+        
         session[HashHelper.hexdigest('language_id')] = ''
         session[HashHelper.hexdigest('word_id')] = ''
         session[HashHelper.hexdigest('word_name')] = ''
@@ -40,6 +41,7 @@ class WordController(BaseController):
 
         # TODO もっと良い方法を考える
         entity = self.__service.getList(user_id, language_id, limit, offset)
+        entity.set_language_id(language_id)
         # TODO もっと良い方法を考える
         entity.set_title(self.__title)
         entity.set_description(self.__description)
@@ -104,7 +106,7 @@ class WordController(BaseController):
         
         word_spell = request.forms.get('word_spell')
         word_explanation = request.forms.get('word_explanation')
-        word_pronanciation = request.forms.get('word_pronanciation')
+        word_pronounciation = request.forms.get('word_pronounciation')
         word_is_learned = 0
         word_note = request.forms.get('word_note')
         
@@ -113,7 +115,7 @@ class WordController(BaseController):
         
         session[HashHelper.hexdigest('word_spell')] = word_spell
         session[HashHelper.hexdigest('word_explanation')] = word_explanation
-        session[HashHelper.hexdigest('word_pronanciation')] = word_pronanciation
+        session[HashHelper.hexdigest('word_pronounciation')] = word_pronounciation
         session[HashHelper.hexdigest('word_is_learned')] = word_is_learned
         session[HashHelper.hexdigest('word_note')] = word_note
         session.save()
@@ -124,7 +126,7 @@ class WordController(BaseController):
         entity.set_word_id(word_id)
         entity.set_word_spell(word_spell)
         entity.set_word_explanation(word_explanation)
-        entity.set_word_pronanciation(word_pronanciation)
+        entity.set_word_pronounciation(word_pronounciation)
         entity.set_word_is_learned(word_is_learned)
         entity.set_word_note(word_note)
         entity.set_description(self.__description)
@@ -136,7 +138,7 @@ class WordController(BaseController):
         language_id = session.get(HashHelper.hexdigest('language_id'), False)
         word_spell = session.get(HashHelper.hexdigest('word_spell'), False)
         word_explanation = session.get(HashHelper.hexdigest('word_explanation'), False)
-        word_pronanciation = session.get(HashHelper.hexdigest('word_pronanciation'), False)
+        word_pronounciation = session.get(HashHelper.hexdigest('word_pronounciation'), False)
         word_is_learned = session.get(HashHelper.hexdigest('word_is_learned'), False)
         word_note = session.get(HashHelper.hexdigest('word_note'), False)
         
@@ -147,12 +149,11 @@ class WordController(BaseController):
         
         session = request.environ.get('beaker.session')
         
-        session[HashHelper.hexdigest('language_id')] = ''
         session[HashHelper.hexdigest('word_id')] = ''
         session[HashHelper.hexdigest('word_name')] = ''
         session.save()
 
-        entity = self.__service.create(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note)
+        entity = self.__service.create(user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')

@@ -20,11 +20,12 @@ class DbWords(DbBase):
         bindings = (user_id, word_id)
         return super().selectOne(sql, bindings)
 
-    def insert(self, user_id, word_name):
-        sql = 'INSERT INTO m_words(m_user_id, m_word_name) VALUES(%s, %s);'
-        bindings = (user_id, word_name)
+    def insert(self, user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
+        sql = 'INSERT INTO t_words(m_user_id, m_language_id, t_word_spell, t_word_explanation, t_word_pronounciation, t_word_is_learned, t_word_note) VALUES(%s, %s, %s, %s, %s, %s, %s);'
+        bindings = (user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
         
         # TODO 全体的に例外処理を入れる
+        id = None
         try:
             id = super().insert(sql, bindings)
             super().commit()
