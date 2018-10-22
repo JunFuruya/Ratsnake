@@ -180,25 +180,25 @@ def post_language_delete():
 ###############################################################################
 # 単語帳
 ###############################################################################
-@get('/admin/words')
+@get('/admin/languages/words')
 def get_word_list():
     check_login_status('admin')
     return WordController().index(request)
 
 @get('/admin/languages/<language_id>/words')
-def post_word_list():
+def post_word_list(language_id):
     check_login_status('admin')
-    return WordController().index(request)
+    return WordController().index(request, language_id)
 
 @get('/admin/languages/<language_id>/words/create')
-def get_word_create():
+def get_word_create(language_id):
     check_login_status('admin')
     return WordController().create(request, language_id)
 
 @get('/admin/languages/<language_id>/words/<word_id>')
-def post_word_detail(word_id):
+def post_word_detail(language_id, word_id):
     check_login_status('admin')
-    return WordController().detail(request, word_id)
+    return WordController().detail(request, language_id, word_id)
 
 @post('/admin/languages/<language_id>/words/<word_id>')
 def post_word_edit(language_id, word_id):

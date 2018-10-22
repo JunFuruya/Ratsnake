@@ -11,8 +11,8 @@
       <table>
         <form method="GET" name="languages" />
           <a href="/admin">TOPへ</a>
-          <a href="JavaScript:void(0);" onclick="document.languages.action='/admin/languages/'+document.languages.language_id[document.languages.language_id.selecedId]+'/words/create';document.languages.submit();">新規登録</a>
-          <select name="language_id">
+          <a onclick="JavaScript:setAction('languages', '/admin/languages/'+$('#language_id').prop('selectedIndex')+'/words/create');">新規登録</a>
+          <select id="language_id" name="language_id">
             <option value="">選択してください</option>
             {% for language_entity in entity.get_language_entity_list() %}
             <option value="{{ language_entity.get_language_id() }}"{% if entity.get_language_id() == language_entity.get_language_id() %} selected{% endif %} >{{ language_entity.get_language_name() }}</option>
