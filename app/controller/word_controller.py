@@ -49,13 +49,9 @@ class WordController(BaseController):
         
         return self.view('./template/admin/words/list.html', entity=entity)
     
-    def create(self, request):
+    def create(self, request, language_id):
         # TODO セッションからとる
         user_id = 1
-
-        # TODO もっと良い方法を考える
-        language_id = request.forms.get('language_id')
-        language_id = language_id if language_id is not None else ''
 
         # TODO validation
         
@@ -63,7 +59,8 @@ class WordController(BaseController):
         session[HashHelper.hexdigest('language_id')] = language_id
         session.save()
 
-        entity = self.__service.get_language(user_id, language_id)
+        entity = WordEntity()
+        entity.set_language_id(language_id)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')

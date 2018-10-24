@@ -206,7 +206,7 @@ def post_word_edit(language_id, word_id):
     return WordController().edit(request, language_id, word_id)
 
 @post('/admin/languages/<language_id>/words/confirm')
-def post_word_confirm(language_id):
+def post_word_confirm():
     check_login_status('admin')
     return WordController().confirm(request, language_id)
 
