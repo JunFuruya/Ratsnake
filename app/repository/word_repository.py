@@ -18,8 +18,8 @@ class WordRepository():
         self.__language_db = DbLanguages()
         pass
 
-    def find(self, user_id, word_id):
-        record = self.__word_db.selectOne(user_id, word_id)
+    def find(self, user_id, language_id, word_id):
+        record = self.__word_db.selectOne(user_id, language_id, word_id)
 
         entity = WordEntity()
         if record is not None:

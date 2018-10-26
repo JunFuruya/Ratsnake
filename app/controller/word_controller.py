@@ -17,15 +17,16 @@ class WordController(BaseController):
         self.__description = '選択した言語の単語を登録・編集・削除します。'
         pass
 
-    def index(self, request):
+    def index(self, request, language_id=0):
+        session = request.environ.get('beaker.session')
         # TODO セッションからとる
         user_id = 1
         # TODO もっと良い方法を考える
-        language_id = request.forms.get('language_id')
-        session = request.environ.get('beaker.session')
-        ses_language_id = HashHelper.hexdigest('language_id') in session
-        language_id = language_id if language_id is not None else ses_language_id
-
+        if language_id == 0:
+            language_id = request.query.get('language_id')
+        if language_id == '':
+            language_id = HashHelper.hexdigest('language_id') in session
+ 
         # TODO もっと良い方法を考える
         limit = request.query.get('limit')
         limit = limit if limit is not None else 10
@@ -94,7 +95,7 @@ class WordController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/edit.html', entity=entity)
     
-    def confirm(self, request):
+    def confirm(self, request, language_id):
         session = request.environ.get('beaker.session')
         language_id = session.get(HashHelper.hexdigest('language_id'), False)
         word_id = session.get(HashHelper.hexdigest('word_id'), False)
@@ -118,7 +119,8 @@ class WordController(BaseController):
         session.save()
         
         # TODO もっと良い設計があるはず
-        entity = self.__service.get_language(user_id, language_id)
+        entity = WordEntity()
+        entity.set_language_id(language_id)
         entity.set_title(self.__title)
         entity.set_word_id(word_id)
         entity.set_word_spell(word_spell)
@@ -130,7 +132,7 @@ class WordController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/confirm.html', entity=entity)
 
-    def insert(self, request):
+    def insert(self, request, language_id):
         session = request.environ.get('beaker.session')
         language_id = session.get(HashHelper.hexdigest('language_id'), False)
         word_spell = session.get(HashHelper.hexdigest('word_spell'), False)
@@ -151,6 +153,7 @@ class WordController(BaseController):
         session.save()
 
         entity = self.__service.create(user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
+        entity.set_language_id(language_id)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
@@ -169,6 +172,7 @@ class WordController(BaseController):
         session.save()
 
         entity = wordEntity()
+        entity.set_language_id(language_id)
         entity.set_word_id(self.__service.update(word_id, user_id, word_name))
         entity.set_title(self.__title)
         entity.set_description(self.__description)
@@ -186,6 +190,7 @@ class WordController(BaseController):
         session.save()
 
         entity = wordEntity()
+        entity.set_language_id(language_id)
         entity.set_word_id(self.__service.delete(word_id, user_id))
         entity.set_title(self.__title)
         entity.set_description(self.__description)

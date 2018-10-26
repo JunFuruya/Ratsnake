@@ -200,13 +200,8 @@ def post_word_detail(language_id, word_id):
     check_login_status('admin')
     return WordController().detail(request, language_id, word_id)
 
-@post('/admin/languages/<language_id>/words/<word_id>')
-def post_word_edit(language_id, word_id):
-    check_login_status('admin')
-    return WordController().edit(request, language_id, word_id)
-
 @post('/admin/languages/<language_id>/words/confirm')
-def post_word_confirm():
+def post_word_confirm(language_id):
     check_login_status('admin')
     return WordController().confirm(request, language_id)
 
@@ -214,6 +209,11 @@ def post_word_confirm():
 def post_word_insert(language_id):
     check_login_status('admin')
     return WordController().insert(request, language_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>')
+def post_word_edit(language_id, word_id):
+    check_login_status('admin')
+    return WordController().edit(request, language_id, word_id)
 
 @post('/admin/languages/<language_id>/words/<word_id>/update')
 def post_word_update(language_id, word_id):
