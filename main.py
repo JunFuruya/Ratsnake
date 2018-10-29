@@ -1,31 +1,42 @@
 # -*- coding: utf-8 -*-
 
 from beaker.middleware import SessionMiddleware
-from bottle import app, error, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
+# TODO jinja2_template はBaseController に移したので消す
+from bottle import app, error, route, get, jinja2_template, post, redirect, request, response, run, static_file, TEMPLATE_PATH
 
 from app.helper.helper import HashHelper
-from app.service.web_service import ConfigGetService
-from app.service.web_service import LoginService
-from app.service.web_service import SlackBotStartService
+from app.controller.language_controller import LanguageController
+from app.controller.word_controller import WordController
+
+# TODO そのうち消す
+from app.service.web_service import ConfigGetService, LoginService, SlackBotStartService
 
 from app.infrastructure.config_ini_file import DbServerConfigIniFile
 
 config = ConfigGetService().get_web_server_config()
 
+###############################################################################
+# 非ログインユーザ用画面
+###############################################################################
 @get('/')
 def get_index():
     # TODO: username取得
+    #check_login_status('admin')
+        
     #entity = service.get_index_data
     tempalte_path = './template/index.html'
     #return jinja2_template(tempalte_path, entity=entity)
     return jinja2_template(tempalte_path)
     
+###############################################################################
+# 管理画面TOP
+###############################################################################
 @get('/admin')
 def get_link_index():
     # TODO: username取得
     check_login_status('admin')
     
-    from app.entity.admin.index_entity import IndexEntity
+    from app.entity.index_entity import IndexEntity
     index_entity = IndexEntity()
     index_entity.set_title('Hideout Login')
     index_entity.set_description('Hideout Main Page')
@@ -33,12 +44,15 @@ def get_link_index():
     tempalte_path = './template/admin/index.html'
     return jinja2_template(tempalte_path, entity=index_entity)
 
+###############################################################################
+# ログイン、ログアウト
+###############################################################################
 @get('/admin/login')
 def get_admin_login():
     service = LoginService()
 
     # TODO: a factory class should return entity through a service class 
-    from app.entity.admin.login_entity import LoginEntity
+    from app.entity.login_entity import LoginEntity
     login_entity = LoginEntity()
     login_entity.set_title('Hideout Main Page')
     login_entity.set_description('Hideout Login Page')
@@ -46,10 +60,25 @@ def get_admin_login():
     tempalte_path = './template/admin/login.html'
     return jinja2_template(tempalte_path, entity=login_entity)
 
-@get('/admin/login/complete')
-def get_admin_login_complete():
-    redirect('/admin') # In case that users press F5 key
-    pass
+@post('/admin/login')
+def post_admin_login_complete():
+    username = request.forms.get('username')
+    password = request.forms.get('password')
+
+    service = LoginService()
+    if(service.is_authenticated(username, password)):
+        session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('login')] = HashHelper.hexdigest(username)
+        session.save()
+
+        # TODO: move max_age to config file
+        max_age = 60 * 60 * 24 * 30 # 1Month
+        response.set_cookie(HashHelper.hexdigest('login'), session[HashHelper.hexdigest('login')], max_age=max_age)
+        # TODO cookie 使えてる?
+        return redirect('/admin')
+        
+    else:
+        return redirect('/admin/login')
 
 @get('/admin/logout')
 def get_admin_login_complete():
@@ -58,63 +87,159 @@ def get_admin_login_complete():
     session.save()
     return redirect('/admin/login')
 
-@post('/admin/login/complete')
-def post_admin_login_complete():
-    username = request.forms.get('username')
-    password = request.forms.get('password')
+###############################################################################
+# リンクカテゴリマスタ
+###############################################################################
 
-    service = LoginService()
-    if(service.is_authenticated(username, password)):
-        session = request.environ.get('beaker.session')
-        session['login'] = HashHelper.hexdigest(username)
-        session[HashHelper.hexdigest('login')] = HashHelper.hexdigest(username)
-        session.save()
-
-        # TODO: move max_age to config file
-        #max_age = 60 * 60 * 24 * 30 # 1Month
-        # TODO: cookie ログイン状態を保持にチェックをいれた場合のみ
-        #response.set_cookie(cookie_key, cookie_value, max_age=max_age)
-        return redirect('/admin')
-        
-    else:
-        return redirect('/admin/login')
-
+###############################################################################
+# リンクマスタ
+###############################################################################
 @get('/admin/links')
 def get_link_list():
-    check_login_status('admins')
+    check_login_status('admin')
     link_list = [
         [1, 'AAA', 'http://aaa.co.jp'],
         [2, 'BBB', 'http://bbb.co.jp'],
         [3, 'CCC', 'http://ccc.co.jp']
     ]
+    # TODO テンプレート用意する
     tempalte_path = './template/admin/links/list.html'
     return jinja2_template(tempalte_path, link_list=link_list)
 
 @get('/admin/links/create')
 def get_link_create():
-    html = '<html><body>create</body></html>'
-    tempalte_path = './template/admin/links/list.html'
+    return jinja2_template('./template/admin/links/create.html', entity=LinkController().create(request))
+
+@get('/admin/links/<link_id>')
+def post_link_update(link_id):
+    # TODO テンプレート用意する
+    html = '<html><body>update</body></html>'
     return jinja2_template(html)
 
-@post('/admin/links/update')
-def post_link_update():
+@post('/admin/links/<link_id>')
+def post_link_update(link_id):
+    # TODO テンプレート用意する
     html = '<html><body>update</body></html>'
     return jinja2_template(html)
 
 @post('/admin/links/confirm')
 def post_link_confirm():
+    # TODO テンプレート用意する
     html = '<html><body>confirm</body></html>'
     return jinja2_template(html)
 
 @post('/admin/links/complete')
 def post_link_complete():
+    # TODO テンプレート用意する
     html = '<html><body>complete</body></html>'
     return jinja2_template(html)
 
+###############################################################################
+# 言語マスタ
+###############################################################################
+@get('/admin/languages')
+def get_language_list():
+    check_login_status('admin')
+    return LanguageController().index(request)
+
+@get('/admin/languages/create')
+def get_language_create():
+    check_login_status('admin')
+    return LanguageController().create(request)
+
+@get('/admin/languages/<language_id>')
+def post_language_detail(language_id):
+    check_login_status('admin')
+    return LanguageController().detail(request, language_id)
+
+@post('/admin/languages/<language_id>')
+def post_language_edit(language_id):
+    check_login_status('admin')
+    return LanguageController().edit(request, language_id)
+
+@post('/admin/languages/confirm')
+def post_language_confirm():
+    check_login_status('admin')
+    return LanguageController().confirm(request)
+
+@post('/admin/languages/insert')
+def post_language_insert():
+    check_login_status('admin')
+    return LanguageController().insert(request)
+
+@post('/admin/languages/update')
+def post_language_update():
+    check_login_status('admin')
+    return LanguageController().update(request)
+
+@post('/admin/languages/delete')
+def post_language_delete():
+    check_login_status('admin')
+    return LanguageController().delete(request)
+
+###############################################################################
+# 単語帳
+###############################################################################
+@get('/admin/languages/words')
+def get_word_list():
+    check_login_status('admin')
+    return WordController().index(request)
+
+@get('/admin/languages/<language_id>/words')
+def post_word_list(language_id):
+    check_login_status('admin')
+    return WordController().index(request, language_id)
+
+@get('/admin/languages/<language_id>/words/create')
+def get_word_create(language_id):
+    check_login_status('admin')
+    return WordController().create(request, language_id)
+
+@get('/admin/languages/<language_id>/words/<word_id>')
+def post_word_detail(language_id, word_id):
+    check_login_status('admin')
+    return WordController().detail(request, language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/confirm')
+def post_word_confirm(language_id):
+    check_login_status('admin')
+    return WordController().confirm(request, language_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/confirm')
+def post_word_confirm(language_id, word_id):
+    check_login_status('admin')
+    return WordController().confirm(request, language_id)
+
+@post('/admin/languages/<language_id>/words/insert')
+def post_word_insert(language_id):
+    check_login_status('admin')
+    return WordController().insert(request, language_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>')
+def post_word_edit(language_id, word_id):
+    check_login_status('admin')
+    return WordController().edit(request, language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/update')
+def post_word_update(language_id, word_id):
+    check_login_status('admin')
+    return WordController().update(request, language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/delete')
+def post_word_delete(language_id, word_id):
+    check_login_status('admin')
+    return WordController().delete(request, language_id, word_id)
+
+###############################################################################
+# 静的ファイル
+###############################################################################
 @get('/public/<path:path>')
 def get_static_file(path):
     return static_file(path, root='./public/')
 
+###############################################################################
+# エラー画面
+###############################################################################
 @error(404)
 def error404(error):
     from app.entity.error_entity import ErrorEntity
@@ -127,7 +252,7 @@ def error404(error):
     tempalte_path = './template/front/error.html'
     return jinja2_template(tempalte_path, entity=error_entity)
     
-#@error(500)
+error(500)
 def error500(error):
     from app.entity.error_entity import ErrorEntity
     error_entity = ErrorEntity()
@@ -141,8 +266,9 @@ def error500(error):
 
 def check_login_status(username):
     session = request.environ.get('beaker.session')
-    session_value = session[HashHelper.hexdigest('login')]
+    session_value = session.get(HashHelper.hexdigest('login'), False)
     hashed_value = HashHelper.hexdigest(username)
+    
     if(session_value != hashed_value):
         return redirect('/admin/login')
     pass

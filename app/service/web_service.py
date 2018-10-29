@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 import configparser
 import urllib3
 
+from app.service.base_service import BaseService
 from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
 from app.repository.app_slack_repository import AppSlackRepository
-from app.repository.db_users_repository import DbUsersRepository
+from app.repository.db_user_repository import DbUsersRepository
 from app.repository.file_web_server_config_repository import FileWebServerConfigRepository
 
 '''
@@ -30,7 +31,7 @@ class LoginService():
         
     def is_authenticated(self, username, password):
         return self.__repository.exists(username, password)
-    
+
 class SlackBotStartService():
     __slack_bot_repository = None
     def __init__(self):
@@ -38,7 +39,7 @@ class SlackBotStartService():
         
     def run(self):
         self.__slack_bot_reposiroty.run()
-
+    
 class IdcfCloudStartService():
     __idcf_cloud_repository = None
     
