@@ -12,7 +12,7 @@
       {% if entity.get_word_id() == '' %}
         {% set action = '/admin/languages/' + entity.get_language_id() + '/words/insert' %}
       {% else %}
-        {% set action = '/admin/languages/' + entity.get_language_id() + '/words/update' %}
+        {% set action = '/admin/languages/' + entity.get_language_id() + '/words/' + entity.get_word_id() + '/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
         {{ entity.get_word_spell() }}

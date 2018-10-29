@@ -22,10 +22,14 @@ class WordRepository():
         record = self.__word_db.selectOne(user_id, language_id, word_id)
 
         entity = WordEntity()
+        entity.set_language_id(language_id)
         if record is not None:
             entity.set_word_id(record[0])
-            entity.set_word_name(record[1])
-            
+            entity.set_word_spell(record[1])
+            entity.set_word_explanation(record[2])
+            entity.set_word_pronounciation(record[3])
+            entity.set_word_is_learned(record[4])
+            entity.set_word_note(record[5])            
         return entity
 
     def findList(self, user_id, language_id, limit, offset):
@@ -47,10 +51,6 @@ class WordRepository():
             entity = WordEntity()
             entity.set_word_id(word_record[0])
             entity.set_word_spell(word_record[1])
-            entity.set_word_explanation(word_record[2])
-            entity.set_word_pronounciation(word_record[3])
-            entity.set_word_is_learned(word_record[4])
-            entity.set_word_note(word_record[5])
             entities.append(entity)
             
         list_entity.set_word_entity_list(entities)
@@ -61,15 +61,15 @@ class WordRepository():
         entity = WordEntity()
         return entity.set_word_id(self.__word_db.insert(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note))
 
-    def update(self, word_id, user_id, word_name):
-        is_success = self.__word_db.update(word_id, user_id, word_name)
+    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
+        is_success = self.__word_db.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
         if is_success == True:
             return word_id
         else:
             return ''
 
-    def delete(self, word_id, user_id):
-        is_success = self.__word_db.delete(word_id, user_id)
+    def delete(self, user_id, language_id, word_id):
+        is_success = self.__word_db.delete(user_id, language_id, word_id)
         if is_success == True:
             return word_id
         else:

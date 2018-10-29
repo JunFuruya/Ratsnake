@@ -11,13 +11,13 @@ class DbWords(DbBase):
         pass
     
     def select(self, user_id, language_id, limit, offset):
-        sql = 'SELECT t_word_id, t_word_spell, t_word_explanation, t_word_pronounciation, t_word_is_learned, t_word_note FROM t_words WHERE m_user_id = %s AND m_language_id = %s LIMIT %s OFFSET %s'
+        sql = 'SELECT t_word_id, t_word_spell FROM t_words WHERE m_user_id = %s AND m_language_id = %s LIMIT %s OFFSET %s'
         bindings = (user_id, language_id, limit, offset)
         return super().select(sql, bindings)
 
-    def selectOne(self, user_id, word_id):
-        sql = 'SELECT m_word_id, m_word_name FROM m_words WHERE m_user_id = %s AND m_word_id = %s;'
-        bindings = (user_id, word_id)
+    def selectOne(self, user_id, language_id, word_id):
+        sql = 'SELECT t_word_id, t_word_spell, t_word_explanation, t_word_pronounciation, t_word_is_learned, t_word_note FROM t_words WHERE m_user_id = %s AND m_language_id = %s AND t_word_id = %s;'
+        bindings = (user_id, language_id, word_id)
         return super().selectOne(sql, bindings)
 
     def insert(self, user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
@@ -36,9 +36,9 @@ class DbWords(DbBase):
         
         return id
     
-    def update(self, word_id, user_id, word_name):
-        sql = 'UPDATE m_words SET m_word_name = %s WHERE m_word_id = %s AND m_user_id = %s;'
-        bindings = (word_name, word_id, user_id)
+    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
+        sql = 'UPDATE t_words SET t_word_spell = %s, t_word_explanation = %s, t_word_pronounciation = %s, t_word_is_learned = %s, t_word_note = %s WHERE m_user_id = %s AND m_language_id = %s AND t_word_id = %s;'
+        bindings = (word_spell, word_explanation, word_pronounciation, word_is_learned, word_note, user_id, language_id, word_id)
 
         is_success = False
         # TODO 全体的に例外処理を入れる
@@ -49,9 +49,9 @@ class DbWords(DbBase):
             super().rollback()
         return is_success
     
-    def delete(self, word_id, user_id):
-        sql = 'DELETE FROM m_words WHERE m_word_id = %s AND m_user_id = %s;'
-        bindings = (word_id, user_id)
+    def delete(self, user_id, language_id, word_id):
+        sql = 'DELETE FROM t_words WHERE m_user_id = %s AND m_language_id = %s AND t_word_id = %s;'
+        bindings = (user_id, language_id, word_id)
 
         is_success = False
         # TODO 全体的に例外処理を入れる

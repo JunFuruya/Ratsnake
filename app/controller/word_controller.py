@@ -67,29 +67,31 @@ class WordController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/create.html', entity=entity)
 
-    def detail(self, request, word_id):
+    def detail(self, request, language_id, word_id):
         
         # TODO user_id 取得する
         user_id = 1
         # TODO validation
         
         session = request.environ.get('beaker.session')
+        session[HashHelper.hexdigest('language_id')] = language_id
         session[HashHelper.hexdigest('word_id')] = word_id
         session.save()
         
-        entity = self.__service.get(user_id, word_id)
+        entity = self.__service.get(user_id, language_id, word_id)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/detail.html', entity=entity)
 
-    def edit(self, request, word_id):
+    def edit(self, request, language_id, word_id):
         session = request.environ.get('beaker.session')
-        word_id = session.get(HashHelper.hexdigest('word_id'), False)
+        #language_id = HashHelper.hexdigest('language_id') in session
+        #word_id = HashHelper.hexdigest('word_id') in session
         # TODO user_id 取得する
         user_id = 1
         
-        entity = self.__service.get(user_id, word_id)
+        entity = self.__service.get(user_id, language_id, word_id)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
@@ -105,6 +107,7 @@ class WordController(BaseController):
         word_spell = request.forms.get('word_spell')
         word_explanation = request.forms.get('word_explanation')
         word_pronounciation = request.forms.get('word_pronounciation')
+        # TODO 取得した値に応じて表示する
         word_is_learned = 0
         word_note = request.forms.get('word_note')
         
@@ -141,7 +144,7 @@ class WordController(BaseController):
         word_is_learned = session.get(HashHelper.hexdigest('word_is_learned'), False)
         word_note = session.get(HashHelper.hexdigest('word_note'), False)
         
-        #TODO ログイン時に取得するようにする 
+        #TODO ログイン時に取得するようにする
         user_id = 1
         
         # TODO validation
@@ -159,39 +162,51 @@ class WordController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/complete.html', entity=entity)
 
-    def update(self, request):
+    def update(self, request, language_id, word_id):
         session = request.environ.get('beaker.session')
+        language_id = session.get(HashHelper.hexdigest('language_id'), False)
         word_id = session.get(HashHelper.hexdigest('word_id'), False)
-        word_name = session.get(HashHelper.hexdigest('word_name'), False)
+        word_spell = session.get(HashHelper.hexdigest('word_spell'), False)
+        word_explanation = session.get(HashHelper.hexdigest('word_explanation'), False)
+        word_pronounciation = session.get(HashHelper.hexdigest('word_pronounciation'), False)
+        word_is_learned = session.get(HashHelper.hexdigest('word_is_learned'), False)
+        word_note = session.get(HashHelper.hexdigest('word_note'), False)
         #TODO ログイン時に取得するようにする 
         user_id = 1
         
         session = request.environ.get('beaker.session')
         session[HashHelper.hexdigest('word_id')] = ''
-        session[HashHelper.hexdigest('word_name')] = ''
+        session[HashHelper.hexdigest('word_spell')] = ''
+        session[HashHelper.hexdigest('word_explanation')] = ''
+        session[HashHelper.hexdigest('word_pronounciation')] = ''
+        session[HashHelper.hexdigest('word_is_learned')] = ''
+        session[HashHelper.hexdigest('word_note')] = ''
         session.save()
 
-        entity = wordEntity()
+        entity = WordEntity()
         entity.set_language_id(language_id)
-        entity.set_word_id(self.__service.update(word_id, user_id, word_name))
+        entity.set_word_id(self.__service.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note))
+
+        entity.set_title(self.__title)
+        entity.set_title(self.__title)
+        entity.set_title(self.__title)
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/words/complete.html', entity=entity)
     
-    def delete(self, request):
+    def delete(self, request, language_id, word_id):
         word_id = request.forms.get('word_id')
         #TODO ログイン時に取得するようにする 
         user_id = 1
 
         session = request.environ.get('beaker.session')
         session[HashHelper.hexdigest('word_id')] = ''
-        session[HashHelper.hexdigest('word_name')] = ''
         session.save()
 
-        entity = wordEntity()
+        entity = WordEntity()
         entity.set_language_id(language_id)
-        entity.set_word_id(self.__service.delete(word_id, user_id))
+        entity.set_word_id(self.__service.delete(user_id, language_id, word_id))
         entity.set_title(self.__title)
         entity.set_description(self.__description)
         entity.set_notification('This is the index page.')
