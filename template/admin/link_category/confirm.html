@@ -8,18 +8,17 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      {{ entity.get_link_name() }}
-      {% if entity.get_link_id() == '' %}
-        {% set action = '/admin/links/' + entity.get_link_id() + '/insert' %}
+      {% if entity.get_link_category_id() == '' %}
+        {% set action = '/admin/link-categories/insert' %}
       {% else %}
-        {% set action = '/admin/links/' + entity.get_link_id() + '/update' %}
+        {% set action = '/admin/link-categories/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_link_name() }}
+        {{ entity.get_link_category_name() }}
         <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
         <input type="submit" value="登録"/>
       </form>
-      <a href="/admin/links">リンク一覧へ</a>
+      <a href="/admin/link-categories">言語一覧へ</a>
       
     </article>
 {% endblock %}

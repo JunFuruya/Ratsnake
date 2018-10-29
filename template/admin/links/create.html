@@ -1,84 +1,22 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="author" content="" />
-  <meta name="keyword" content="" />
-  <meta name="description" content="Hideout Main Page" />
-  <meta name="robots" content="noindex,nofollow">
-  <link rel="stylesheet" type="text/css" href="/public/css/common.css"/>
-  <script src="/public/js/vendor/jquery-3.2.1.min.js"></script>
-  <script src="/public/js/common.js"></script>
-  <title>Hideout Login</title>
-</head>
-<body>
-  <app.entity.admin.index_entity.IndexEntity object at 0x04205C10>
-    <header>
-    <section id="logo">
-      <a href="">Hideout</a>
-      <span class="breadcrumb">></span>
-      <a href="">管理画面TOP</a>
-      <span id="logout"><a href="/admin/logout">ログアウト</a></span>
-    </section>
-    <section class="description">
-      <p>This is the index page.</p>
-      <ul id="event_button_ul"></ul>
-    </section>
-  </header>
-  <section id="main">
-    
-      <nav id="menu">
-      <section class="menu_category">外部開発ツール</section>
-      <ul>
-        <li>
-          <a href="https://github.com/">
-            <section class="menu_label">Github</section>
-            <section class="menu_description">ソースコードを管理します。</section>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <section class="menu_label">Swagger Editor</section>
-            <section class="menu_description">Api仕様書を作成します。</section>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <section class="menu_label">Draw IO</section>
-            <section class="menu_description">詳細設計書を作成します。</section>
-          </a>
-        </li>
-      </ul>
-      <section class="menu_category">マスタ管理</section>
-      <ul>
-        <li>
-          <a href="">
-            <section class="menu_label">リンクカテゴリマスタ管理</section>
-            <section class="menu_description">リンクを分類するためのカテゴリを登録、編集、削除します。</section>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <section class="menu_label">リンクマスタ管理</section>
-            <section class="menu_description">よく使うリンクを登録、編集、削除します。</section>
-          </a>
-        </li>
-      </ul>
-    </nav>
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
 
-    
+{% block content %}
     <article>
-      <h2>Hideout Login</h2>
-      <h3>Index</h3>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin/languages">言語一覧へ</a>
-      <form action="/admin/languages/confirm" method="POST"><input type="submit" value="確認"/></form>
+      {{ entity.get_link_name() }}
+      <form action="/admin/links/{{ entity.get_link_id() }}/words/confirm" method="POST">
+        <div>Link Name <input type="text" name="link_name" value="" /></div>
+        <div>
+          <input type="reset" value="リセット" />
+          <input type="submit" value="確認" />
+        </div>
+      </form>
+      <a href="/admin/links">リンク一覧へ</a>
       
     </article>
-
-  </section>
-    <footer>
-    Copyright &copy; 2018 Jun Furuya All Rights Reserved.
-  </footer>
-</body>
-</html>
+{% endblock %}
