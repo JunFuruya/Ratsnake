@@ -25,10 +25,11 @@ class AdminLoginController(BaseController):
         return self.view('./template/admin/login.html', entity=LoginEntity())
 
     def login(self):
-        username = self.get_param('username')
-        password = self.get_param('password')
+        username = self.get_param('username', '')
+        password = self.get_param('password', '')
 
         if(self.__service.is_authenticated(username, password)):
+            # TODO user_id 取得
             self.set_session('login', HashHelper.hexdigest(username))
             # TODO cookie 使う
             return self.redirect('/admin')

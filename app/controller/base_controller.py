@@ -27,8 +27,11 @@ class BaseController():
     def redirect(self, path):
         return redirect(path)
     
-    def get_param(self, key):
-        return self.__request.forms.get(key).strip()
+    def get_param(self, key, default):
+        if key not in self.__request.forms:
+            return ''
+        else:
+            return self.__request.forms.get(key).strip()
     
     def get_session(self, key):
         if HashHelper.hexdigest(key) not in self.__session:
