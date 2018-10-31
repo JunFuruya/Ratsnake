@@ -66,7 +66,7 @@ class LinkController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/links/create.html', entity=entity)
 
-    def detail(self, request, link_id, link_id):
+    def detail(self, request, link_id):
         
         # TODO user_id 取得する
         user_id = 1
@@ -82,7 +82,7 @@ class LinkController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/links/detail.html', entity=entity)
 
-    def edit(self, request, link_id, link_id):
+    def edit(self, request, link_id):
         session = request.environ.get('beaker.session')
         #link_id = HashHelper.hexdigest('link_id') in session
         # TODO user_id 取得する
@@ -159,7 +159,7 @@ class LinkController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/links/complete.html', entity=entity)
 
-    def update(self, request, link_id, link_id):
+    def update(self, request, link_id):
         session = request.environ.get('beaker.session')
         link_id = session.get(HashHelper.hexdigest('link_id'), False)
         link_id = session.get(HashHelper.hexdigest('link_id'), False)
@@ -192,7 +192,7 @@ class LinkController(BaseController):
         entity.set_notification('This is the index page.')
         return self.view('./template/admin/links/complete.html', entity=entity)
     
-    def delete(self, request, link_id, link_id):
+    def delete(self, request, link_id):
         link_id = request.forms.get('link_id')
         #TODO ログイン時に取得するようにする 
         user_id = 1

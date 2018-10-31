@@ -2,7 +2,7 @@
 
 from app.service.base_service import BaseService
 from app.repository.link_category_repository import LinkCategoryRepository
-from app.repository.db_user_repository import DbUsersRepository
+from app.repository.user_repository import UsersRepository
 
 class LinkCategoryService(BaseService):
     def __init__(self):

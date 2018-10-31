@@ -9,16 +9,12 @@ from app.helper.helper import HashHelper
 Word Controller Module
 '''
 class AdminIndexController(BaseController):
-    def __init__(self):
-        self.__title = ''
-        self.__description = ''
+    def __init__(self, request):
+        super().__init__(request)
+        self.__title = 'Hideout Login'
+        self.__description = 'Login page.'
+        self.__notification = 'Please enter your id and password.'
         pass
 
-    def index(self, request):
-        # TODO: username取得
-        entity = IndexEntity()
-        entity.set_title(self.__title)
-        entity.set_description(self.__description)
-        entity.set_notification('This is the index page.')
-        return self.view('./template/admin/index.html', entity=entity)
-
+    def index(self):
+        return self.view('./template/admin/index.html', entity=IndexEntity())

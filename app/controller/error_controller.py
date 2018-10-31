@@ -1,7 +1,7 @@
 #-*- UTF-8 -*-
 
 from app.controller.base_controller import BaseController
-from app.entity.base_entity import BaseEntity
+from app.entity.base_web_entity import BaseWebEntity
 from app.entity.error_entity import ErrorEntity
 
 from app.helper.helper import HashHelper

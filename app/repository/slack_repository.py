@@ -2,7 +2,7 @@
 
 from vendor.slackbot.bot import Bot
 
-class AppSlackRepository():
+class SlackRepository():
     __bot = None
     def __init__(self):
         self.__bot = Bot()
