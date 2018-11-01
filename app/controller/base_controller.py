@@ -27,9 +27,11 @@ class BaseController():
     def redirect(self, path):
         return redirect(path)
     
-    def get_param(self, key, default):
+    def get_param(self, key, default=''):
         if key not in self.__request.forms:
-            return ''
+            return default
+        elif self.__request.forms.get(key).strip() == '':
+            return default
         else:
             return self.__request.forms.get(key).strip()
     

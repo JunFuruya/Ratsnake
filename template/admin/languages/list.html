@@ -19,10 +19,10 @@
             <td>{{ entity.get_language_id() }}</td>
             <td>{{ entity.get_language_name() }}</td>
             <td>
-              <form action="/admin/languages/{{ entity.get_language_id() }}" method="POST">
+              <form id="language{{ entity.get_language_id() }}" action="/admin/languages/{{ entity.get_language_id() }}" method="GET">
                 <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
                 <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){document.forms[0].action='/admin/languages/delete';document.forms[0].method='POST';document.forms[0].submit();}" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('language{{ entity.get_language_id() }}', '/admin/languages/delete');}" />
               </form>
             </td>
           </tr>

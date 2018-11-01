@@ -33,31 +33,24 @@ class LanguageController(BaseController):
         return self.view('./template/admin/languages/create.html', LanguageEntity())
 
     def detail(self, language_id):
-        
         # TODO user_id 取得する
         user_id = 1
         # TODO validation
         
-        session = request.environ.get('beaker.session')
-        session[HashHelper.hexdigest('language_id')] = language_id
-        session.save()
+        self.set_session('language_id', language_id)
         
-        entity = self.__service.get(user_id, language_id)
-        return self.view('./template/admin/languages/detail.html', entity)
+        return self.view('./template/admin/languages/detail.html', self.__service.get(user_id, language_id))
 
     def edit(self, language_id):
-        session = request.environ.get('beaker.session')
-        language_id = session.get(HashHelper.hexdigest('language_id'), False)
+        language_id = self.get_session('language_id')
         # TODO user_id 取得する
         user_id = 1
-        
-        entity = self.__service.get(user_id, language_id)
-        return self.view('./template/admin/languages/edit.html', entity)
+        # TODO validation        
+        return self.view('./template/admin/languages/edit.html', self.__service.get(user_id, language_id))
     
     def confirm(self):
-        session = request.environ.get('beaker.session')
-        language_id = session.get(HashHelper.hexdigest('language_id'), False)
-        language_name = request.forms.get('language_name')
+        language_id = self.get_session('language_id')
+        language_name = self.get_param('language_name')
 
         # TODO validation
         
@@ -70,8 +63,7 @@ class LanguageController(BaseController):
         return self.view('./template/admin/languages/confirm.html', entity)
 
     def insert(self):
-        session = request.environ.get('beaker.session')
-        language_name = session.get(HashHelper.hexdigest('language_name'), False)
+        language_name = self.get_session('language_name')
         
         #TODO ログイン時に取得するようにする 
         user_id = 1
@@ -85,9 +77,8 @@ class LanguageController(BaseController):
         return self.view('./template/admin/languages/complete.html', self.__service.create(user_id, language_name))
 
     def update(self):
-        session = request.environ.get('beaker.session')
-        language_id = session.get(HashHelper.hexdigest('language_id'), False)
-        language_name = session.get(HashHelper.hexdigest('language_name'), False)
+        language_id = self.get_session('language_id')
+        language_name = self.get_session('language_name')
         #TODO ログイン時に取得するようにする 
         user_id = 1
         
@@ -100,7 +91,7 @@ class LanguageController(BaseController):
         return self.view('./template/admin/languages/complete.html', entity)
     
     def delete(self):
-        language_id = request.forms.get('language_id')
+        language_id = self.get_param('language_id')
         #TODO ログイン時に取得するようにする 
         user_id = 1
 
@@ -110,5 +101,4 @@ class LanguageController(BaseController):
 
         entity = LanguageEntity()
         entity.set_language_id(self.__service.delete(language_id, user_id))
-        return self.view('./template/admin/languages/complete.html', entity)
-    
+        return self.view('./template/admin/languages/complete.html', entity)    
