@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from app.service.base_service import BaseService
-from app.repository.word_repository import WordRepository
-from app.repository.language_repository import LanguageRepository
+from app.repository.link_repository import LinkRepository
+from app.repository.link_category_repository import LinkCategoryRepository
 from app.repository.user_repository import UsersRepository
-from app.entity.word_entity import WordEntity
+from app.entity.link_entity import LinkEntity
 
-class WordService(BaseService):
-    __language_repository = None
+class LinkService(BaseService):
+    __link_repository = None
     
     def __init__(self):
         self.__reposiroty = WordRepository()

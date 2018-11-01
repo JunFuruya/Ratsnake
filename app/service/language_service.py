@@ -2,7 +2,7 @@
 
 from app.service.base_service import BaseService
 from app.repository.language_repository import LanguageRepository
-from app.repository.db_user_repository import DbUsersRepository
+from app.repository.user_repository import UsersRepository
 
 class LanguageService(BaseService):
     def __init__(self):

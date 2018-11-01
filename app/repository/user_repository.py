@@ -3,9 +3,9 @@
 from app.infrastructure.user_db import DbUsers
 
 '''
-Repository Module
+User Repository Module
 '''
-class DbUsersRepository():
+class UsersRepository():
     __db = None
     
     def __init__(self):

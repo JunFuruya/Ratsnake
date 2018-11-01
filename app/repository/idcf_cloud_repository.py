@@ -4,12 +4,9 @@ from app.infrastructure.idcf_cloud_api import IdcfCloudApi
 from app.infrastructure.idcf_cloud_yaml_file import IdcfCloudConfigYamlFile
 
 '''
-ApiIdcfCloudRepository Module
+IdcfCloudRepository Module
 '''
-class ApiIdcfCloudRepository():
-    '''
-    ApiIdcfCloudRepository
-    '''
+class IdcfCloudRepository():
     __idcf_cloud_api = None
     
     def __init__(self):

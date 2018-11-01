@@ -4,9 +4,9 @@ from app.entity.web_config_entity import WebServerConfigEntity
 from app.infrastructure.web_server_yaml_file import WebServerConfigYamlFile
 
 '''
-FileWebServerConfigRepository Module
+WebServerConfigRepository Module
 '''
-class FileWebServerConfigRepository():
+class WebServerConfigRepository():
     __web_config = None
 
     def __init__(self):

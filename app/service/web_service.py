@@ -5,19 +5,19 @@ import configparser
 import urllib3
 
 from app.service.base_service import BaseService
-from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
-from app.repository.app_slack_repository import AppSlackRepository
-from app.repository.db_user_repository import DbUsersRepository
-from app.repository.file_web_server_config_repository import FileWebServerConfigRepository
+from app.repository.idcf_cloud_repository import IdcfCloudRepository
+from app.repository.slack_repository import SlackRepository
+from app.repository.user_repository import UsersRepository
+from app.repository.web_server_config_repository import WebServerConfigRepository
 
 '''
-Service Module
+Web Server Config Service Module
 '''
 class ConfigGetService():
     __repository = None
 
     def __init__(self):
-        self.__repository = FileWebServerConfigRepository()
+        self.__repository = WebServerConfigRepository()
         pass
     
     def get_web_server_config(self):
