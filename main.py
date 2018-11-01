@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-
+#-*- UTF-8 -*-
 
 from beaker.middleware import SessionMiddleware
-
 from bottle import app, error, get, post, request, run, static_file
+
+from app.helper.helper import HashHelper
 
 from app.controller.admin_index_controller import AdminIndexController
 from app.controller.admin_login_controller import AdminLoginController

@@ -29,7 +29,12 @@ class BaseController():
     
     def get_param(self, key, default=''):
         if key not in self.__request.forms:
-            return default
+            if key not in self.__request.query:
+                return default
+            elif self.__request.query.get(key).strip() == '':
+                return default
+            else:
+                return self.__request.query.get(key).strip() 
         elif self.__request.forms.get(key).strip() == '':
             return default
         else:
