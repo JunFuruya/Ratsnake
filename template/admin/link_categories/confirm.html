@@ -11,14 +11,15 @@
       {% if entity.get_link_category_id() == '' %}
         {% set action = '/admin/link-categories/insert' %}
       {% else %}
-        {% set action = '/admin/link-categories/update' %}
+        {% set action = '/admin/link-categories/' + entity.get_link_category_id() + '/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
         {{ entity.get_link_category_name() }}
+        {{ entity.get_link_category_display_order() }}
         <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
         <input type="submit" value="登録"/>
       </form>
-      <a href="/admin/link-categories">言語一覧へ</a>
+      <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>
       
     </article>
 {% endblock %}

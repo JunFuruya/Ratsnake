@@ -9,17 +9,17 @@ class LinkCategoryService(BaseService):
         self.__reposiroty = LinkCategoryRepository()
         pass
 
-    def getList(self, limit, oiffset):
-        return self.__reposiroty.findList(limit, oiffset)
+    def getList(self, user_id, limit, offset):
+        return self.__reposiroty.findList(user_id, limit, offset)
 
     def get(self, user_id, link_category_id):
         return self.__reposiroty.find(user_id, link_category_id)
 
-    def create(self, user_id, link_category_name):
-        return self.__reposiroty.insert(user_id, link_category_name)
+    def create(self, user_id, link_category_name, link_category_display_order):
+        return self.__reposiroty.insert(user_id, link_category_name, link_category_display_order)
 
-    def update(self, link_category_id, user_id, link_category_name):
-        return self.__reposiroty.update(link_category_id, user_id, link_category_name)
+    def update(self, link_category_id, user_id, link_category_name, link_category_display_order):
+        return self.__reposiroty.update(link_category_id, user_id, link_category_name, link_category_display_order)
 
     def delete(self, link_category_id, user_id):
         return self.__reposiroty.delete(link_category_id, user_id)
