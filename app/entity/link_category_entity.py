@@ -6,6 +6,7 @@ class LinkCategoryEntity(BaseWebEntity):
     __link_category_id = ''
     __user_id = ''
     __link_category_name = ''
+    __link_category_display_order = ''
     
     def set_error_message(self, error_message):
         self.__error_message = error_message
@@ -35,4 +36,10 @@ class LinkCategoryEntity(BaseWebEntity):
     def get_link_category_name(self):
         return self.__link_category_name
     
+    def set_link_category_display_order(self, link_category_display_order):
+        self.__link_category_display_order = link_category_display_order
+        return self
+
+    def get_link_category_display_order(self):
+        return self.__link_category_display_order
     # TODO to array

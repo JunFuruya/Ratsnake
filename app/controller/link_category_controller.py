@@ -11,7 +11,7 @@ Link Category Controller Module
 '''
 class LinkCategoryController(BaseController):
 
-    def __init__(self):
+    def __init__(self, request):
         super().__init__(request)
         self.__title = 'リンクカテゴリマスタ'
         self.__description = 'リンクを分類するためのカテゴリを登録・編集・削除します。'
@@ -21,91 +21,89 @@ class LinkCategoryController(BaseController):
         pass
 
     def index(self):
-        # TODO もっと良い方法を考える
-        limit = request.query.get('limit')
-        limit = limit if limit is not None else 10
-            
-        # TODO もっと良い方法を考える
-        offset = request.query.get('offset')
-        offset = offset if offset is not None else 0
+        user_id = 1
+        limit = self.get_param('limit', 10)
+        offset = self.get_param('offset', 0)
 
-        session[HashHelper.hexdigest('link_category_id')] = ''
-        session[HashHelper.hexdigest('link_category_name')] = ''
+        self.set_session('link_category_id', '')
 
-        return self.view('./template/admin/link_categories/list.html', self.__service.getList(limit, offset))
+        return self.view('./template/admin/link_categories/list.html', self.__service.getList(user_id, limit, offset))
     
     def create(self):
         return self.view('./template/admin/link_categories/create.html', LinkCategoryEntity())
 
     def detail(self, link_category_id):
-        
+        link_categoty_id = self.get_param('link_categoty_id')
         # TODO user_id 取得する
         user_id = 1
         # TODO validation
         
-        session = request.environ.get('beaker.session')
-        session[HashHelper.hexdigest('link_category_id')] = link_category_id
-        session.save()
-        
-        entity = self.__service.get(user_id, link_category_id)
-        return self.view('./template/admin/link_categories/detail.html', entity)
+        self.set_session('link_category_id', link_categoty_id)
+        return self.view('./template/admin/link_categories/detail.html', self.__service.get(user_id, link_category_id))
 
     def edit(self, link_category_id):
-        link_category_id = session.get(HashHelper.hexdigest('link_category_id'), False)
         # TODO user_id 取得する
         user_id = 1
+        # TODO validation
         
-        entity = self.__service.get(user_id, link_category_id)
-        return self.view('./template/admin/link_categories/edit.html', entity)
+        self.set_session('link_category_id', link_category_id)
+        return self.view('./template/admin/link_categories/edit.html', self.__service.get(user_id, link_category_id))
     
     def confirm(self):
-        link_category_id = session.get(HashHelper.hexdigest('link_category_id'), False)
-        link_category_name = request.forms.get('link_category_name')
+        link_category_id = self.get_session('link_category_id')
+        link_category_name = self.get_param('link_category_name')
+        link_category_display_order = self.get_param('link_category_display_order')
 
         # TODO validation
         
-        session[HashHelper.hexdigest('link_category_name')] = link_category_name
+        self.set_session('link_category_id', link_category_id)
+        self.set_session('link_category_name', link_category_name)
+        self.set_session('link_category_display_order', link_category_display_order)
         
         # TODO もっと良い設計があるはず
         entity = LinkCategoryEntity()
         entity.set_link_category_id(link_category_id)
         entity.set_link_category_name(link_category_name)
+        entity.set_link_category_display_order(link_category_display_order)
         return self.view('./template/admin/link_categories/confirm.html', entity)
 
     def insert(self):
-        link_category_name = session.get(HashHelper.hexdigest('link_category_name'), False)
+        link_category_name = self.get_session('link_category_name')
+        link_category_display_order = self.get_session('link_category_display_order')
         
         #TODO ログイン時に取得するようにする 
         user_id = 1
         
         # TODO validation
         
-        session[HashHelper.hexdigest('link_category_id')] = ''
-        session[HashHelper.hexdigest('link_category_name')] = ''
+        self.set_session('link_category_id', '')
+        self.set_session('link_category_name', '')
+        self.set_session('link_category_display_order', '')
+        return self.view('./template/admin/link_categories/complete.html', self.__service.create(user_id, link_category_name, link_category_display_order))
 
-        entity = self.__service.create(user_id, link_category_name)
-        return self.view('./template/admin/link_categories/complete.html', entity)
-
-    def update(self):
-        link_category_id = session.get(HashHelper.hexdigest('link_category_id'), False)
-        link_category_name = session.get(HashHelper.hexdigest('link_category_name'), False)
+    def update(self, link_category_id):
+        link_category_id = self.get_session('link_category_id')
+        link_category_name = self.get_session('link_category_name')
+        link_category_display_order = self.get_session('link_category_display_order')
         #TODO ログイン時に取得するようにする 
         user_id = 1
         
-        session[HashHelper.hexdigest('link_category_id')] = ''
-        session[HashHelper.hexdigest('link_category_name')] = ''
+        self.set_session('link_category_id', '')
+        self.set_session('link_category_name', '')
+        self.set_session('link_category_display_order', '')
 
         entity = LinkCategoryEntity()
-        entity.set_link_category_id(self.__service.update(link_category_id, user_id, link_category_name))
+        entity.set_link_category_id(self.__service.update(link_category_id, user_id, link_category_name, link_category_display_order))
         return self.view('./template/admin/link_categories/complete.html', entity)
     
-    def delete(self):
-        link_category_id = request.forms.get('link_category_id')
+    def delete(self, link_category_id):
+        link_category_id = self.get_param('link_category_id')
         #TODO ログイン時に取得するようにする 
         user_id = 1
 
-        session[HashHelper.hexdigest('link_category_id')] = ''
-        session[HashHelper.hexdigest('link_category_name')] = ''
+        self.set_session('link_category_id', '')
+        self.set_session('link_category_name', '')
+        self.set_session('link_category_display_order', '')
 
         entity = LinkCategoryEntity()
         entity.set_link_category_id(self.__service.delete(link_category_id, user_id))

@@ -9,11 +9,12 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <form action="/admin/link-categories/confirm" method="POST">
-        {{ entity.get_language_id() }}
-        <input type="text" name="link_category_name" value="{{ entity.get_link_category_name() }}" />
-        <input type="submit" value="確認" />
+        <input type="text" name="link_category_name" value=""/>
+        <input type="text" name="link_category_display_order" value=""/>
+        <input type="reset" value="リセット"/>
+        <input type="submit" value="確認"/>
       </form>
-      <a href="/admin/link-categories">言語一覧へ</a>
+      <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>
       
     </article>
 {% endblock %}
