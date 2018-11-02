@@ -11,7 +11,7 @@ Link Controller Module
 '''
 class LinkController(BaseController):
 
-    def __init__(self):
+    def __init__(self, request):
         super().__init__(request)
         self.__title = 'リンク集'
         self.__description = 'リンク集を登録・編集・削除します。'
@@ -20,62 +20,54 @@ class LinkController(BaseController):
         self.__service = LinkService()
         pass
 
-    def index(self, link_id=0):
+    def index(self):
         # TODO セッションからとる
         user_id = 1
-        # TODO もっと良い方法を考える
-        if link_id == 0:
-            link_id = request.query.get('link_id')
-        if link_id == '':
-            link_id = HashHelper.hexdigest('link_id') in session
+        link_id = HashHelper.hexdigest('link_id') in session
  
-        # TODO もっと良い方法を考える
-        limit = request.query.get('limit')
-        limit = limit if limit is not None else 10
-            
-        # TODO もっと良い方法を考える
-        offset = request.query.get('offset')
-        offset = offset if offset is not None else 0
+        limit = self.get_param('limit', 10)
+        offset = self.get_param('offset', 0)
         
-        session[HashHelper.hexdigest('link_id')] = ''
-        session[HashHelper.hexdigest('link_name')] = ''
+        self.set_session('link_id', '')
+        self.set_session('user_id', '')
+        self.set_session('link_category_id', '')
+        self.set_session('link_site_name', '')
+        self.set_session('link_url', '')
+        self.set_session('link_display_order', '')
 
         # TODO もっと良い方法を考える
         entity = self.__service.getList(user_id, link_id, limit, offset)
         entity.set_link_id(link_id)
-        
         return self.view('./template/admin/links/list.html', entity=entity)
     
-    def create(self, link_id):
+    def create(self):
         # TODO セッションからとる
         user_id = 1
 
         # TODO validation
         
-        session[HashHelper.hexdigest('link_id')] = link_id
-
-        entity = linkEntity()
-        entity.set_link_id(link_id)
-        entity.set_title(self.__title)
-        entity.set_description(self.__description)
-        entity.set_notification('This is the index page.')
-        return self.view('./template/admin/links/create.html', entity=entity)
+        return self.view('./template/admin/links/create.html', entity=linkEntity())
 
     def detail(self, link_id):
-        
-        # TODO user_id 取得する
+        link_id = self.get_param('link_id')
+        # TODO , user_id 取得する
         user_id = 1
         # TODO validation
         
-        session[HashHelper.hexdigest('link_id')] = link_id
+        self.set_session('link_id', link_id)
+        self.set_session('link_category_id', link_category_id)
+        self.set_session('link_site_name', link_site_name)
+        self.set_session('link_url', link_url)
+        self.set_session('link_display_order', link_display_order)
         
-        return self.view('./template/admin/links/detail.html', entity=self.__service.get(user_id, link_id, link_id))
+        return self.view('./template/admin/links/detail.html', entity=self.__service.get(user_id, link_id))
 
     def edit(self, link_id):
+        self.set_session('link_id', link_id)
         # TODO user_id 取得する
         user_id = 1
         
-        return self.view('./template/admin/links/edit.html', entity=self.__service.get(user_id, link_id, link_id))
+        return self.view('./template/admin/links/edit.html', entity=self.__service.get(user_id, link_id))
     
     def confirm(self, request, link_id):
         link_id = session.get(HashHelper.hexdigest('link_id'), False)
