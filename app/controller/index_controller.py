@@ -9,17 +9,13 @@ from app.helper.helper import HashHelper
 Word Controller Module
 '''
 class IndexController(BaseController):
-    def __init__(self):
+    def __init__(self, request):
+        super().__init__(request)
         self.__title = ''
         self.__description = ''
+        self.__notification = ''
         pass
 
-    def index(self, request):
-        # TODO もっと良い方法を考える
-        entity = BaseEntity()
-        entity.set_title(self.__title)
-        entity.set_description(self.__description)
-        entity.set_notification('This is the index page.')
-        return self.view('./template/index.html')
-        #return self.view('./template/index.html', entity=entity)
+    def index(self):
+        return self.view('./template/index.html', entity=BaseEntity())
 
