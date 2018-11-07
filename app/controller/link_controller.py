@@ -14,10 +14,10 @@ Link Controller Module
 class LinkController(BaseController):
 
     def __init__(self, request):
-        super().__init__(request)
         self.__title = 'リンク集'
         self.__description = 'リンク集を登録・編集・削除します。'
         self.__notification = 'Please enter your id and password.'
+        super().__init__(request)
 
         self.__service = LinkService()
         pass
@@ -36,18 +36,15 @@ class LinkController(BaseController):
         self.set_session('link_url', '')
         self.set_session('link_display_order', '')
 
-        # TODO もっと良い方法を考える
-        entity = self.__service.getList(user_id, link_id, limit, offset)
-        entity.set_link_id(link_id)
-        return self.view('./template/admin/links/list.html', entity=entity)
+        return self.view('./template/admin/links/list.html', entity=self.__service.getList(user_id, limit, offset))
 
     def create(self):
         # TODO セッションからとる
         user_id = 1
-
         # TODO validation
-
-        return self.view('./template/admin/links/create.html', entity=LinkEntity())
+        entity = LinkEntity()
+        entity.set_link_category_entity_list(self.__service.get_link_categories(user_id, 0 ,0))
+        return self.view('./template/admin/links/create.html', entity=entity)
 
     def detail(self, link_id):
         link_id = self.get_param('link_id')

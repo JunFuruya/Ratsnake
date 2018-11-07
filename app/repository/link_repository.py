@@ -34,10 +34,11 @@ class LinkRepository():
             entity.set_link_display_order(record[5])
         return entity
 
-    def findList(self, user_id, language_id, limit, offset):
+    def findList(self, user_id, limit, offset):
         list_entity = LinkListEntity()
 
-        link_ctegory_records = self.__link_category_db.selectAll(user_id)
+        # TODO link cateogry は select() と selectAll() が混在しているので、selectAll() に統一する
+        link_ctegory_records = self.__link_category_db.selectAll(user_id, limit, offset)
         link_ctegory_entities = []
         for link_ctegory_record in link_ctegory_records:
             entity = LinkCategoryEntity()

@@ -76,26 +76,21 @@ def post_link_category_detail(link_category_id):
 def post_link_category_edit(link_category_id):
     return LinkCategoryController(request).edit(link_category_id)
 
-
 @post('/admin/link-categories/confirm')
 def post_link_category_confirm():
     return LinkCategoryController(request).confirm()
-
 
 @post('/admin/link-categories/insert')
 def post_link_category_insert():
     return LinkCategoryController(request).insert()
 
-
 @post('/admin/link-categories/<link_category_id>/update')
 def post_link_category_update(link_category_id):
     return LinkCategoryController(request).update(link_category_id)
 
-
 @post('/admin/link-categories/<link_category_id>/delete')
 def post_link_category_delete(link_category_id):
     return LinkCategoryController(request).delete(link_category_id)
-
 
 ###############################################################################
 # リンクマスタ
@@ -108,36 +103,29 @@ def get_link_list():
 def get_link_create():
     return LinkController(request).create()
 
-
 @get('/admin/links/<link_id>')
 def post_link_update(link_id):
     return LinkController(request).update(link_id)
-
 
 @post('/admin/links/<link_id>')
 def post_link_update(link_id):
     return LinkController(request).index(link_id)
 
-
 @post('/admin/links/confirm')
 def post_link_confirm():
     return LinkController(request).confirm()
-
 
 @post('/admin/links/insert')
 def post_link_complete():
     return LinkController(request).insert()
 
-
 @post('/admin/links/update')
 def post_link_complete():
     return LinkController(request).update()
 
-
 @post('/admin/links/delete')
 def post_link_complete():
     return LinkController(request).delete()
-
 
 ###############################################################################
 # 言語マスタ

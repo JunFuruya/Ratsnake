@@ -15,8 +15,8 @@ class LinkService(BaseService):
         self.__link_category_repository = LinkCategoryRepository()
         pass
 
-    def getList(self, user_id, link_id, limit, offset):
-        return self.__reposiroty.findList(user_id, link_id, limit, offset)
+    def getList(self, user_id, limit, offset):
+        return self.__reposiroty.findList(user_id, limit, offset)
     
     def get(self, user_id, language_id, word_id):
         return self.__reposiroty.find(user_id, language_id, word_id)
@@ -30,6 +30,6 @@ class LinkService(BaseService):
     def delete(self, user_id, link_id):
         return self.__reposiroty.delete(user_id, link_id)
 
-    def get_link_categories(self, user_id):
+    def get_link_categories(self, user_id, limit, offset):
         entity = LinkCategoryEntity()
-        return self.__link_category_repository.findList(user_id)
+        return self.__link_category_repository.findList(user_id, limit, offset)

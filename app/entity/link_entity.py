@@ -8,7 +8,7 @@ class LinkEntity(BaseWebEntity):
     __link_site_name = ''
     __link_url = ''
     __link_display_order = ''
-    __link_entity_list = []
+    __link_category_entity_list = []
 
     def set_link_id(self, link_id):
         self.__link_id = link_id
@@ -51,3 +51,10 @@ class LinkEntity(BaseWebEntity):
 
     def get_link_display_order(self):
         return self.__link_display_order
+
+    def set_link_category_entity_list(self, link_category_entity_list):
+        self.__link_category_entity_list = link_category_entity_list
+        return self
+        
+    def get_link_category_entity_list(self):
+        return self.__link_category_entity_list
