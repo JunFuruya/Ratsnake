@@ -9,8 +9,6 @@ from app.helper.helper import HashHelper
 '''
 Link Controller Module
 '''
-
-
 class LinkController(BaseController):
 
     def __init__(self, request):
@@ -43,7 +41,7 @@ class LinkController(BaseController):
         user_id = 1
         # TODO validation
         entity = LinkEntity()
-        entity.set_link_category_entity_list(self.__service.get_link_categories(user_id, 0 ,0))
+        entity.set_link_category_entity_list(self.__service.get_link_categories(user_id, 100 ,0).get_link_category_entity_list())
         return self.view('./template/admin/links/create.html', entity=entity)
 
     def detail(self, link_id):
@@ -63,89 +61,77 @@ class LinkController(BaseController):
 
         return self.view('./template/admin/links/edit.html', entity=self.__service.get(user_id, link_id))
 
-    def confirm(self, request, link_id):
+    def confirm(self):
         link_id = self.get_session('link_id')
         # TODO user_id 取得する
         user_id = 1
 
-        link_spell = request.forms.get('link_spell')
-        link_explanation = request.forms.get('link_explanation')
-        link_pronounciation = request.forms.get('link_pronounciation')
-        # TODO 取得した値に応じて表示する
-        link_is_learned = 0
-        link_note = request.forms.get('link_note')
+        link_category_id = self.get_param('link_category_id')
+        link_site_name = self.get_param('link_site_name')
+        link_url = self.get_param('link_url')
+        link_display_order = self.get_param('link_display_order')
 
         # TODO validation
 
-        self.set_session('link_spell', link_spell)
-        self.set_session('link_explanation', link_explanation)
-        self.set_session('link_pronounciation', link_pronounciation)
-        self.set_session('link_is_learned', link_is_learned)
-        self.set_session('link_note', link_note)
+        self.set_session('link_id', link_id)
+        self.set_session('link_category_id', link_category_id)
+        self.set_session('link_site_name', link_site_name)
+        self.set_session('link_url', link_url)
+        self.set_session('link_display_order', link_display_order)
 
         # TODO もっと良い設計があるはず
-        entity = linkEntity()
+        entity = LinkEntity()
         entity.set_link_id(link_id)
-        entity.set_link_spell(link_spell)
-        entity.set_link_explanation(link_explanation)
-        entity.set_link_pronounciation(link_pronounciation)
-        entity.set_link_is_learned(link_is_learned)
-        entity.set_link_note(link_note)
+        entity.set_link_category_id(link_category_id)
+        entity.set_link_site_name(link_site_name)
+        entity.set_link_url(link_url)
+        entity.set_link_display_order(link_display_order)
         return self.view('./template/admin/links/confirm.html', entity=entity)
 
-    def insert(self, link_id):
-        link_id = session.get(HashHelper.hexdigest('link_id'), False)
-        link_spell = session.get(HashHelper.hexdigest('link_spell'), False)
-        link_explanation = session.get(HashHelper.hexdigest('link_explanation'), False)
-        link_pronounciation = session.get(HashHelper.hexdigest('link_pronounciation'), False)
-        link_is_learned = session.get(HashHelper.hexdigest('link_is_learned'), False)
-        link_note = session.get(HashHelper.hexdigest('link_note'), False)
+    def insert(self):
+        link_category_id = self.get_session('link_category_id')
+        link_site_name = self.get_session('link_site_name')
+        link_url = self.get_session('link_url')
+        link_display_order = self.get_session('link_display_order')
 
         # TODO ログイン時に取得するようにする
         user_id = 1
 
         # TODO validation
 
-        session[HashHelper.hexdigest('link_id')] = ''
-        session[HashHelper.hexdigest('link_name')] = ''
+        self.set_session('link_category_id', '')
+        self.set_session('link_site_name', '')
+        self.set_session('link_url', '')
+        self.set_session('link_display_order', '')
 
-        entity = self.__service.create(user_id, link_id, link_spell, link_explanation, link_pronounciation,
-                                       link_is_learned, link_note)
-        entity.set_link_id(link_id)
-        return self.view('./template/admin/links/complete.html', entity=entity)
+        return self.view('./template/admin/links/complete.html', entity=self.__service.create(user_id, link_category_id, link_site_name, link_url, link_display_order))
 
     def update(self, link_id):
-        link_id = session.get(HashHelper.hexdigest('link_id'), False)
-        link_spell = session.get(HashHelper.hexdigest('link_spell'), False)
-        link_explanation = session.get(HashHelper.hexdigest('link_explanation'), False)
-        link_pronounciation = session.get(HashHelper.hexdigest('link_pronounciation'), False)
-        link_is_learned = session.get(HashHelper.hexdigest('link_is_learned'), False)
-        link_note = session.get(HashHelper.hexdigest('link_note'), False)
+        link_id = self.get_session('link_id')
+        link_category_id = self.get_session('link_category_id')
+        link_site_name = self.get_session('link_site_name')
+        link_url = self.get_session('link_url')
+        link_display_order = self.get_session('link_display_order')
         # TODO ログイン時に取得するようにする
         user_id = 1
 
-        session[HashHelper.hexdigest('link_id')] = ''
-        session[HashHelper.hexdigest('link_spell')] = ''
-        session[HashHelper.hexdigest('link_explanation')] = ''
-        session[HashHelper.hexdigest('link_pronounciation')] = ''
-        session[HashHelper.hexdigest('link_is_learned')] = ''
-        session[HashHelper.hexdigest('link_note')] = ''
+        sell.set_session('link_id', '')
+        sell.set_session('link_category_id', '')
+        sell.set_session('link_site_name', '')
+        sell.set_session('link_url', '')
+        sell.set_session('link_display_order', '')
 
         entity = linkEntity()
         entity.set_link_id(link_id)
-        entity.set_link_id(
-            self.__service.update(user_id, link_id, link_id, link_spell, link_explanation, link_pronounciation,
-                                  link_is_learned, link_note))
-
         return self.view('./template/admin/links/complete.html', entity=entity)
 
     def delete(self, link_id):
-        link_id = request.forms.get('link_id')
+        link_id = self.get_param('link_id')
         # TODO ログイン時に取得するようにする
         user_id = 1
 
-        session[HashHelper.hexdigest('link_id')] = ''
+        self.set_session('link_id', '')
 
         entity = linkEntity()
-        entity.set_link_id(self.__service.delete(user_id, link_id, link_id))
+        entity.set_link_id(self.__service.delete(user_id, link_id))
         return self.view('./template/admin/links/complete.html', entity=entity)

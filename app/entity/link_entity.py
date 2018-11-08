@@ -17,6 +17,13 @@ class LinkEntity(BaseWebEntity):
     def get_link_id(self):
         return self.__link_id
 
+    def set_link_category_id(self, link_category_id):
+        self.__link_category_id = link_category_id
+        return self
+
+    def get_link_category_id(self):
+        return self.__link_category_id
+
     def set_url_id(self, link_id):
         self.__link_id = link_id
         return self

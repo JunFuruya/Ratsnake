@@ -21,8 +21,8 @@ class LinkService(BaseService):
     def get(self, user_id, language_id, word_id):
         return self.__reposiroty.find(user_id, language_id, word_id)
 
-    def create(self, user_id, link_id, link_category_id, link_site_name, link_url, link_display_order):
-        return self.__reposiroty.insert(user_id, link_id, link_category_id, link_site_name, link_url, link_display_order)
+    def create(self, user_id, link_category_id, link_site_name, link_url, link_display_order):
+        return self.__reposiroty.insert(user_id, link_category_id, link_site_name, link_url, link_display_order)
 
     def update(self, user_id, link_id, link_category_id, link_site_name, link_url, link_display_order):
         return self.__reposiroty.update(user_id, link_id, link_category_id, link_site_name, link_url, link_display_order)
@@ -31,5 +31,4 @@ class LinkService(BaseService):
         return self.__reposiroty.delete(user_id, link_id)
 
     def get_link_categories(self, user_id, limit, offset):
-        entity = LinkCategoryEntity()
         return self.__link_category_repository.findList(user_id, limit, offset)
