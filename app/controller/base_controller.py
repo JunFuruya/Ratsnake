@@ -31,14 +31,14 @@ class BaseController():
         if key not in self.__request.forms:
             if key not in self.__request.query:
                 return default
-            elif self.__request.query.get(key).strip() == '':
+            elif self.__request.query.getunicode(key).strip() == '':
                 return default
             else:
-                return self.__request.query.get(key).strip() 
-        elif self.__request.forms.get(key).strip() == '':
+                return self.__request.query.getunicode(key).strip() 
+        elif self.__request.forms.getunicode(key).strip() == '':
             return default
         else:
-            return self.__request.forms.get(key).strip()
+            return self.__request.forms.getunicode(key).strip()
     
     def get_session(self, key):
         if HashHelper.hexdigest(key) not in self.__session:
