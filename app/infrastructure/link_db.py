@@ -16,7 +16,7 @@ class DbLinks(DbBase):
         return super().select(sql, bindings)
 
     def selectOne(self, user_id, link_id):
-        sql = 'SELECT m_link_id, m_link_category_id, m_link_site_name, m_link_url, m_link_display_order FROM m_links WHERE m_user_id = %s AND link_id = %s;'
+        sql = 'SELECT m_link_id, m_link_category_id, m_link_site_name, m_link_url, m_link_display_order FROM m_links WHERE m_user_id = %s AND m_link_id = %s;'
         bindings = (user_id, link_id)
         return super().selectOne(sql, bindings)
 
@@ -26,11 +26,11 @@ class DbLinks(DbBase):
         
         # TODO 全体的に例外処理を入れる
         id = None
-        #try:
-        id = super().insert(sql, bindings)
-        super().commit()
-        #except:
-        #    super().rollback()
+        try:
+            id = super().insert(sql, bindings)
+            super().commit()
+        except:
+            super().rollback()
         
         super().close_connetion()
         
@@ -38,15 +38,15 @@ class DbLinks(DbBase):
     
     def update(self, user_id, link_id, link_category_id, link_site_name, link_url, link_display_order):
         sql = 'UPDATE m_links SET m_link_category_id = %s, m_link_site_name = %s, m_link_url = %s, m_link_display_order = %s WHERE m_user_id = %s AND m_link_id = %s;'
-        bindings = (user_id, link_id, link_category_id, link_site_name, link_url, link_display_order)
+        bindings = (link_category_id, link_site_name, link_url, link_display_order, user_id, link_id)
 
         is_success = False
         # TODO 全体的に例外処理を入れる
-        try:
-            is_success = super().update(sql, bindings)
-            super().commit()
-        except:
-            super().rollback()
+        #try:
+        is_success = super().update(sql, bindings)
+        super().commit()
+        #except:
+        #    super().rollback()
         return is_success
     
     def delete(self, user_id, link_id):

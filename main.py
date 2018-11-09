@@ -104,12 +104,12 @@ def get_link_create():
     return LinkController(request).create()
 
 @get('/admin/links/<link_id>')
-def post_link_update(link_id):
-    return LinkController(request).update(link_id)
+def post_link_detail(link_id):
+    return LinkController(request).detail(link_id)
 
 @post('/admin/links/<link_id>')
-def post_link_update(link_id):
-    return LinkController(request).index(link_id)
+def post_link_edit(link_id):
+    return LinkController(request).edit(link_id)
 
 @post('/admin/links/confirm')
 def post_link_confirm():

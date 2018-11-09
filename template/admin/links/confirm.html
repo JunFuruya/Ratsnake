@@ -11,7 +11,7 @@
       {% if entity.get_link_id() == '' %}
         {% set action = '/admin/links/insert' %}
       {% else %}
-        {% set action = '/admin/links/' + entity.get_link_id() + '/update' %}
+        {% set action = '/admin/links/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
         {{ entity.get_link_id() }}

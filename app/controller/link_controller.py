@@ -106,7 +106,7 @@ class LinkController(BaseController):
 
         return self.view('./template/admin/links/complete.html', entity=self.__service.create(user_id, link_category_id, link_site_name, link_url, link_display_order))
 
-    def update(self, link_id):
+    def update(self):
         link_id = self.get_session('link_id')
         link_category_id = self.get_session('link_category_id')
         link_site_name = self.get_session('link_site_name')
@@ -115,23 +115,23 @@ class LinkController(BaseController):
         # TODO ログイン時に取得するようにする
         user_id = 1
 
-        sell.set_session('link_id', '')
-        sell.set_session('link_category_id', '')
-        sell.set_session('link_site_name', '')
-        sell.set_session('link_url', '')
-        sell.set_session('link_display_order', '')
+        self.set_session('link_id', '')
+        self.set_session('link_category_id', '')
+        self.set_session('link_site_name', '')
+        self.set_session('link_url', '')
+        self.set_session('link_display_order', '')
 
-        entity = linkEntity()
-        entity.set_link_id(link_id)
+        entity = LinkEntity()
+        entity.set_link_id(self.__service.update(user_id, link_id, link_category_id, link_site_name, link_url, link_display_order))
         return self.view('./template/admin/links/complete.html', entity=entity)
 
-    def delete(self, link_id):
+    def delete(self):
         link_id = self.get_param('link_id')
         # TODO ログイン時に取得するようにする
         user_id = 1
 
         self.set_session('link_id', '')
 
-        entity = linkEntity()
+        entity = LinkEntity()
         entity.set_link_id(self.__service.delete(user_id, link_id))
         return self.view('./template/admin/links/complete.html', entity=entity)

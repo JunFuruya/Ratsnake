@@ -8,12 +8,15 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <form action="/admin/links/{{ entity.get_link_id() }}/confirm" method="POST">
+      <form action="/admin/links/confirm" method="POST">
         {{ entity.get_link_id() }}
-        <input type="text" name="link_name" value="{{ entity.get_link_name() }}" />
+        <input type="text" name="link_category_id" value="{{ entity.get_link_category_id() }}" />
+        <input type="text" name="link_site_name" value="{{ entity.get_link_site_name() }}" />
+        <input type="text" name="link_url" value="{{ entity.get_link_url() }}" />
+        <input type="text" name="link_display_order" value="{{ entity.get_link_display_order() }}" />
         <input type="submit" value="確認" />
       </form>
-      <a href="/admin/links/{{ entity.get_link_id() }}">リンク一覧へ</a>
+      <a href="/admin/links">リンク一覧へ</a>
       
     </article>
 {% endblock %}

@@ -25,11 +25,10 @@ class LinkRepository():
         entity.set_link_id(link_id)
         if record is not None:
             entity.set_link_id(record[0])
-            entity.set_user_id(record[1])
-            entity.set_link_category_id(record[2])
-            entity.set_link_site_name(record[3])
-            entity.set_link_url(record[4])
-            entity.set_link_display_order(record[5])
+            entity.set_link_category_id(record[1])
+            entity.set_link_site_name(record[2])
+            entity.set_link_url(record[3])
+            entity.set_link_display_order(record[4])
         return entity
 
     def findList(self, user_id, limit, offset):
@@ -49,11 +48,9 @@ class LinkRepository():
         for link_record in link_records:
             entity = LinkEntity()
             entity.set_link_id(link_record[0])
-            entity.set_url_id(link_record[1])
-            entity.set_link_category_id(link_record[2])
-            entity.set_link_site_name(link_record[3])
-            entity.set_link_url(link_record[4])
-            entity.set_link_display_order(link_record[5])
+            entity.set_link_category_id(link_record[1])
+            entity.set_link_site_name(link_record[2])
+            entity.set_link_url(link_record[3])
             entities.append(entity)
 
         list_entity.set_link_entity_list(entities)
@@ -64,18 +61,16 @@ class LinkRepository():
         return LinkEntity().set_link_id(
             self.__link_db.insert(user_id, link_category_id, link_site_name, link_url, link_display_order))
 
-    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned,
-               word_note):
-        is_success = self.__word_db.update(user_id, language_id, word_id, word_spell, word_explanation,
-                                           word_pronounciation, word_is_learned, word_note)
+    def update(self, user_id, link_id, link_category_id, link_site_name, link_url, link_display_order):
+        is_success = self.__link_db.update(user_id, link_id, link_category_id, link_site_name, link_url, link_display_order)
         if is_success == True:
             return word_id
         else:
             return ''
 
-    def delete(self, user_id, language_id, word_id):
-        is_success = self.__word_db.delete(user_id, language_id, word_id)
+    def delete(self, user_id, link_id):
+        is_success = self.__link_db.delete(user_id, link_id)
         if is_success == True:
-            return word_id
+            return link_id
         else:
             return ''
