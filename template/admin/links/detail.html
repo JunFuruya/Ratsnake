@@ -10,10 +10,13 @@
       
       <form action="/admin/links/{{ entity.get_link_id() }}" method="POST">
         {{ entity.get_link_id() }}
-        {{ entity.get_link_name() }}
+        {{ entity.get_link_category_id() }}
+        {{ entity.get_link_site_name() }}
+        {{ entity.get_link_url() }}
+        {{ entity.get_link_display_order() }}
         <input type="submit" value="編集"/>
       </form>
-      <a href="/admin/links/{{ entity.get_link_id() }}">リンク一覧へ</a>
+      <a href="/admin/links">リンク一覧へ</a>
       
     </article>
 {% endblock %}

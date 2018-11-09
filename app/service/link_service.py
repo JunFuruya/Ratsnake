@@ -5,32 +5,31 @@ from app.repository.link_repository import LinkRepository
 from app.repository.link_category_repository import LinkCategoryRepository
 from app.repository.user_repository import UsersRepository
 from app.entity.link_entity import LinkEntity
+from app.entity.link_category_entity import LinkCategoryEntity
 
 class LinkService(BaseService):
-    __link_repository = None
+    __repository = None
+    __link_category_repository = None
     
     def __init__(self):
-        self.__reposiroty = WordRepository()
-        self.__language_repository = LanguageRepository()
+        self.__repository = LinkRepository()
+        self.__link_category_repository = LinkCategoryRepository()
         pass
 
-    def getList(self, user_id, language_id, limit, offset):
-        return self.__reposiroty.findList(user_id, language_id, limit, offset)
+    def getList(self, user_id, limit, offset):
+        return self.__repository.findList(user_id, limit, offset)
+    
+    def get(self, user_id, link_id):
+        return self.__repository.find(user_id, link_id)
 
-    def get(self, user_id, language_id, word_id):
-        return self.__reposiroty.find(user_id, language_id, word_id)
+    def create(self, user_id, link_category_id, link_site_name, link_url, link_display_order):
+        return self.__repository.insert(user_id, link_category_id, link_site_name, link_url, link_display_order)
 
-    def create(self, user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
-        return self.__reposiroty.insert(user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
+    def update(self, user_id, link_id, link_category_id, link_site_name, link_url, link_display_order):
+        return self.__repository.update(user_id, link_id, link_category_id, link_site_name, link_url, link_display_order)
 
-    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
-        return self.__reposiroty.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
+    def delete(self, user_id, link_id):
+        return self.__repository.delete(user_id, link_id)
 
-    def delete(self, user_id, language_id, word_id):
-        return self.__reposiroty.delete(user_id, language_id, word_id)
-
-    def get_language(self, user_id, language_id):
-        entity = WordEntity()
-        language_entity = self.__language_repository.find(user_id, language_id)
-        entity.set_language_name(language_entity.get_language_name())
-        return entity
+    def get_link_categories(self, user_id, limit, offset):
+        return self.__link_category_repository.findList(user_id, limit, offset)

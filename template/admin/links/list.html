@@ -11,20 +11,22 @@
       <table>
         <thead></thead>
         <tbody>
-          {% for link_entity in entity.get_link_entity_list() %}
+          {% for entity in entity.get_link_entity_list() %}
           <tr>
-            <td>{{ word_entity.get_link_id() }}</td>
-            <td>{{ word_entity.get_link_spell() }}</td>
+            <td>{{ entity.get_link_id() }}</td>
+            <td>{{ entity.get_link_category_id() }}</td>
+            <td>{{ entity.get_link_site_name() }}</td>
+            <td>{{ entity.get_link_url() }}</td>
             <td>
-              <form id="word{{ link_entity.get_link_id() }}" action="/admin/links/{{ entity.get_link_id() }}" method="GET">
+              <form id="link{{ entity.get_link_id() }}" action="/admin/links/{{ entity.get_link_id() }}" method="GET">
                 <input type="hidden" name="link_id" value="{{ entity.get_link_id() }}"/>
-                <input type="hidden" name="link_name" value="{{ link_entity.get_link_name() }}"/>
                 <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('link{{ link_entity.get_link_id() }}', '/admin/links/{{ word_entity.get_link_id() }}/delete')}" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('link{{ entity.get_link_id() }}', '/admin/links/delete')}" />
               </form>
             </td>
           </tr>
           {% endfor %}
+          <a href="/admin/links/create">新規登録</a>
         </tbody>
       </table>
     </article>

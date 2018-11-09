@@ -8,9 +8,17 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      {{ entity.get_link_name() }}
-      <form action="/admin/links/{{ entity.get_link_id() }}/words/confirm" method="POST">
-        <div>Link Name <input type="text" name="link_name" value="" /></div>
+      <form action="/admin/links/confirm" method="POST">
+        <div>カテゴリ 
+          <select name="link_category_id">{{ entity.get_link_category_entity_list()|pprint }}
+            {% for link_category_entity in entity.get_link_category_entity_list() %}
+            <option value="{{ link_category_entity.get_link_category_id() }}">{{ link_category_entity.get_link_category_name() }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>サイト名 <input type="text" name="link_site_name" value="" /></div>
+        <div>URL <input type="text" name="link_url" value="" /></div>
+        <div>表示順 <input type="text" name="link_display_order" value="" /></div>
         <div>
           <input type="reset" value="リセット" />
           <input type="submit" value="確認" />

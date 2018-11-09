@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS hideout.m_link_categories (
 ALTER TABLE hideout.m_link_categories ADD CONSTRAINT m_user_id FOREIGN KEY (m_user_id) REFERENCES m_users(m_user_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 CREATE TABLE IF NOT EXISTS hideout.m_links (
-  m_link_id INT(4) NOT NULL COMMENT 'リンクID',
+  m_link_id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'リンクID',
   m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
-  m_link_category_id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'リンクカテゴリID',
+  m_link_category_id INT(4) NOT NULL COMMENT 'リンクカテゴリID',
   m_link_site_name VARCHAR(100) NOT NULL COMMENT 'リンク名称',
   m_link_url VARCHAR(200) NOT NULL COMMENT 'リンク名URL',
   m_link_display_order INT(3) NOT NULL COMMENT 'リンク表示順序'
