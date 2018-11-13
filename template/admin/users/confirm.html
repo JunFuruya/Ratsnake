@@ -1,0 +1,26 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      {% if entity.get_user_id() == '' %}
+        {% set action = '/admin/users/insert' %}
+      {% else %}
+        {% set action = '/admin/users/' + entity.get_user_id() + '/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        {{ entity.get_user_id() }}
+        {{ entity.get_user_username() }}
+        {{ entity.get_user_hashed_password() }}
+        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
+        <input type="submit" value="登録"/>
+      </form>
+      <a href="/admin/users">ユーザ一覧へ</a>
+      
+    </article>
+{% endblock %}
