@@ -1,0 +1,23 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <form action="/admin/users/confirm" method="POST">
+        {{ entity.get_user_id() }}
+        <input type="hidden" name="user_id" value="{{ entity.get_user_id() }}" />
+        <input type="text" name="user_username" value="{{ entity.get_user_username() }}" />
+        <input type="password" name="user_hashed_password" value="{{ entity.get_user_hashed_password() }}" />
+        <input type="password" name="user_hashed_password_check" value="{{ entity.get_user_hashed_password() }}" />
+        <input type="reset" value="リセット"/>
+        <input type="submit" value="確認" />
+      </form>
+      <a href="/admin/users">ユーザ一覧へ</a>
+      
+    </article>
+{% endblock %}

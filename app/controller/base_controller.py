@@ -8,12 +8,13 @@ from app.helper.helper import HashHelper
 Base Controller Module
 '''
 class BaseController():
+    __title = ''
+    __description = ''
+    __notification = ''
+
     def __init__(self, request, should_check=True):
         self.__request = request
         self.__session = request.environ.get('beaker.session')
-        self.__title = ''
-        self.__description = ''
-        self.__notification = ''
         self.check_login_status(should_check)
         pass
 
