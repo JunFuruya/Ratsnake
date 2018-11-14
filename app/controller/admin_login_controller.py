@@ -14,10 +14,8 @@ class AdminLoginController(BaseController):
     __should_check_login_status = False
     
     def __init__(self, request):
-        self.__title = 'Hideout Login'
-        self.__description = 'Login page.'
-        self.__notification = 'Please enter your id and password.'
         super().__init__(request, self.__should_check_login_status)
+        self.set_page_info('Hideoutログイン', 'ログイン', 'ログインに必要な情報を入力してください。')
         self.__service = LoginService()
         pass
 

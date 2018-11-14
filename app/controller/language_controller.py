@@ -12,7 +12,7 @@ Language Controller Module
 class LanguageController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('言語マスタ', '単語帳を作成する対象の言語を登録・編集・削除します。', 'Please enter your id and password.')
+        self.set_page_info('言語マスタ', '単語帳を作成する対象の言語を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = LanguageService()
         pass

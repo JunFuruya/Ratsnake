@@ -11,11 +11,9 @@ Word Controller Module
 class IndexController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.__title = ''
-        self.__description = ''
-        self.__notification = ''
+        self.set_page_info('管理画面トップ', '', '')
+        self.__user_id = self.get_login_user()
         pass
 
     def index(self):
         return self.view('./template/index.html', entity=BaseEntity())
-

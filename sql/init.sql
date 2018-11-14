@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS hideout.t_words (
   m_language_id TINYINT(2) NOT NULL COMMENT '言語ID',
   t_word_spell VARCHAR(50) NOT NULL COMMENT '綴り',
   t_word_explanation VARCHAR(1000) NOT NULL COMMENT '説明',
-  t_word_pronounciation VARCHAR(50) NOT NULL DEFAULT '' COMMENT '発音',
+  t_word_pronunciation VARCHAR(50) NOT NULL DEFAULT '' COMMENT '発音',
   t_word_is_learned TINYINT(1) NOT NULL DEFAULT 0 COMMENT '習得済みフラグ 0: 未習得、1:習得済み',
   t_word_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
   t_word_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
