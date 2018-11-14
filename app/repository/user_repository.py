@@ -14,11 +14,13 @@ class UsersRepository():
         self.__db = DbUsers()
         pass
 
-    def exists(self, username, password):
-        if(self.__db.count(username, password) > 0):
-            return True
+    def findByLoginInfo(self, username, password):
+        record = self.__db.selectByLoginInfo(username, password)
+        print(record[0])
+        if len(record) > 0:
+            return record[0]
         else:
-            return False
+            return None
 
     def findList(self, limit, offset):
         records = self.__db.selectAll(limit, offset)

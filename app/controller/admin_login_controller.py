@@ -14,10 +14,10 @@ class AdminLoginController(BaseController):
     __should_check_login_status = False
     
     def __init__(self, request):
-        super().__init__(request, self.__should_check_login_status)
         self.__title = 'Hideout Login'
         self.__description = 'Login page.'
         self.__notification = 'Please enter your id and password.'
+        super().__init__(request, self.__should_check_login_status)
         self.__service = LoginService()
         pass
 
@@ -28,14 +28,14 @@ class AdminLoginController(BaseController):
         username = self.get_param('username', '')
         password = self.get_param('password', '')
 
-        if(self.__service.is_authenticated(username, password)):
-            # TODO user_id 取得
-            self.set_session('login', HashHelper.hexdigest(username))
+        self.__user_id = self.__service.findByLoginInfo(username, password)
+        if self.__user_id is not None:
+            self.set_session(self.LOGIN_SESSION_USER_ID, self.__user_id)
             # TODO cookie 使う
             return self.redirect('/admin')
         else:
             return self.redirect('/admin/login')
 
     def logout(self):
-        self.set_session('login', '')
+        self.set_session(self.LOGIN_SESSION_USER_ID, '')
         return self.redirect('/admin/login')

@@ -8,5 +8,5 @@ class LoginService(BaseService):
         self.__reposiroty = UsersRepository()
         pass
 
-    def is_authenticated(self, username, password):
-        return self.__reposiroty.exists(username, password)
+    def findByLoginInfo(self, username, password):
+        return self.__reposiroty.findByLoginInfo(username, password)

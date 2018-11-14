@@ -11,12 +11,20 @@ class BaseController():
     __title = ''
     __description = ''
     __notification = ''
+    __login_user_id = ''
+    LOGIN_SESSION_USER_ID = 'login_user_id'
 
     def __init__(self, request, should_check=True):
         self.__request = request
         self.__session = request.environ.get('beaker.session')
+        self.__login_user_id = self.get_session(self.LOGIN_SESSION_USER_ID)
         self.check_login_status(should_check)
         pass
+    
+    def set_page_info(self, title, description, notification):
+        self.__title = title
+        self.__description = description
+        self.__notification = notification
 
     def view(self, tempalte_path, entity):
         entity.set_title(self.__title) 
@@ -52,15 +60,19 @@ class BaseController():
         self.__session.save()
         pass
     
+    def get_session(self, key):
+        if HashHelper.hexdigest(key) not in self.__session:
+            return ''
+        else:
+            return self.__session.get(HashHelper.hexdigest(key), False)
+    
     def check_login_status(self, should_check=True):
         if (should_check):
-            # TODO 動的に取得する
-            username = 'admin'
-            session_value = self.get_session('login')
-            hashed_value = HashHelper.hexdigest(username)
-    
-            if(session_value != hashed_value):
+            if(self.__login_user_id == ''):
                 return self.redirect('/admin/login')
             pass
         else:
             pass
+    
+    def get_login_user(self):
+        return self.__login_user_id
