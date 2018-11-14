@@ -1,0 +1,33 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <a href="/admin">TOPへ</a>
+      <a href="/admin/link-categories/create">新規登録</a>
+      
+      <table>
+        <thead></thead>
+        <tbody>
+          {% for entity in entity.get_link_category_entity_list() %}
+          <tr>
+            <td>{{ entity.get_link_category_id() }}</td>
+            <td>{{ entity.get_link_category_name() }}</td>
+            <td>
+              <form id="link-category{{ entity.get_link_category_id() }}" action="/admin/link-categories/{{ entity.get_link_category_id() }}" method="GET">
+                <input type="hidden" name="link_category_id" value="{{ entity.get_link_category_id() }}"/>
+                <input type="submit" value="詳細へ" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('link-category{{ entity.get_link_category_id() }}' ,'/admin/link-categories/{{ entity.get_link_category_id() }}/delete')}" />
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </article>
+{% endblock %}

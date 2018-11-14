@@ -1,0 +1,29 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      {{ entity.get_language_name() }}
+      {% if entity.get_word_id() == '' %}
+        {% set action = '/admin/languages/' + entity.get_language_id() + '/words/insert' %}
+      {% else %}
+        {% set action = '/admin/languages/' + entity.get_language_id() + '/words/' + entity.get_word_id() + '/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        {{ entity.get_word_spell() }}
+        {{ entity.get_word_explanation() }}
+        {{ entity.get_word_pronunciation() }}
+        {{ entity.get_word_is_learned() }}
+        {{ entity.get_word_note() }}
+        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
+        <input type="submit" value="登録"/>
+      </form>
+      <a href="/admin/words">単語一覧へ</a>
+      
+    </article>
+{% endblock %}

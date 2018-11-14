@@ -1,0 +1,25 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      {% if entity.get_link_category_id() == '' %}
+        {% set action = '/admin/link-categories/insert' %}
+      {% else %}
+        {% set action = '/admin/link-categories/' + entity.get_link_category_id() + '/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        {{ entity.get_link_category_name() }}
+        {{ entity.get_link_category_display_order() }}
+        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
+        <input type="submit" value="登録"/>
+      </form>
+      <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>
+      
+    </article>
+{% endblock %}

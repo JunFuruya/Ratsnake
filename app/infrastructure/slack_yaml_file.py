@@ -6,8 +6,8 @@ class SlackConfigYamlFile(BaseYamlFile):
     __FILE_NAME = 'slack_config.yaml'
     
     def __init__(self):
-        super().__init__()
+        super().__init__(self.__FILE_NAME)
         pass
     
     def get_config(self):
-        return super().get_config(self.__FILE_NAME).values()
+        return super().get_config().values()

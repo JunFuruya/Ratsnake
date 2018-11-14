@@ -1,0 +1,44 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <table>
+        <form method="GET" id="languages" name="languages" />
+          <a href="/admin">TOPへ</a>
+          <a onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/'+$('#language_id option:selected').val()+'/words/create');">新規登録</a>
+          <select id="language_id" name="language_id">
+            <option value="">選択してください</option>
+            
+            {% for language_entity in entity.get_language_entity_list() %}
+            <option value="{{ language_entity.get_language_id() }}"{% if entity.get_language_id() == language_entity.get_language_id()|string %} selected{% endif %} >{{ language_entity.get_language_name() }}</option>
+            {% endfor %}{{ entity.get_language_id() }}
+            <input type="button" value="検索" onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/words');"/>
+          </select>
+        </form>
+        <thead></thead>
+        <tbody>
+          {% for word_entity in entity.get_word_entity_list() %}
+          <tr>
+            <td>{{ word_entity.get_word_id() }}</td>
+            <td>{{ word_entity.get_word_spell() }}</td>
+            <td>
+              <form id="word{{ word_entity.get_word_id() }}" action="/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}" method="GET">
+                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
+                <input type="hidden" name="word_id" value="{{ word_entity.get_word_id() }}"/>
+                <input type="hidden" name="word_spell" value="{{ word_entity.get_word_spell() }}"/>
+                <input type="submit" value="詳細へ" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('word{{ word_entity.get_word_id() }}', '/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}/delete')}" />
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </article>
+{% endblock %}

@@ -1,0 +1,8 @@
+ALIASES :
+API_TOKEN : xoxb-338970753681-7nWtm8bgMPXH4fii8Dd7b7zR
+BOT_ICON : http://lorempixel.com/64/64/abstract/7/
+BOT_EMOJI : ""
+DEBUG : False
+DEFAULT_REPLY : "なるほど、わからん。"
+ERRORS_TO : 
+PLUGINS : [vendor.slackbot.plugins]

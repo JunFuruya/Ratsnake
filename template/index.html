@@ -1,25 +1,43 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8"/>
-  <link rel="stylesheet" type="text/css" href="./public/css/common.css"/>
-  <script src="./public/js/vendor/jquery-3.2.1.min.js"></script>
-  <script src="./public/js/common.js"></script>
-</head>
-<body>
-  <header>
-    管理画面TOP
-    <section class="description">
-      <p>説明</p>
-      <ul id="event_button_ul"></ul>
-    </section>
-  </header>
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
 
-  <section>
-    <h2>機能</h2>
-  </section>
-  <footer>
-    &copy; 2018
-  </footer>
-</body>
-</html>
+{% block content %}
+    <article>
+      <h2>管理画面TOP</h2>
+      <h3>Index</h3>
+      <section>
+        <textarea cols="80" rows="20"></textarea>
+      </section>
+      <h3>Github Pull Requestテンプレ</h3>
+      <section>
+        <p>
+        MAMA-XXX チケットタイトルや対応内容の説明
+        
+        **対応の背景**
+        
+        **関連する課題**
+        
+        **動作確認可能なURLや手順**
+        
+        **実装のポイント**
+        
+        **特に心配な点や確認してほしい点**
+        </p>
+      </section>
+      <section>
+        <h3>チートシート</h3>
+        <section>
+          <h3>mysql</h3>
+          <ul class="console">
+            <li>$ mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev</li>
+            <li># mysqldump -uroot -B test > dump_20170510.dmp</li>
+            <li># mysql -uroot -D test < ./tests/sql/dump/20171024_campaign.dmp</li>
+            <li># source （sqlファイルフルパス）</li>
+            <li># LOAD DATA LOCAL INFILE 'csvファイルフルパス' INTO TABLE （スキーマ）.（テーブル） FIELDS TERMINATED BY '（区切り文字）' ENCLOSED BY '（囲み文字）' IGNORE 1 LINES;</li>
+          </ul>
+        </section>
+      </section>
+    </article>
+{% endblock %}

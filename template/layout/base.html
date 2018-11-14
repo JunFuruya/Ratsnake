@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="author" content="{# TODO: implement #}" />
+  <meta name="keyword" content="{# TODO: implement #}" />
+  <meta name="description" content="{{ entity.get_description() }}" />
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" type="text/css" href="/public/css/common.css"/>
+  <script src="/public/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="/public/js/common.js"></script>
+  <title>Hideout|{{ entity.get_title() }}</title>
+</head>
+<body>
+  {% include 'template/layout/header.html' %}
+  <section id="main">
+    {% block navi %}{% endblock %}
+    {% block content %}{% endblock %}
+  </section>
+  {% include 'template/layout/footer.html' %}
+</body>
+</html>

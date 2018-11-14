@@ -1,0 +1,22 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <form action="/admin/links/{{ entity.get_link_id() }}" method="POST">
+        {{ entity.get_link_id() }}
+        {{ entity.get_link_category_id() }}
+        {{ entity.get_link_site_name() }}
+        {{ entity.get_link_url() }}
+        {{ entity.get_link_display_order() }}
+        <input type="submit" value="編集"/>
+      </form>
+      <a href="/admin/links">リンク一覧へ</a>
+      
+    </article>
+{% endblock %}

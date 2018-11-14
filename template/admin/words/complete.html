@@ -1,0 +1,14 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <a href="/admin/languages/{{ entity.get_language_id() }}/words">単語一覧へ</a>
+      
+    </article>
+{% endblock %}

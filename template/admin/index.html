@@ -1,93 +1,170 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8"/>
-  <link rel="stylesheet" type="text/css" href="./public/css/common.css"/>
-  <script src="./public/js/vendor/jquery-3.2.1.min.js"></script>
-  <script src="./public/js/common.js"></script>
-</head>
-<body>
-  <header>
-    資料
-    <section class="description">
-      <p>アイコンをクリックすると、新しいタブでそのテーマのページを全て開きます。</p>
-      <ul id="event_button_ul"></ul>
-    </section>
-  </header>
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
 
-  <section>
-    <h2>リンク</h2>
-    <section>
-      <table id="links">
-        <tbody>
-          <tr>
-            <th>連絡・仕様調整</th>
-            <td><a href="https://mail.google.com/mail/#inbox" target="_blank">gmail</a></td>
-          </tr>
-          <tr>
-            <th>共有フォルダ</th>
-          </tr>
-          <tr>
-            <th>外部開発ツール</th>
-            <td><a href="https://github.com/JunFuruya" target="_blank">Github</a></td>
-          </tr>
-          <tr>
-            <th>メトリクス、外部サービス</th>
-          </tr>
-          <tr>
-            <th>開発サーバ環境</th>
-          </tr>
-          <tr>
-            <th>インフラ設計書</th>
-          </tr>
-          <tr>
-            <th>開発共通</th>
-          </tr>
-          <tr>
-            <th>API開発設計書</th>
-          </tr>
-          <tr>
-            <th>Web版設計書関連</th>
-          </tr>
-          <tr>
-            <th>参考プロジェクト</th>
-          </tr>
-          <tr>
-            <th>phpunit</th>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </section>
-
-  <section id="main">
-    <section class="column">
-      <h1>日々のとど</h1>
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>Index</h3>
+      
       <section>
-        <h2>簡易とど</h2>
+        <textarea cols="130" rows="20"></textarea>
+      </section>
+      <section>
+        プルリクテンプレ
+        <textarea cols="60" rows="16">
+MAMA-XXX チケットタイトルや対応内容の説明
+
+**対応の背景**
+
+
+**関連する課題**
+
+
+**動作確認可能なURLや手順**
+
+
+**実装のポイント**
+
+
+**特に心配な点や確認してほしい点**</textarea>
+      </section>
+      <h2>チートシート</h2>
+      <section>
+        <h3>git</h3>
+        <ul class="console">
+          <li>$ git config --global user.name "John Doe"</li>
+          <li>$ git config --global user.email johndoe@example.com</li>
+          <li>$ git config --global core.autocrlf input</li>
+          <li>$ git clone git@github.com::nttresonant/gooblog.git</li>
+          <li>$ git status</li>
+          <li>$ git add</li>
+          <li>$ git commit</li>
+          <li>$ git commit --amend</li>
+          <li>$ git reset HEAD</li>
+          <li>$ git cherry-pick 546de2cc727fcae02646c6af637f401e4238feef</li>
+          <li>$ git clean -n 削除されるであろうファイルを一覧表示する</li>
+          <li>$ git clean -f configに削除できない設定があっても、強制的に未追跡ファイルを削除する</li>
+          <li>$ git branch --set-upstream-to=origin/develop develop</li>
+          <li>$ git tag タグの一覧</li>
+          <li>$ git tag -a v1.0 -m 'message' タグの生成</li>
+          <li>$ git tag -a v1.0 -m 'message' (check sum) タグの後付</li>
+          <li>$ git tag -d v1.0 タグの削除</li>
+          <li>$ git log --abbrev-commit --pretty=oneline 省略形でログの一覧を表示する</li>
+        </ul>
+      </section>
+      <section>
+        <h3>mysql</h3>
+        <ul class="console">
+          <li>$ mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev</li>
+          <li># mysqldump -uroot -B test > dump_20170510.dmp</li>
+          <li># mysql -uroot -D test < ./tests/sql/dump/20171024_campaign.dmp</li>
+          <li># source （sqlファイルフルパス）</li>
+          <li># LOAD DATA LOCAL INFILE 'csvファイルフルパス' INTO TABLE （スキーマ）.（テーブル） FIELDS TERMINATED BY '（区切り文字）' ENCLOSED BY '（囲み文字）' IGNORE 1 LINES;</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Vagrant</h3>
+        <ul class="console">
+          <li>$ vagrant box add base C:\Users\junfuruya\boxes\base.box ← プロジェクト開始時に作業した</li>
+          <li>$ vagrant up</li>
+          <li>$ vagrant halt</li>
+          <li>$ vagrant ssh</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Docker</h3>
+        <ul class="console">
+          <li>$ docker run --privileged -p 18080:80 -d --name gooblog3 -v /home/vagrant/repository/gooblog3:/var/www/html/gooblog3 gooblog3:v1 /sbin/init 新規コンテナを作成し、コマンドを実行する</li>
+          <li>$ docker exec コンテナ内でコマンドを実行する（当然、コンテナが起動していることが前提）</li>
+          <li>$ docker pull allinone DockerイメージかRepositoryをResistoryからPullする</li>
+          <li>$ docker ps</li>
+          <li>$ docker start gooblog3</li>
+          <li>$ docker start -a 0a21d7d1da2b</li>
+          <li>$ docker stop angry_stonebraker</li>
+          <li>$ docker build -t gooblog3:v1 ./</li>
+          <li>$ docker commit コンテナをDockerイメージを作成</li>
+          <li>$ sudo docker-compose down</li>
+          <li>$ sudo docker login -u admin -p Harbor12345 dev.harbor.mama000.goo.ne.jp</li>
+          <li>$ sudo docker pull dev.harbor.mama000.goo.ne.jp/dmama/allinone:latest</li>
+          <li>$ sudo docker pull dev.harbor.mama000.goo.ne.jp/dmama/elasticsearch:latest</li>
+          <li>$ sudo docker-compose up -d</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Redis</h3>
+        <p class="console">
+          <ul class="console">
+            <li># which redis-server</li>
+            <li>/usr/bin/redis-server</li>
+            <li># reids-server ← サーバ起動</li>
+            <li>$ for i in `seq 6374 6379`;do redis-cli -p $i keys *Ranking*;done</li>
+            <li>$ redis-cli -c</li>
+          </ul>
+        </p>
+        設定<br/>
+        <ul class="console">
+          <li># vi /repository/dmama/docker/allinone/conf/redis/redis.conf.org</li>
+        </ul>
+      </section>
+      <section>
+        <h3>phpunit</h3>
+        <ul class="console">
+          <li>$ ./vendor/phpunit/phpunit/phpunit</li>
+          <li>$ ./vendor/phpunit/phpunit/phpunit -version</li>
+          <li>$ ./vendor/phpunit/phpunit/phpunit ./tests/app/Front/UserInterface/Http/Controller/Api/FrontApiMeControllerTest.php</li>
+          <li>$ ./vendor/phpunit/phpunit/phpunit （phpファイルのパス）--filter ◯◯できること</li>
+          <li>$ ./vendor/phpunit/phpunit/phpunit -c phpunit_monitor.xml</li>
+        </ul>
+      </section>
+      <section>
+        <h3>composer</h3>
+        <ul class="console">
+          <li>$ composer dump-autoload</li>
+          <li>$ composer require kreait/firebase-php ^4.17.0</li>
+          <li>$ composer require predis/predis ^1.1.1</li>
+        </ul>
+      </section>
+      <section>
+        <h3>プロセス</h3>
+        <ul class="console">
+          <li>$ lsof -n -P -p [PID] | grep TCP</li>
+        </ul>
+      </section>
+      <section>
+        <h3>pip install</h3>
+        <ul class="console">
+          <li>$ pip install bottle</li>
+          <li>$ pip freeze > requirements.txt</li>
+          <li>$ pip install -r requirements.txt</li>
+          <li>$ python -m pip install --upgrade pip</li>
+          <li>$ python -m unittest tests.main</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Laravel の機能</h2>
         <section>
-          <textarea id="quick_memo" cols="60" rows="20">
-          </textarea>
+          <h3>providor</h3>
+          /Front/Application/Provider/AppServiceProvider.php
+          <h3>Artisan</h3>
+          <ul class="console">
+            <li>$ cd /home/vagrant/repository/dmama-webapp/artisan</li>
+            <li>$ php artisan list</li>
+            <li>$ php artisan route:clear</li>
+            <li>$ php artisan config:cache</li>
+            <li>$ php artisan make:console HogeCommand</li>
+            <li>$ php artisan command:push_notification</li>
+            <li>$ php artisan queue:listen push_notification</li>
+          </ul>
         </section>
       </section>
       <section>
-        <h2>vagrant</h2>
-        <section>
-         【仮想環境起動】
-          <p class="console">
-            $ vagrant up
-          </p>
-        </section>
+        <h2>SSH key 生成</h2>
+        <p class="console">
+          $ ssh-keygen -yf /Users/hoge/private_key > public_key<br/>
+          $ ssh-keygen -yf C:\Users\junfuruya\.vagrant.d\boxes\base\0\virtualbox\private_key > public_key
+        </p>
       </section>
-    </section>
-
-    <section class="column right">
-      <section>
-      </section>
-    </section>
-  </section>
-  <footer>
-    &copy; 2018
-  </footer>
-</body>
-</html>
+    </article>
+{% endblock %}

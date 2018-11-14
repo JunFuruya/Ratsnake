@@ -1,89 +1,262 @@
-#-*- UTF-8 -*-
+# -*- UTF-8 -*-
 
-# auth_basic を使う場合に、コメントを外す
-#from bottle import auth_basic, get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
-from bottle import get, post, redirect, request, response, run, static_file, template, TEMPLATE_PATH
+from beaker.middleware import SessionMiddleware
+from bottle import app, error, get, post, request, run, static_file
 
-from app.service.web_service import ConfigGetService, SlackBotStartService
+from app.helper.helper import HashHelper
 
+from app.controller.admin_index_controller import AdminIndexController
+from app.controller.admin_login_controller import AdminLoginController
+from app.controller.error_controller import ErrorController
+from app.controller.index_controller import IndexController
+from app.controller.language_controller import LanguageController
+from app.controller.link_category_controller import LinkCategoryController
+from app.controller.link_controller import LinkController
+from app.controller.user_controller import UserController
+from app.controller.word_controller import WordController
+
+# TODO そのうち消す
+from app.service.web_service import ConfigGetService
+config = ConfigGetService().get_web_server_config()
+
+###############################################################################
+# 非ログインユーザ用画面
+###############################################################################
 @get('/')
-def index():
-    # if user has not logged in, redirect to /login
-    # redirect('/login')
-    
-    #entity = service.get_index_data
-    tempalte_path = './template/index.html'
-    #return template(tempalte_path, entity=entity)
-    return template(tempalte_path)
+def get_index():
+    return IndexController(request).index()
 
+###############################################################################
+# 管理画面TOP
+###############################################################################
 @get('/admin')
-def link_index():
-    tempalte_path = './template/admin/index.html'
-    return template(tempalte_path)
+def get_link_index():
+    return AdminIndexController(request).index()
 
+###############################################################################
+# ログイン、ログアウト
+###############################################################################
 @get('/admin/login')
-def admin_login():
-    tempalte_path = './template/admin/login.html'
-    return template(tempalte_path)
+def get_admin_login():
+    return AdminLoginController(request).index()
 
-@post('/admin/login/complete')
-def admin_login_complete():
-    username = request.forms.get('username')
-    password = request.forms.get('password')
+@post('/admin/login')
+def post_admin_login_complete():
+    return AdminLoginController(request).login()
 
-    service = app.service.LoginService()
-    if(service.is_authenticated(username, password)):
-        redirect('/admin')
-    else:
-        tempalte_path = './template/admin/login.html'
-        #entity
-        return template(tempalte_path)
-        #return template(tempalte_path, entity=entity) TODO: implement error message
+@get('/admin/logout')
+def get_admin_login_complete():
+    return AdminLoginController(request).logout()
 
+###############################################################################
+# リンクカテゴリマスタ
+###############################################################################
+@get('/admin/link-categories')
+def get_link_category_list():
+    return LinkCategoryController(request).index()
+
+@get('/admin/link-categories/create')
+def get_link_category_create():
+    return LinkCategoryController(request).create()
+
+@get('/admin/link-categories/<link_category_id>')
+def post_link_category_detail(link_category_id):
+    return LinkCategoryController(request).detail(link_category_id)
+
+@post('/admin/link-categories/<link_category_id>')
+def post_link_category_edit(link_category_id):
+    return LinkCategoryController(request).edit(link_category_id)
+
+@post('/admin/link-categories/confirm')
+def post_link_category_confirm():
+    return LinkCategoryController(request).confirm()
+
+@post('/admin/link-categories/insert')
+def post_link_category_insert():
+    return LinkCategoryController(request).insert()
+
+@post('/admin/link-categories/<link_category_id>/update')
+def post_link_category_update(link_category_id):
+    return LinkCategoryController(request).update(link_category_id)
+
+@post('/admin/link-categories/<link_category_id>/delete')
+def post_link_category_delete(link_category_id):
+    return LinkCategoryController(request).delete(link_category_id)
+
+###############################################################################
+# リンクマスタ
+###############################################################################
 @get('/admin/links')
-def link_list():
-    
-    link_list = [
-        [1, 'AAA', 'http://aaa.co.jp'],
-        [2, 'BBB', 'http://bbb.co.jp'],
-        [3, 'CCC', 'http://ccc.co.jp']
-    ]
-    tempalte_path = './template/admin/links/list.html'
-    return template(tempalte_path, link_list=link_list)
+def get_link_list():
+    return LinkController(request).index()
 
 @get('/admin/links/create')
-def link_create():
-    html = '<html><body>create</body></html>'
-    tempalte_path = './template/admin/links/list.html'
-    return template(html)
+def get_link_create():
+    return LinkController(request).create()
 
-@post('/admin/links/update')
-def link_update():
-    html = '<html><body>update</body></html>'
-    return template(html)
+@get('/admin/links/<link_id>')
+def post_link_detail(link_id):
+    return LinkController(request).detail(link_id)
+
+@post('/admin/links/<link_id>')
+def post_link_edit(link_id):
+    return LinkController(request).edit(link_id)
 
 @post('/admin/links/confirm')
-def link_confirm():
-    html = '<html><body>confirm</body></html>'
-    return template(html)
+def post_link_confirm():
+    return LinkController(request).confirm()
 
-@post('/admin/links/complete')
-def link_complete():
-    html = '<html><body>complete</body></html>'
-    return template(html)
+@post('/admin/links/insert')
+def post_link_complete():
+    return LinkController(request).insert()
 
+@post('/admin/links/update')
+def post_link_complete():
+    return LinkController(request).update()
+
+@post('/admin/links/delete')
+def post_link_complete():
+    return LinkController(request).delete()
+
+###############################################################################
+# 言語マスタ
+###############################################################################
+@get('/admin/languages')
+def get_language_list():
+    return LanguageController(request).index()
+
+@get('/admin/languages/create')
+def get_language_create():
+    return LanguageController(request).create()
+
+@get('/admin/languages/<language_id>')
+def post_language_detail(language_id):
+    return LanguageController(request).detail(language_id)
+
+@post('/admin/languages/<language_id>')
+def post_language_edit(language_id):
+    return LanguageController(request).edit(language_id)
+
+@post('/admin/languages/confirm')
+def post_language_confirm():
+    return LanguageController(request).confirm()
+
+@post('/admin/languages/insert')
+def post_language_insert():
+    return LanguageController(request).insert()
+
+@post('/admin/languages/update')
+def post_language_update():
+    return LanguageController(request).update()
+
+@post('/admin/languages/delete')
+def post_language_delete():
+    return LanguageController(request).delete()
+
+###############################################################################
+# 単語帳
+###############################################################################
+@get('/admin/languages/words')
+def get_word_list():
+    return WordController(request).index()
+
+@get('/admin/languages/<language_id>/words')
+def post_word_list(language_id):
+    return WordController(request).index(language_id)
+
+@get('/admin/languages/<language_id>/words/create')
+def get_word_create(language_id):
+    return WordController(request).create(language_id)
+
+@get('/admin/languages/<language_id>/words/<word_id>')
+def post_word_detail(language_id, word_id):
+    return WordController(request).detail(language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/confirm')
+def post_word_confirm(language_id):
+    return WordController(request).confirm(language_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/confirm')
+def post_word_confirm(language_id, word_id):
+    return WordController(request).confirm(language_id)
+
+@post('/admin/languages/<language_id>/words/insert')
+def post_word_insert(language_id):
+    return WordController(request).insert(language_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>')
+def post_word_edit(language_id, word_id):
+    return WordController(request).edit(language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/update')
+def post_word_update(language_id, word_id):
+    return WordController(request).update(language_id, word_id)
+
+@post('/admin/languages/<language_id>/words/<word_id>/delete')
+def post_word_delete(language_id, word_id):
+    return WordController(request).delete(language_id, word_id)
+
+###############################################################################
+# ユーザマスタ
+###############################################################################
+@get('/admin/users')
+def get_user_list():
+    return UserController(request).index()
+
+@get('/admin/users/create')
+def get_usercreate():
+    return UserController(request).create()
+
+@get('/admin/users/<user_id>')
+def post_link_category_detail(user_id):
+    return UserController(request).detail(user_id)
+
+@post('/admin/users/<user_id>')
+def post_user_edit(user_id):
+    return UserController(request).edit(user_id)
+
+@post('/admin/users/confirm')
+def post_user_confirm():
+    return UserController(request).confirm()
+
+@post('/admin/users/insert')
+def post_user_insert():
+    return UserController(request).insert()
+
+@post('/admin/users/<user_id>/update')
+def post_user_update(user_id):
+    return UserController(request).update(user_id)
+
+@post('/admin/users/<user_id>/delete')
+def post_user_delete(user_id):
+    return UserController(request).delete(user_id)
+
+###############################################################################
+# 静的ファイル
+###############################################################################
 @get('/public/<path:path>')
-def callback(path):
+def get_static_file(path):
     return static_file(path, root='./public/')
 
-#@error(404)
-#def error(404):
-#    return '404error'
+###############################################################################
+# エラー画面
+###############################################################################
+@error(404)
+def error404(error):
+    return ErrorController.error(404)
 
-#@error(500)
-#def error(500):
-#    return '500error'
+error(500)
+def error500(error):
+    return ErrorController.error(500)
 
 if __name__ == "__main__":
-    config = ConfigGetService().get_web_server_config()
-    run(host=config.get_web_host(), port=config.get_web_port(), debug=config.get_debug(), reloader=config.get_reloader())
+    # TODO: create controller classes
+    session_opts = {
+        'session.type': 'file',
+        'session.cookie_expires': 300,
+        'session.data_dir': './data',
+        'session.auto': True
+    }
+
+    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
+        debug=config.get_debug(), reloader=config.get_reloader())

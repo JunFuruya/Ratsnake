@@ -1,0 +1,11 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {# No Column #}
+{% endblock %}
+
+{% block content %}
+<article>
+{{ entity.get_http_status() }}
+{{ entity.get_user_error_message() }}
+</article>
+{% endblock %}
