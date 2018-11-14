@@ -12,16 +12,13 @@ User Controller Module
 class UserController(BaseController):
 
     def __init__(self, request):
-        self.__title = 'ユーザマスタ'
-        self.__description = 'ユーザを登録・編集・削除します。'
-        self.__notification = 'Please enter your id and password.'
-
         super().__init__(request)
+        self.set_page_info('ユーザマスタ', 'ユーザを登録・編集・削除します。', 'Please enter your id and password.')
+        self.__user_id = self.get_login_user()
         self.__service = UserService()
         pass
 
     def index(self):
-        user_id = 1
         limit = self.get_param('limit', 10)
         offset = self.get_param('offset', 0)
 

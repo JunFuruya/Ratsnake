@@ -9,8 +9,8 @@ class LanguageService(BaseService):
         self.__reposiroty = LanguageRepository()
         pass
 
-    def getList(self, limit, oiffset):
-        return self.__reposiroty.findList(limit, oiffset)
+    def getList(self, user_id, limit, oiffset):
+        return self.__reposiroty.findList(user_id, limit, oiffset)
 
     def get(self, user_id, language_id):
         return self.__reposiroty.find(user_id, language_id)
