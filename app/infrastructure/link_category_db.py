@@ -9,12 +9,6 @@ class DbLinkCategories(DbBase):
     def __init__(self):
         super().__init__()
         pass
-    
-    def select(self, limit, offset):
-        # TODO user_id で絞る
-        sql = 'SELECT m_link_category_id, m_link_category_name FROM m_link_categories ORDER BY m_link_category_display_order limit %s offset %s;'
-        bindings = (limit, offset)
-        return super().select(sql, bindings)
 
     def selectAll(self, user_id, limit, offset):
         sql = 'SELECT m_link_category_id, m_link_category_name FROM m_link_categories WHERE m_user_id = %s ORDER BY m_link_category_display_order LIMIT %s OFFSET %s;'
@@ -31,12 +25,12 @@ class DbLinkCategories(DbBase):
         bindings = (user_id, link_category_name, link_category_display_order)
         
         # TODO 全体的に例外処理を入れる
-        id = ''
-        try:
-            id = super().insert(sql, bindings)
-            super().commit()
-        except:
-            super().rollback()
+        #id = ''
+        #try:
+        id = super().insert(sql, bindings)
+        super().commit()
+        #except:
+        #    super().rollback()
         
         super().close_connetion()
         

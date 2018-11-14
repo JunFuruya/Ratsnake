@@ -10,10 +10,10 @@ class DbUsers(DbBase):
         super().__init__()
         pass
     
-    def count(self, username, password):
-        sql = 'SELECT COUNT(m_user_id) FROM m_users where m_user_username = %s and m_user_hashed_password = SHA2(%s, 256)'
+    def selectByLoginInfo(self, username, password):
+        sql = 'SELECT m_user_id FROM m_users where m_user_username = %s and m_user_hashed_password = SHA2(%s, 256)'
         bindings = (username, password)
-        return super().count(sql, bindings)
+        return super().selectOne(sql, bindings)
 
     def selectAll(self, limit, offset):
         sql = 'SELECT m_user_id, m_user_username, m_user_hashed_password FROM m_users LIMIT %s OFFSET %s;'
@@ -42,7 +42,7 @@ class DbUsers(DbBase):
         return id
     
     def update(self, user_id, user_username, user_hashed_password):
-        sql = 'UPDATE m_users SET m_user_username = %s, m_user_hashed_password = %s WHERE m_user_id = %s;'
+        sql = 'UPDATE m_users SET m_user_username = %s, m_user_hashed_password = SHA2(%s, 256) WHERE m_user_id = %s;'
         bindings = (user_username, user_hashed_password, user_id)
 
         is_success = False

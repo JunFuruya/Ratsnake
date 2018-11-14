@@ -24,8 +24,8 @@ class LanguageRepository():
             
         return entity
 
-    def findList(self, limit, offset):
-        records = self.__db.select(limit, offset)
+    def findList(self, user_id, limit, offset):
+        records = self.__db.selectList(user_id, limit, offset)
         list_entity = LanguageListEntity()
         
         entities = []
