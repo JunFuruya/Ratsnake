@@ -13,7 +13,7 @@ class UserController(BaseController):
 
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('ユーザマスタ', 'ユーザを登録・編集・削除します。', 'Please enter your id and password.')
+        self.set_page_info('ユーザマスタ', 'ユーザを登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = UserService()
         pass

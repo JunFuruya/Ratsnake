@@ -12,7 +12,7 @@ Word Controller Module
 class WordController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('単語帳', '選択した言語の単語を登録・編集・削除します。', 'Please enter your id and password.')
+        self.set_page_info('単語帳', '選択した言語の単語を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = WordService()
         pass
@@ -28,7 +28,7 @@ class WordController(BaseController):
         self.set_session('word_id', '')
         self.set_session('word_spell', '')
         self.set_session('word_explanation', '')
-        self.set_session('word_pronounciation', '')
+        self.set_session('word_pronunciation', '')
         self.set_session('word_is_learned', '')
         self.set_session('word_note', '')
 
@@ -64,7 +64,7 @@ class WordController(BaseController):
         
         word_spell = self.get_param('word_spell')
         word_explanation = self.get_param('word_explanation')
-        word_pronounciation = self.get_param('word_pronounciation')
+        word_pronunciation = self.get_param('word_pronunciation')
         word_is_learned = self.get_param('word_is_learned', 0)
         word_note = self.get_param('word_note')
         
@@ -72,7 +72,7 @@ class WordController(BaseController):
         
         self.set_session('word_spell', word_spell)
         self.set_session('word_explanation', word_explanation)
-        self.set_session('word_pronounciation', word_pronounciation)
+        self.set_session('word_pronunciation', word_pronunciation)
         self.set_session('word_is_learned', word_is_learned)
         self.set_session('word_note', word_note)
         
@@ -82,7 +82,7 @@ class WordController(BaseController):
         entity.set_word_id(word_id)
         entity.set_word_spell(word_spell)
         entity.set_word_explanation(word_explanation)
-        entity.set_word_pronounciation(word_pronounciation)
+        entity.set_word_pronunciation(word_pronunciation)
         entity.set_word_is_learned(word_is_learned)
         entity.set_word_note(word_note)
         return self.view('./template/admin/words/confirm.html', entity=entity)
@@ -91,7 +91,7 @@ class WordController(BaseController):
         language_id = self.get_session('language_id')
         word_spell = self.get_session('word_spell')
         word_explanation = self.get_session('word_explanation')
-        word_pronounciation = self.get_session('word_pronounciation')
+        word_pronunciation = self.get_session('word_pronunciation')
         word_is_learned = self.get_session('word_is_learned')
         word_note = self.get_session('word_note')
         
@@ -101,11 +101,11 @@ class WordController(BaseController):
         self.set_session('word_id', '')
         self.set_session('word_spell', '')
         self.set_session('word_explanation', '')
-        self.set_session('word_pronounciation', '')
+        self.set_session('word_pronunciation', '')
         self.set_session('word_is_learned', '')
         self.set_session('word_note', '')
 
-        entity = self.__service.create(self.__user_id, language_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
+        entity = self.__service.create(self.__user_id, language_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note)
         entity.set_language_id(language_id)
         return self.view('./template/admin/words/complete.html', entity=entity)
 
@@ -114,7 +114,7 @@ class WordController(BaseController):
         word_id = self.get_session('word_id')
         word_spell = self.get_session('word_spell')
         word_explanation = self.get_session('word_explanation')
-        word_pronounciation = self.get_session('word_pronounciation')
+        word_pronunciation = self.get_session('word_pronunciation')
         word_is_learned = self.get_session('word_is_learned')
         word_note = self.get_session('word_note')
         
@@ -122,13 +122,13 @@ class WordController(BaseController):
         self.set_session('word_id', '')
         self.set_session('word_spell', '')
         self.set_session('word_explanation', '')
-        self.set_session('word_pronounciation', '')
+        self.set_session('word_pronunciation', '')
         self.set_session('word_is_learned', '')
         self.set_session('word_note', '')
 
         entity = WordEntity()
         entity.set_language_id(language_id)
-        entity.set_word_id(self.__service.update(self.__user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note))
+        entity.set_word_id(self.__service.update(self.__user_id, language_id, word_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note))
         return self.view('./template/admin/words/complete.html', entity=entity)
     
     def delete(self, language_id, word_id):

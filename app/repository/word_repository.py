@@ -27,7 +27,7 @@ class WordRepository():
             entity.set_word_id(record[0])
             entity.set_word_spell(record[1])
             entity.set_word_explanation(record[2])
-            entity.set_word_pronounciation(record[3])
+            entity.set_word_pronunciation(record[3])
             entity.set_word_is_learned(record[4])
             entity.set_word_note(record[5])            
         return entity
@@ -61,8 +61,8 @@ class WordRepository():
         entity = WordEntity()
         return entity.set_word_id(self.__word_db.insert(user_id, language_id, word_spell, word_explanation, word_pronanciation, word_is_learned, word_note))
 
-    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note):
-        is_success = self.__word_db.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronounciation, word_is_learned, word_note)
+    def update(self, user_id, language_id, word_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note):
+        is_success = self.__word_db.update(user_id, language_id, word_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note)
         if is_success == True:
             return word_id
         else:
