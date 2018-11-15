@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from bottle import jinja2_template, redirect
 

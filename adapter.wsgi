@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: UTF-8 -*-
 
 #def application(environ, start_response):
 #
@@ -6,7 +6,7 @@
 #
 #    return 'Hello, world'
 
-#mport sys, os
+import sys, os
 import bottle
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
@@ -14,4 +14,5 @@ sys.path.append(dirpath)
 os.chdir(dirpath)
 
 import main
+from app import *
 application = bottle.default_app()

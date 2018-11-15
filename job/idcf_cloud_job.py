@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 #from app.service.slack_service import SlackBotStartService
 from app.service.idcf_cloud_service import IdcfCloudService

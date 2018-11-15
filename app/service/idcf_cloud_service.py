@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.repository.api_idcf_cloud_repository import ApiIdcfCloudRepository
 from app.service.base_service import BaseService
