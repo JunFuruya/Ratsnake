@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 import mysql.connector
 from app.infrastructure.config_ini_file import DbServerConfigIniFile
