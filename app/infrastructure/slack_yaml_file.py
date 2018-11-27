@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.infrastructure.base_yaml_file import BaseYamlFile
 

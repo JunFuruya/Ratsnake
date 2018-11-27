@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.infrastructure.link_category_db import DbLinkCategories
 from app.entity.link_category_entity import LinkCategoryEntity

@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
 from app.entity.index_entity import IndexEntity

@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 class Values:
     def __init__(self):
