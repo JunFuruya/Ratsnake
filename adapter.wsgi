@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import sys, os, import bottle
+import sys, os, bottle
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(dirpath)
