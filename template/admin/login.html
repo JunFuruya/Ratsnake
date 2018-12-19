@@ -6,7 +6,10 @@
 {% block content %}
   <article>
     <form action="/admin/login" method="POST">
-      <section class="error_message">{{ entity.get_error_message() }}
+      <section class="error_message">
+      {% for error_message in entity.get_error_messages() %}
+        {{ error_message }}
+      {% endfor %}
       </section>
       <section>
         <input name="username" type="text" value=""/>

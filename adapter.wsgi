@@ -10,7 +10,6 @@ import main
 from app import *
 from beaker.middleware import SessionMiddleware
 
-
 session_opts = {
     'session.type': 'file',
     'session.cookie_expires': 300,

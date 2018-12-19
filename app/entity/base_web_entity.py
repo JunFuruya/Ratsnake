@@ -4,7 +4,7 @@ class BaseWebEntity():
     __title = ''
     __description = ''
     __notification = ''
-    __error_message = ''
+    __error_messages = []
     __records = []
 
     def set_title(self, title):
@@ -28,12 +28,12 @@ class BaseWebEntity():
     def get_notification(self):
         return self.__notification
     
-    def set_error_message(self, error_message):
-        self.__error_message = error_message
+    def set_error_messages(self, error_messages):
+        self.__error_messages = error_messages
         return self
 
-    def get_error_message(self):
-        return self.__error_message
+    def get_error_messages(self):
+        return self.__error_messages
     
     def set_records(self, records):
         self.__records = records
@@ -48,5 +48,5 @@ class BaseWebEntity():
             self.get_description(),
             self.get_explanation(),
             self.get_records(),
-            self.get_error_message()
+            self.get_error_messages()
         ]

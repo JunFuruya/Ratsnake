@@ -240,12 +240,19 @@ def get_static_file(path):
 ###############################################################################
 @error(404)
 def error404(error):
-    return ErrorController.error(404)
+    return ErrorController(request).error(404)
 
-@error(500)
+#@error(500)
 def error500(error):
-    return ErrorController.error(500)
+    return ErrorController(request).error(500)
 
 if __name__ == "__main__":
-    run(app=app(), host=config.get_web_host(), port=config.get_web_port(),
+    from beaker.middleware import SessionMiddleware
+    session_opts = {
+        'session.type': 'file',
+        'session.cookie_expires': 300,
+        'session.data_dir': './data',
+        'session.auto': True
+    }
+    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
         debug=config.get_debug(), reloader=config.get_reloader())
