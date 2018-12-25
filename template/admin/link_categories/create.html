@@ -11,8 +11,8 @@
         {{ error_message }}
       {% endfor %}
       <form action="/admin/link-categories/confirm" method="POST">
-        <input type="text" name="link_category_name" value="{{ entity.get_link_category_name() }}"/>
-        <input type="text" name="link_category_display_order" value="{{ entity.get_link_category_display_order() }}"/>
+        <div>リンクカテゴリ名称<input type="text" name="link_category_name" value="{{ entity.get_link_category_name() }}"/></div>
+        <div>リンクカテゴリ表示順序<input type="text" name="link_category_display_order" value="{{ entity.get_link_category_display_order() }}"/></div>
         <input type="reset" value="リセット"/>
         <input type="submit" value="確認"/>
       </form>

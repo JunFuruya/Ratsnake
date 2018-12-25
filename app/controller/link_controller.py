@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
+from app.validator.link_validator import LinkValidator
 from app.service.link_service import LinkService
 from app.entity.link_entity import LinkEntity
 
@@ -16,6 +17,7 @@ class LinkController(BaseController):
         self.set_page_info('リンク集', 'リンク集を登録・編集・削除します。', 'Please enter your id and password.')
         self.__user_id = self.get_login_user()
         self.__service = LinkService()
+        self.__validator = LinkValidator()
         pass
 
     def index(self):
@@ -57,22 +59,26 @@ class LinkController(BaseController):
         link_url = self.get_param('link_url')
         link_display_order = self.get_param('link_display_order')
 
-        # TODO validation
+        error_messages = self.__validator.get_error_messages(link_site_name, link_url, link_display_order)
+        if(len(error_messages) == 0):
+            self.set_session('link_id', link_id)
+            self.set_session('link_category_id', link_category_id)
+            self.set_session('link_site_name', link_site_name)
+            self.set_session('link_url', link_url)
+            self.set_session('link_display_order', link_display_order)
+            template = './template/admin/links/confirm.html'
+        else:
+            template = './template/admin/links/create.html'
 
-        self.set_session('link_id', link_id)
-        self.set_session('link_category_id', link_category_id)
-        self.set_session('link_site_name', link_site_name)
-        self.set_session('link_url', link_url)
-        self.set_session('link_display_order', link_display_order)
-
-        # TODO もっと良い設計があるはず
+        # TODO Factory class
         entity = LinkEntity()
         entity.set_link_id(link_id)
         entity.set_link_category_id(link_category_id)
         entity.set_link_site_name(link_site_name)
         entity.set_link_url(link_url)
         entity.set_link_display_order(link_display_order)
-        return self.view('./template/admin/links/confirm.html', entity=entity)
+        entity.set_error_message(error_messages)
+        return self.view(template, entity=entity)
 
     def insert(self):
         link_category_id = self.get_session('link_category_id')

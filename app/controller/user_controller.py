@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
+from app.validator.user_validator import UserValidator
 from app.service.user_service import UserService
 from app.entity.user_entity import UserEntity
 
@@ -16,6 +17,7 @@ class UserController(BaseController):
         self.set_page_info('ユーザマスタ', 'ユーザを登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = UserService()
+        self.__validator = UserValidator()
         pass
 
     def index(self):
@@ -49,18 +51,22 @@ class UserController(BaseController):
         user_hashed_password = self.get_param('user_hashed_password')
         user_hashed_password_check = self.get_session('user_hashed_password_check')
 
-        # TODO validation
-        
-        self.set_session('user_id', user_id)
-        self.set_session('user_username', user_username)
-        self.set_session('user_hashed_password', user_hashed_password)
-        
-        # TODO もっと良い設計があるはず
+        error_messages = self.__validator.get_error_messages(user_username, user_hashed_password)
+        if(len(error_messages) == 0):
+            self.set_session('user_id', user_id)
+            self.set_session('user_username', user_username)
+            self.set_session('user_hashed_password', user_hashed_password)
+            template = './template/admin/link_categories/confirm.html'
+        else:
+            template = './template/admin/link_categories/create.html'
+
+        # TODO Factory Class
         entity = UserEntity()
         entity.set_user_id(user_id)
         entity.set_user_username(user_username)
         entity.set_user_hashed_password(user_hashed_password)
-        return self.view('./template/admin/users/confirm.html', entity)
+        entity.set_error_message(error_messages)
+        return self.view(template, entity)
 
     def insert(self):
         user_username = self.get_session('user_username')

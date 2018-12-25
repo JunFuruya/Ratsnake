@@ -74,8 +74,11 @@ class LinkCategoryController(BaseController):
             self.set_session('link_category_id', '')
             self.set_session('link_category_name', '')
             self.set_session('link_category_display_order', '')
+            template = './template/admin/link_categories/confirm.html'
+        else:
+            template = './template/admin/link_categories/create.html'
 
-        return self.view('./template/admin/link_categories/complete.html', self.__service.create(self.__user_id, link_category_name, link_category_display_order))
+        return self.view(template, self.__service.create(self.__user_id, link_category_name, link_category_display_order))
 
     def update(self, link_category_id):
         link_category_id = self.get_session('link_category_id')
