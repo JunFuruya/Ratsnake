@@ -1,0 +1,33 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <a href="/admin">TOPへ</a>
+      <a href="/admin/languages/create">新規登録</a>
+      
+      <table>
+        <thead></thead>
+        <tbody>
+          {% for entity in entity.get_language_entity_list() %}
+          <tr>
+            <td>{{ entity.get_language_id() }}</td>
+            <td>{{ entity.get_language_name() }}</td>
+            <td>
+              <form id="language{{ entity.get_language_id() }}" action="/admin/languages/{{ entity.get_language_id() }}" method="GET">
+                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
+                <input type="submit" value="詳細へ" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('language{{ entity.get_language_id() }}', '/admin/languages/delete');}" />
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </article>
+{% endblock %}
