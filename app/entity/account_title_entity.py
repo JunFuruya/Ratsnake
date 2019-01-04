@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from app.entity.base_web_entity import BaseWebEntity
-from app.entity.value.values import AccountTitleClassificationTypeValue
+from app.value.values import AccountTitleClassificationTypeValue
 
 class AccountTitleEntity(BaseWebEntity):
     
@@ -19,15 +19,8 @@ class AccountTitleEntity(BaseWebEntity):
     def get_account_title_id(self):
         return self.__account_title_id
     
-    def set_user_id(self, user_id):
-        self.__user_id = user_id
-        return self
-    
-    def get_user_id(self):
-        return self.__user_id
-    
     def set_account_title_name(self, account_title_name):
-        self.account_title_name = account_title_name
+        self.__account_title_name = account_title_name
         return self
     
     def get_account_title_name(self):
@@ -38,5 +31,5 @@ class AccountTitleEntity(BaseWebEntity):
         return self
 
     def get_account_title_classification_type(self):
-        return self.__account_title_classification_type.get()
+        return self.__account_title_classification_type
     # TODO to array

@@ -8,12 +8,12 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <form action="/admin/languages/{{ entity.get_language_id() }}" method="POST">
-        {{ entity.get_language_id() }}
-        {{ entity.get_language_name() }}
+      <form action="/admin/account-titles/{{ entity.get_account_title_id() }}" method="POST">
+        {{ entity.get_account_title_name() }}
+        {{ entity.get_account_title_classification_type().get_name() }}
         <input type="submit" value="編集"/>
       </form>
-      <a href="/admin/languages">言語一覧へ</a>
+      <a href="/admin/account-titles">勘定科目一覧へ</a>
       
     </article>
 {% endblock %}

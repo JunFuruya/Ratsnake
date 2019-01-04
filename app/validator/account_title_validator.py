@@ -2,26 +2,26 @@
 
 from app.validator.base_validator import BaseValidator
 
-class LinkCategoryValidator(BaseValidator):
+class AccountTitleValidator(BaseValidator):
     def __init__(self):
         pass
         
-    def get_error_messages(self, link_category_name, link_category_display_order):
-        self.__link_category_name = link_category_name
-        self.__link_category_display_order = link_category_display_order
+    def get_error_messages(self, account_title_name, account_title_classification_type):
+        self.__account_title_name = account_title_name
+        self.__account_title_classification_type = account_title_classification_type
 
         self.__validate()
 
         return super().get_error_messages()
 
     def __validate(self):
-        if(self.has_empty_error(self.__link_category_name)):
-            super().error_messages.append('リンクカテゴリ名称が入力されていません。')
-        if(self.has_too_large_number_error(self.__link_category_name, 100)):
-            super().error_messages.append('リンクカテゴリ名称は100文字以内で入力してください。')
-        if(self.has_empty_error(self.__link_category_display_order)):
-            super().error_messages.append('リンクカテゴリ表示順序が入力されていません。')
-        if(self.has_too_large_number_error(self.__link_category_display_order, 3)):
-            super().error_messages.append('リンクカテゴリ名称は3文字以内で入力してください。')
+        #if(self.has_empty_error(self.__account_title_name)):
+            #super().error_messages.append('勘定科目が入力されていません。')
+        if(self.has_too_large_number_error(self.__account_title_name, 20)):
+            super().error_messages.append('勘定科目は20文字以内で入力してください。')
+        #if(self.has_empty_error(self.__account_title_classification_type)):
+            #super().error_messages.append('勘定科目分類区分が入力されていません。')
+        if(self.has_too_large_number_error(self.__account_title_classification_type, 1)):
+            super().error_messages.append('勘定科目分類区分は1文字で入力してください。')
         pass
     

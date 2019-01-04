@@ -9,20 +9,21 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <a href="/admin">TOPへ</a>
-      <a href="/admin/languages/create">新規登録</a>
+      <a href="/admin/account-titles/create">新規登録</a>
       
       <table>
         <thead></thead>
         <tbody>
-          {% for entity in entity.get_language_entity_list() %}
+          <th>勘定科目</th>
+          <th>操作</th>
+          {% for entity in entity.get_account_title_entity_list() %}
           <tr>
-            <td>{{ entity.get_language_id() }}</td>
-            <td>{{ entity.get_language_name() }}</td>
+            <td>{{ entity.get_account_title_name() }}</td>
             <td>
-              <form id="language{{ entity.get_language_id() }}" action="/admin/languages/{{ entity.get_language_id() }}" method="GET">
-                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
+              <form id="account_title{{ entity.get_account_title_id() }}" action="/admin/account-titles/{{ entity.get_account_title_id() }}" method="GET">
+                <input type="hidden" name="account_title_id" value="{{ entity.get_account_title_id() }}"/>
                 <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('language{{ entity.get_language_id() }}', '/admin/languages/delete');}" />
+                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('account_title{{ entity.get_account_title_id() }}', '/admin/account-titles/{{ entity.get_account_title_id() }}/delete');}" />
               </form>
             </td>
           </tr>

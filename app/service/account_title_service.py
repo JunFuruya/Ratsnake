@@ -1,25 +1,24 @@
 # -*- coding: UTF-8 -*-
 
 from app.service.base_service import BaseService
-from app.repository.link_category_repository import LinkCategoryRepository
-from app.repository.user_repository import UsersRepository
+from app.repository.account_title_repository import AccountTitleRepository
 
-class LinkCategoryService(BaseService):
+class AccountTitleService(BaseService):
     def __init__(self):
-        self.__reposiroty = LinkCategoryRepository()
+        self.__reposiroty = AccountTitleRepository()
         pass
 
     def getList(self, user_id, limit, offset):
         return self.__reposiroty.findList(user_id, limit, offset)
 
-    def get(self, user_id, link_category_id):
-        return self.__reposiroty.find(user_id, link_category_id)
+    def get(self, user_id, account_title_id):
+        return self.__reposiroty.find(user_id, account_title_id)
 
-    def create(self, user_id, link_category_name, link_category_display_order):
-        return self.__reposiroty.insert(user_id, link_category_name, link_category_display_order)
+    def create(self, user_id, account_title_name, account_title_classification_type):
+        return self.__reposiroty.insert(user_id, account_title_name, account_title_classification_type)
 
-    def update(self, link_category_id, user_id, link_category_name, link_category_display_order):
-        return self.__reposiroty.update(link_category_id, user_id, link_category_name, link_category_display_order)
+    def update(self, account_title_id, user_id, account_title_name, account_title_classification_type):
+        return self.__reposiroty.update(account_title_id, user_id, account_title_name, account_title_classification_type)
 
-    def delete(self, link_category_id, user_id):
-        return self.__reposiroty.delete(link_category_id, user_id)
+    def delete(self, account_title_id, user_id):
+        return self.__reposiroty.delete(account_title_id, user_id)

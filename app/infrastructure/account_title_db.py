@@ -3,26 +3,26 @@
 from app.infrastructure.base_db import DbBase
 
 '''
-langauage database module
+account title database module
 '''
-class DbLinkCategories(DbBase):
+class DbAccountTitles(DbBase):
     def __init__(self):
         super().__init__()
         pass
 
     def selectAll(self, user_id, limit, offset):
-        sql = 'SELECT m_link_category_id, m_link_category_name FROM m_link_categories WHERE m_user_id = %s ORDER BY m_link_category_display_order LIMIT %s OFFSET %s;'
+        sql = 'SELECT m_account_title_id, m_account_title_name, m_account_title_classification_type FROM m_account_titles WHERE m_user_id = %s LIMIT %s OFFSET %s;'
         bindings = (user_id, limit, offset)
         return super().select(sql, bindings)
 
-    def selectOne(self, user_id, link_category_id):
-        sql = 'SELECT m_link_category_id, m_user_id, m_link_category_name, m_link_category_display_order FROM m_link_categories WHERE m_user_id = %s AND m_link_category_id = %s;'
-        bindings = (user_id, link_category_id)
+    def selectOne(self, user_id, account_title_id):
+        sql = 'SELECT m_account_title_id, m_account_title_name, m_account_title_classification_type FROM m_account_titles WHERE m_user_id = %s AND m_account_title_id = %s;'
+        bindings = (user_id, account_title_id)
         return super().selectOne(sql, bindings)
 
-    def insert(self, user_id, link_category_name, link_category_display_order):
-        sql = 'INSERT INTO m_link_categories(m_user_id, m_link_category_name, m_link_category_display_order) VALUES(%s, %s, %s);'
-        bindings = (user_id, link_category_name, link_category_display_order)
+    def insert(self, user_id, account_title_name, account_title_classification_type):
+        sql = 'INSERT INTO m_account_titles(m_user_id, m_account_title_name, m_account_title_classification_type) VALUES(%s, %s, %s);'
+        bindings = (user_id, account_title_name, account_title_classification_type)
         
         # TODO 全体的に例外処理を入れる
         #id = ''
@@ -36,9 +36,9 @@ class DbLinkCategories(DbBase):
         
         return id
     
-    def update(self, link_category_id, user_id, link_category_name, link_category_display_order):
-        sql = 'UPDATE m_link_categories SET m_link_category_name = %s, m_link_category_display_order = %s WHERE m_link_category_id = %s AND m_user_id = %s;'
-        bindings = (link_category_name, link_category_display_order, link_category_id, user_id)
+    def update(self, account_title_id, user_id, account_title_name, account_title_classification_type):
+        sql = 'UPDATE m_account_titles SET m_account_title_name = %s, m_account_title_classification_type = %s WHERE m_account_title_id = %s AND m_user_id = %s;'
+        bindings = (account_title_name, account_title_classification_type, account_title_id, user_id)
 
         is_success = False
         # TODO 全体的に例外処理を入れる
@@ -49,9 +49,9 @@ class DbLinkCategories(DbBase):
             super().rollback()
         return is_success
     
-    def delete(self, link_category_id, user_id):
-        sql = 'DELETE FROM m_link_categories WHERE m_link_category_id = %s AND m_user_id = %s;'
-        bindings = (link_category_id, user_id)
+    def delete(self, account_title_id, user_id):
+        sql = 'DELETE FROM m_account_titles WHERE m_account_title_id = %s AND m_user_id = %s;'
+        bindings = (account_title_id, user_id)
 
         is_success = False
         # TODO 全体的に例外処理を入れる

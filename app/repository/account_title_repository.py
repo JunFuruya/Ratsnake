@@ -1,60 +1,60 @@
 # -*- coding: UTF-8 -*-
 
-from app.infrastructure.link_category_db import DbLinkCategories
-from app.entity.link_category_entity import LinkCategoryEntity
-from app.entity.link_category_list_entity import LinkCategoryListEntity
+from app.infrastructure.account_title_db import DbAccountTitles
+from app.entity.account_title_entity import AccountTitleEntity
+from app.entity.account_title_list_entity import AccountTitleListEntity
 
 '''
-Link Category Repository Module
+Account Title Repository Module
 '''
-class LinkCategoryRepository():
+class AccountTitleRepository():
     __db = None
     
     def __init__(self):
-        self.__db = DbLinkCategories()
+        self.__db = DbAccountTitles()
         pass
 
-    def find(self, user_id, link_category_id):
-        record = self.__db.selectOne(user_id, link_category_id)
+    def find(self, user_id, account_title_id):
+        record = self.__db.selectOne(user_id, account_title_id)
 
-        entity = LinkCategoryEntity()
+        entity = AccountTitleEntity()
         if record is not None:
-            entity.set_link_category_id(record[0])
-            entity.set_user_id(record[1])
-            entity.set_link_category_name(record[2])
-            entity.set_link_category_display_order(record[3])
+            entity.set_account_title_id(record[0])
+            entity.set_account_title_name(record[1])
+            entity.set_account_title_classification_type(record[2])
             
         return entity
 
     def findList(self, user_id, limit, offset):
         records = self.__db.selectAll(user_id, limit, offset)
-        list_entity = LinkCategoryListEntity()
+        list_entity = AccountTitleListEntity()
         
         entities = []
         for record in records:
-            entity = LinkCategoryEntity()
-            entity.set_link_category_id(record[0])
-            entity.set_link_category_name(record[1])
+            entity = AccountTitleEntity()
+            entity.set_account_title_id(record[0])
+            entity.set_account_title_name(record[1])
+            entity.set_account_title_classification_type(record[2])
             entities.append(entity)
             
-        list_entity.set_link_category_entity_list(entities)
+        list_entity.set_account_title_entity_list(entities)
         
         return list_entity
 
-    def insert(self, user_id, link_category_name, link_category_display_order):
-        entity = LinkCategoryEntity()
-        return entity.set_link_category_id(self.__db.insert(user_id, link_category_name, link_category_display_order))
+    def insert(self, user_id, account_title_name, account_title_classification_type):
+        entity = AccountTitleEntity()
+        return entity.set_account_title_id(self.__db.insert(user_id, account_title_name, account_title_classification_type))
 
-    def update(self, link_category_id, user_id, link_category_name, link_category_display_order):
-        is_success = self.__db.update(link_category_id, user_id, link_category_name, link_category_display_order)
+    def update(self, account_title_id, user_id, account_title_name, account_title_classification_type):
+        is_success = self.__db.update(account_title_id, user_id, account_title_name, account_title_classification_type)
         if is_success == True:
-            return link_category_id
+            return account_title_id
         else:
             return ''
 
-    def delete(self, link_category_id, user_id):
-        is_success = self.__db.delete(link_category_id, user_id)
+    def delete(self, account_title_id, user_id):
+        is_success = self.__db.delete(account_title_id, user_id)
         if is_success == True:
-            return link_category_id
+            return account_title_id
         else:
             return ''

@@ -14,19 +14,22 @@ class ScreenIdValue():
 class AccountTitleClassificationTypeValue():
     def __init__(self, account_title_value):
         self.__account_title_value = account_title_value
-        self.account_titles = {
-            'assets' : 1,
-            'net_assets' : 2,
-            'liability' : 3,
-            'revenue' : 4,
-            'expense' : 5,
+        self.__account_titles = {
+            1: '資産',
+            2: '負債',
+            3: '資本',
+            4: '費用',
+            5: '収益',
         }
-        
-    def has_error()
-        if(account_title_value in values(self.account_titles)):
+
+    def has_error(self):
+        if(self.__account_title_value in values(self.__account_titles)):
             return False
         else:
             return True
 
-    def get():
+    def get(self):
         return self.__account_title_value
+    
+    def get_name(self):
+        return self.__account_titles[int(self.__account_title_value)]
