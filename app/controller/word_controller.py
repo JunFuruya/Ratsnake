@@ -147,4 +147,23 @@ class WordController(BaseController):
         entity = WordEntity()
         entity.set_language_id(language_id)
         entity.set_word_id(self.__service.delete(self.__user_id, language_id, word_id))
-        return self.view('./template/admin/words/complete.html', entity=entity)   
+        return self.view('./template/admin/words/complete.html', entity=entity)
+    
+    def import_csv(self):
+        csv_file = self.get_params('csv_file', '');
+
+        error_messages = self.__validator.get_csv_error_messages(csv_file)
+
+        # エラーがなければ、取り込み実施
+        if len(error_messages) == 0:
+            csv_lines = open(file_path, 'r')
+            foreach(csv_line in csv_lines):
+                language_id = csv_line[0]
+                word_spell = csv_line[1]
+                word_explanation = csv_line[2]
+                word_pronunciation = csv_line[3]
+                word_is_learned = 0 # 強制的に0
+                word_note = csv_line[4]
+                self.__service.create(self.__user_id, language_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note)
+            csv_lines.close()
+        return self.view('./template/admin/words/detail.html', entity=entity.set_error_messages(error_messages))

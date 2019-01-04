@@ -194,6 +194,10 @@ def post_word_update(language_id, word_id):
 def post_word_delete(language_id, word_id):
     return WordController(request).delete(language_id, word_id)
 
+@post('/admin/languages/words/csv')
+def post_word_import_csv():
+    return WordController(request).import_csv()
+
 ###############################################################################
 # ユーザマスタ
 ###############################################################################
