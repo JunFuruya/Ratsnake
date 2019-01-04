@@ -9,12 +9,10 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-      - run:
-        -command: set RANDFILE=.rnd
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: hideout_test
+          MYSQL_DATABASE: circle_test
         command: [
           --character-set-server=utf8,
           --collation-server=utf8_general_ci,
@@ -47,7 +45,6 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
-            mysql -uroot -e "CREATE DATABASE IF NOT EXISTS hideout_test";
 
       - save_cache:
           paths:
