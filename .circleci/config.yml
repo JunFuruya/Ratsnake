@@ -9,12 +9,17 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-      # 20190104 added in order to test the controllers
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: hideout_test
-          command: [--character-set-server=utf8, --collation-server=utf8_general_ci, --default-storage-engine=innodb]
+        command: [
+          --character-set-server=utf8,
+          --collation-server=utf8_general_ci,
+          --default-storage-engine=innodb,
+          --explicit_defaults_for_timestamp,
+          --initialize-insecure,
+        ]
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -38,9 +43,9 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
-            # 20190104 added in order to test the controllers
-            mysql -uroot -p -e "CREATE DATABASE IF NOT EXISTS hideout_test";
+            mysql -uroot -e "CREATE DATABASE IF NOT EXISTS hideout_test";
 
       - save_cache:
           paths:
