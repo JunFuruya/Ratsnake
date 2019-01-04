@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.entity.web_config_entity import WebServerConfigEntity
 from app.infrastructure.web_server_yaml_file import WebServerConfigYamlFile

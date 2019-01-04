@@ -9,8 +9,7 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <form action="/admin/link-categories/{{ entity.get_link_category_id() }}" method="POST">
-        {{ entity.get_link_category_id() }}
-        {{ entity.get_link_category_name() }}
+        カテゴリ名称{{ entity.get_link_category_name() }}
         <input type="submit" value="編集"/>
       </form>
       <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>

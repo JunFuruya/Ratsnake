@@ -1,17 +1,19 @@
-# coding: utf-8
+# -*- coding: UTF-8 -*-
 
-#def application(environ, start_response):
-#
-#    start_response('200 OK', [('Content-type', 'text/plain')])
-#
-#    return 'Hello, world'
-
-#mport sys, os
-import bottle
+import sys, os, bottle
 
 dirpath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(dirpath)
 os.chdir(dirpath)
 
 import main
-application = bottle.default_app()
+from app import *
+from beaker.middleware import SessionMiddleware
+
+session_opts = {
+    'session.type': 'file',
+    'session.cookie_expires': 300,
+    'session.data_dir': './data',
+    'session.auto': True
+}
+application = SessionMiddleware(bottle.default_app(), session_opts)

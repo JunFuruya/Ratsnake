@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.entity.user_list_entity import UserListEntity
 from app.entity.user_entity import UserEntity

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.service.base_service import BaseService
 from app.repository.word_repository import WordRepository

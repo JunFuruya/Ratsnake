@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from bottle import jinja2_template, redirect
 
@@ -59,12 +59,6 @@ class BaseController():
         self.__session[HashHelper.hexdigest(key)] = value
         self.__session.save()
         pass
-    
-    def get_session(self, key):
-        if HashHelper.hexdigest(key) not in self.__session:
-            return ''
-        else:
-            return self.__session.get(HashHelper.hexdigest(key), False)
     
     def check_login_status(self, should_check=True):
         if (should_check):

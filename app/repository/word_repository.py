@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.infrastructure.language_db import DbLanguages
 from app.infrastructure.word_db import DbWords

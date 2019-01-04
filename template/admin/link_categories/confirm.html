@@ -14,8 +14,8 @@
         {% set action = '/admin/link-categories/' + entity.get_link_category_id() + '/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_link_category_name() }}
-        {{ entity.get_link_category_display_order() }}
+        <div>リンクカテゴリ名称{{ entity.get_link_category_name() }}</div>
+        <div>リンクカテゴリ表示順序{{ entity.get_link_category_display_order() }}</div>
         <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
         <input type="submit" value="登録"/>
       </form>

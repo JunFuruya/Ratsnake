@@ -14,9 +14,12 @@
       <table>
         <thead></thead>
         <tbody>
-          {% for entity in entity.get_link_category_entity_list() %}
           <tr>
-            <td>{{ entity.get_link_category_id() }}</td>
+            <th>カテゴリ名</th>
+            <th>操作</th>
+          </tr>
+            {% for entity in entity.get_link_category_entity_list() %}
+          <tr>
             <td>{{ entity.get_link_category_name() }}</td>
             <td>
               <form id="link-category{{ entity.get_link_category_id() }}" action="/admin/link-categories/{{ entity.get_link_category_id() }}" method="GET">

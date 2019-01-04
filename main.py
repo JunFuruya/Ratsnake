@@ -1,9 +1,6 @@
-# -*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
-from beaker.middleware import SessionMiddleware
 from bottle import app, error, get, post, request, run, static_file
-
-from app.helper.helper import HashHelper
 
 from app.controller.admin_index_controller import AdminIndexController
 from app.controller.admin_login_controller import AdminLoginController
@@ -243,20 +240,19 @@ def get_static_file(path):
 ###############################################################################
 @error(404)
 def error404(error):
-    return ErrorController.error(404)
+    return ErrorController(request).error(404)
 
-error(500)
+@error(500)
 def error500(error):
-    return ErrorController.error(500)
+    return ErrorController(request).error(500)
 
 if __name__ == "__main__":
-    # TODO: create controller classes
+    from beaker.middleware import SessionMiddleware
     session_opts = {
         'session.type': 'file',
         'session.cookie_expires': 300,
         'session.data_dir': './data',
         'session.auto': True
     }
-
     run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
         debug=config.get_debug(), reloader=config.get_reloader())

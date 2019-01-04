@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.repository.app_slack_repository import AppSlackRepository
 from app.service.base_service import BaseService

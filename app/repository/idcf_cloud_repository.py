@@ -1,4 +1,4 @@
-#-*- UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 from app.infrastructure.idcf_cloud_api import IdcfCloudApi
 from app.infrastructure.idcf_cloud_yaml_file import IdcfCloudConfigYamlFile
