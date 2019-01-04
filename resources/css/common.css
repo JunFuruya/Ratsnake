@@ -1,0 +1,118 @@
+@charset "utf-8";
+
+* {
+  margin: 0px;
+  padding: 0px;
+  color: #333333;
+}
+
+header {
+  color: #FFFFFF;
+  font-size: medium;
+
+  background-color: #191970;
+  width: 100%;
+}
+
+header section#logo {
+  color: #FFFFFF;
+  background-color: #191970;
+  vertical-align: middle;
+  
+  height: 30px;
+  padding-left: 15px;
+}
+
+header section#logo span.breadcrumb {
+  color: #FFFFFF;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+header section#logo span#logout {
+  color: #FFFFFF;
+  position: absolute;
+  right: 15px
+}
+
+header section.description {
+  background-color: #B1D6DC;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#main {
+  background-color: #FFFFFF;
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#main h2 {
+  color: #333333;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+#main nav#menu {
+  border-right: 1px solid #CCCCCC;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  max-width: 200px;
+  min-width: 200px;
+}
+
+#main nav#menu ul{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+#main nav#menu ul li{
+  list-style: none;
+}
+
+#main nav#menu  section.menu_category{
+  font-weight: bold;
+  font-size: small;
+}
+
+#main nav#menu ul li section.menu_label{
+  font-weight: bold;
+  font-size: small;
+}
+
+#main nav#menu ul li section.menu_description{
+  font-size: small;
+  padding-bottom: 15px;
+}
+
+#main article {
+  padding-left: 15px;
+}
+#main article section.console {
+  background-color: #000000;
+  display: inline-block;
+}
+
+#main article section ul.console li {
+  color: #FFFFFF;
+  background-color: #000000;
+  display: inline-block;
+}
+
+footer {
+  color: #FFFFFF;
+  font-size: small;
+  background-color: #191970;
+  width: 100%;
+  height: 50px;
+}
+
+section.error_message {
+  color: #E91E63;
+}
