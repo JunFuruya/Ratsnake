@@ -2,6 +2,7 @@
 
 from bottle import app, error, get, post, request, run, static_file
 
+from app.controller.account_title_controller import AccountTitleController
 from app.controller.admin_index_controller import AdminIndexController
 from app.controller.admin_login_controller import AdminLoginController
 from app.controller.error_controller import ErrorController
@@ -201,11 +202,11 @@ def get_user_list():
     return UserController(request).index()
 
 @get('/admin/users/create')
-def get_usercreate():
+def get_user_create():
     return UserController(request).create()
 
 @get('/admin/users/<user_id>')
-def post_link_category_detail(user_id):
+def post_user_detail(user_id):
     return UserController(request).detail(user_id)
 
 @post('/admin/users/<user_id>')
@@ -229,6 +230,41 @@ def post_user_delete(user_id):
     return UserController(request).delete(user_id)
 
 ###############################################################################
+# 勘定科目マスタ
+###############################################################################
+@get('/admin/account-titles')
+def get_account_title_list():
+    return AccountTitleController(request).index()
+
+@get('/admin/account-titles/create')
+def get_account_title_create():
+    return AccountTitleController(request).create()
+
+@get('/admin/account-titles/<account_title_id>')
+def get_account_title_detail(account_title_id):
+    return AccountTitleController(request).detail(account_title_id)
+
+@post('/admin/account-titles/<account_title_id>')
+def post_account_title_edit(account_title_id):
+    return AccountTitleController(request).edit(account_title_id)
+
+@post('/admin/account-titles/confirm')
+def post_account_title_confirm():
+    return AccountTitleController(request).confirm()
+
+@post('/admin/account-titles/insert')
+def post_user_insert():
+    return AccountTitleController(request).insert()
+
+@post('/admin/account-titles/<account_title_id>/update')
+def post_account_title_update(account_title_id):
+    return AccountTitleController(request).update(account_title_id)
+
+@post('/admin/account-titles/<account_title_id>/delete')
+def post_account_title_delete(account_title_id):
+    return AccountTitleController(request).delete(account_title_id)
+
+###############################################################################
 # 静的ファイル
 ###############################################################################
 @get('/public/<path:path>')
@@ -242,7 +278,7 @@ def get_static_file(path):
 def error404(error):
     return ErrorController(request).error(404)
 
-@error(500)
+#@error(500)
 def error500(error):
     return ErrorController(request).error(500)
 
