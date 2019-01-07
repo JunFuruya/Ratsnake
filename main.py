@@ -10,6 +10,7 @@ from app.controller.index_controller import IndexController
 from app.controller.language_controller import LanguageController
 from app.controller.link_category_controller import LinkCategoryController
 from app.controller.link_controller import LinkController
+from app.controller.journal_entry_controller import JournalEntryController
 from app.controller.user_controller import UserController
 from app.controller.word_controller import WordController
 
@@ -257,7 +258,7 @@ def post_account_title_confirm():
     return AccountTitleController(request).confirm()
 
 @post('/admin/account-titles/insert')
-def post_user_insert():
+def post_account_title_insert():
     return AccountTitleController(request).insert()
 
 @post('/admin/account-titles/<account_title_id>/update')
@@ -267,6 +268,41 @@ def post_account_title_update(account_title_id):
 @post('/admin/account-titles/<account_title_id>/delete')
 def post_account_title_delete(account_title_id):
     return AccountTitleController(request).delete(account_title_id)
+
+###############################################################################
+# 仕分元帳画面
+###############################################################################
+@get('/admin/journal-entries')
+def get_journal_entry_list():
+    return JournalEntryController(request).index()
+
+@get('/admin/journal-entries/create')
+def get_journal_entry_create():
+    return JournalEntryController(request).create()
+
+@get('/admin/journal-entries/<journal_entry_id>')
+def get_journal_entry_detail(journal_entry_id):
+    return JournalEntryController(request).detail(journal_entry_id)
+
+@post('/admin/journal-entries/<journal_entry_id>')
+def post_journal_entry_edit(journal_entry_id):
+    return JournalEntryController(request).edit(journal_entry_id)
+
+@post('/admin/journal-entries/confirm')
+def post_journal_entry_confirm():
+    return JournalEntryController(request).confirm()
+
+@post('/admin/journal-entries/insert')
+def post_journal_entry_insert():
+    return JournalEntryController(request).insert()
+
+@post('/admin/journal-entries/<journal_entry_id>/update')
+def post_journal_entry_update(journal_entry_id):
+    return JournalEntryController(request).update(journal_entry_id)
+
+@post('/admin/journal-entries/<journal_entry_id>/delete')
+def post_journal_entry_delete(journal_entry_id):
+    return JournalEntryController(request).delete(journal_entry_id)
 
 ###############################################################################
 # 静的ファイル
