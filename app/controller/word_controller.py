@@ -157,7 +157,7 @@ class WordController(BaseController):
         # エラーがなければ、取り込み実施
         if len(error_messages) == 0:
             csv_lines = open(file_path, 'r')
-            foreach(csv_line in csv_lines):
+            for csv_line in csv_lines:
                 language_id = csv_line[0]
                 word_spell = csv_line[1]
                 word_explanation = csv_line[2]

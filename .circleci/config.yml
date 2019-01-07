@@ -12,6 +12,7 @@ jobs:
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_RANDOM_ROOT_PASSWORD: no
           MYSQL_DATABASE: circle_test
         command: [
           --character-set-server=utf8,

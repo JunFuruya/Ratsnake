@@ -40,7 +40,7 @@ class WordValidator(BaseValidator):
         
         if (len(super().get_error_messages()) > 0):
             csv_lines = open(file_path, 'r')
-            foreach(csv_line in csv_lines):
+            for csv_line in csv_lines:
                 if(self.has_empty_error(csv_line[1])):
                     super().error_messages.append('綴りが入力されていません。')
                 if(self.has_too_large_number_error(csv_line[1], 50)):
