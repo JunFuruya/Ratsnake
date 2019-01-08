@@ -8,9 +8,11 @@ idna==2.6
 Jinja2==2.10
 MarkupSafe==1.0
 mysql-connector-python==8.0.11
+pillow>=4.0.0
 protobuf==3.5.2.post1
 pycurl==7.43.0.1
 PyYAML==3.12
+reportlab==3.5.12
 requests==2.20.0
 six==1.11.0
 slackbot==0.5.1
