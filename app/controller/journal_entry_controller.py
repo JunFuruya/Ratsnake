@@ -25,7 +25,9 @@ class JournalEntryController(BaseController):
 
         # session をクリアする
         self.set_session('journal_entry_id', '')
-        self.set_session('journal_entry_name', '')
+        self.set_session('account_title_id', '')
+        self.set_session('journal_entry_transaction_date', '')
+        self.set_session('journal_entry_note', '')
         
         return self.view('./template/admin/journal-entries/list.html', self.__service.getList(self.__user_id, limit, offset))
     
@@ -45,20 +47,28 @@ class JournalEntryController(BaseController):
         return self.view('./template/admin/journal-entries/edit.html', self.__service.get(self.__user_id, journal_entry_id))
     
     def confirm(self):
-        language_id = self.get_session('journal_entry_id')
-        language_name = self.get_param('journal_entry_name')
+        journal_entry_id = self.get_session('journal_entry_id')
+        account_title_id = self.get_session('account_title_id')
+        journal_entry_transaction_date = self.get_param('journal_entry_transaction_date')
+        journal_entry_note = self.get_param('journal_entry_note')
 
-        error_messages = self.__validator.get_error_messages(journal_entry_name)
+        error_messages = self.__validator.get_error_messages(account_title_id, journal_entry_transaction_date, journal_entry_note)
         if(len(error_messages) == 0):
-            self.set_session('journal_entry_name', journal_entry_name)
+            self.set_session('journal_entry_id', '')
+            self.set_session('account_title_id', '')
+            self.set_session('journal_entry_transaction_date', '')
+            self.set_session('journal_entry_note', '')
+
             template = './template/admin/journal-entries/confirm.html'
         else:
             template = './template/admin/journal-entries/create.html'
         
         # TODO Factory Class
         entity = JournalEntryEntity()
-        entity.set_language_id(journal_entry_id)
-        entity.set_language_name(journal_entry_name)
+        entity.set_journal_entry_id(journal_entry_id)
+        entity.set_account_title_id(account_title_id)
+        entity.set_journal_entry_transaction_date(journal_entry_transaction_date)
+        entity.set_journal_entry_note(journal_entry_note)
         entity.set_error_message(error_messages)
         return self.view(template, entity)
 
@@ -69,29 +79,37 @@ class JournalEntryController(BaseController):
         
         # session をクリアする
         self.set_session('journal_entry_id', '')
-        self.set_session('journal_entry_name', '')
+        self.set_session('account_title_id', '')
+        self.set_session('journal_entry_transaction_date', '')
+        self.set_session('journal_entry_note', '')
 
-        return self.view('./template/admin/journal-entries/complete.html', self.__service.create(self.__user_id, journal_entry_name))
+        return self.view('./template/admin/journal-entries/complete.html', self.__service.create(self.__user_id, account_title_id, journal_entry_transaction_date, journal_entry_note))
 
     def update(self):
         journal_entry_id = self.get_session('journal_entry_id')
-        journal_entry_name = self.get_session('journal_entry_name')
+        account_title_id = self.get_session('account_title_id')
+        journal_entry_transaction_date = self.get_session('journal_entry_transaction_date')
+        journal_entry_note = self.get_session('journal_entry_note')
         
         # session をクリアする
         self.set_session('journal_entry_id', '')
-        self.set_session('journal_entry_name', '')
+        self.set_session('account_title_id', '')
+        self.set_session('journal_entry_transaction_date', '')
+        self.set_session('journal_entry_note', '')
 
         entity = JournalEntryEntity()
-        entity.set_language_id(self.__service.update(journal_entry_id, self.__user_id, journal_entry_name))
+        entity.set_language_id(self.__service.update(journal_entry_id, self.__user_id, account_title_id, journal_entry_transaction_date, journal_entry_note))
         return self.view('./template/admin/journal-entries/complete.html', entity)
     
     def delete(self):
-        language_id = self.get_param('journal_entry_id')
+        journal_entry_id = self.get_param('journal_entry_id')
 
         # session をクリアする
         self.set_session('journal_entry_id', '')
-        self.set_session('journal_entry_name', '')
+        self.set_session('account_title_id', '')
+        self.set_session('journal_entry_transaction_date', '')
+        self.set_session('journal_entry_note', '')
 
         entity = JournalEntryEntity()
-        entity.set_language_id(self.__service.delete(journal_entry_id, self.__user_id))
+        entity.set_journal_entry_id(self.__service.delete(journal_entry_id, self.__user_id))
         return self.view('./template/admin/journal-entries/complete.html', entity)
