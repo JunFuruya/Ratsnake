@@ -1,6 +1,6 @@
 [MySQL]
 Host     = localhost
 Port     = 3306
-Name     = hideout
+Name     = hideout_test
 User     =
 Password =

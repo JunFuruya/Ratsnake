@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import os.path
 import re
 
 class BaseValidator():
@@ -70,3 +71,12 @@ class BaseValidator():
     # 値の同一性の判定
     def has_half_width_special_characters_error(self, string):
         return True if (name == '') else False 
+
+    # ファイル存在チェック
+    def file_exists(self, file_path):
+        return os.path.isfile(file_path)
+
+    # 拡張子チェック
+    def has_inappropriate_file_extention_error(self, file_path, intended_extention):
+        root, input_extention = os.path.splitext(path)
+        return False if (input_extention == '.' + intended_extention) else True

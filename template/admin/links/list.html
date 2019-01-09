@@ -11,11 +11,15 @@
       <table>
         <thead></thead>
         <tbody>
+          <th>カテゴリ</th>
+          <th>サイト名</th>
+          <th>URL</th>
+          <th>操作</th>
           {% for entity in entity.get_link_entity_list() %}
           <tr>
-            <td>{{ entity.get_link_id() }}</td>
-            <td>{{ entity.get_link_category_id() }}</td>
-            <td>{{ entity.get_link_site_name() }}</td>
+            {# TODO カテゴリ名を取得する #}
+            <td>カテゴリ名</td>
+            <td><a href="{{ entity.get_link_url() }}">{{ entity.get_link_site_name() }}</a></td>
             <td>{{ entity.get_link_url() }}</td>
             <td>
               <form id="link{{ entity.get_link_id() }}" action="/admin/links/{{ entity.get_link_id() }}" method="GET">

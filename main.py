@@ -5,17 +5,21 @@ from bottle import app, error, get, post, request, run, static_file
 from app.controller.account_title_controller import AccountTitleController
 from app.controller.admin_index_controller import AdminIndexController
 from app.controller.admin_login_controller import AdminLoginController
+from app.controller.cover_letter_controller import CoverLetterController
 from app.controller.error_controller import ErrorController
 from app.controller.index_controller import IndexController
 from app.controller.language_controller import LanguageController
 from app.controller.link_category_controller import LinkCategoryController
 from app.controller.link_controller import LinkController
+from app.controller.journal_entry_controller import JournalEntryController
 from app.controller.user_controller import UserController
 from app.controller.word_controller import WordController
 
 # TODO そのうち消す
 from app.service.web_service import ConfigGetService
 config = ConfigGetService().get_web_server_config()
+
+# TODO メソッド名を全て見直し
 
 ###############################################################################
 # 非ログインユーザ用画面
@@ -30,6 +34,9 @@ def get_index():
 @get('/admin')
 def get_link_index():
     return AdminIndexController(request).index()
+
+# TODO 自己紹介インフォグラフィック
+# TODO ポートフォリオ
 
 ###############################################################################
 # ログイン、ログアウト
@@ -194,6 +201,10 @@ def post_word_update(language_id, word_id):
 def post_word_delete(language_id, word_id):
     return WordController(request).delete(language_id, word_id)
 
+@post('/admin/languages/words/csv')
+def post_word_import_csv():
+    return WordController(request).import_csv()
+
 ###############################################################################
 # ユーザマスタ
 ###############################################################################
@@ -253,7 +264,7 @@ def post_account_title_confirm():
     return AccountTitleController(request).confirm()
 
 @post('/admin/account-titles/insert')
-def post_user_insert():
+def post_account_title_insert():
     return AccountTitleController(request).insert()
 
 @post('/admin/account-titles/<account_title_id>/update')
@@ -263,6 +274,88 @@ def post_account_title_update(account_title_id):
 @post('/admin/account-titles/<account_title_id>/delete')
 def post_account_title_delete(account_title_id):
     return AccountTitleController(request).delete(account_title_id)
+
+###############################################################################
+# TODO 取引先マスタ
+###############################################################################
+
+
+###############################################################################
+# 仕分元帳画面
+###############################################################################
+@get('/admin/journal-entries')
+def get_journal_entry_list():
+    return JournalEntryController(request).index()
+
+@get('/admin/journal-entries/create')
+def get_journal_entry_create():
+    return JournalEntryController(request).create()
+
+@get('/admin/journal-entries/<journal_entry_id>')
+def get_journal_entry_detail(journal_entry_id):
+    return JournalEntryController(request).detail(journal_entry_id)
+
+@post('/admin/journal-entries/<journal_entry_id>')
+def post_journal_entry_edit(journal_entry_id):
+    return JournalEntryController(request).edit(journal_entry_id)
+
+@post('/admin/journal-entries/confirm')
+def post_journal_entry_confirm():
+    return JournalEntryController(request).confirm()
+
+@post('/admin/journal-entries/insert')
+def post_journal_entry_insert():
+    return JournalEntryController(request).insert()
+
+@post('/admin/journal-entries/<journal_entry_id>/update')
+def post_journal_entry_update(journal_entry_id):
+    return JournalEntryController(request).update(journal_entry_id)
+
+@post('/admin/journal-entries/<journal_entry_id>/delete')
+def post_journal_entry_delete(journal_entry_id):
+    return JournalEntryController(request).delete(journal_entry_id)
+
+###############################################################################
+# 受注管理表画面
+###############################################################################
+# TODO 受注一覧画面
+# TODO 送り状PDF出力
+# @post('/admin/cover-letter/<cover_letter_id>/pdf')
+@get('/admin/cover-letter/<cover_letter_id>/pdf')
+def get_cover_letter_pdf(cover_letter_id):
+    return CoverLetterController(request).get_pdf(cover_letter_id)
+
+# TODO 送り状登録画面
+# TODO 送り状詳細画面
+# TODO 見積書登録画面
+# TODO 見積書PDF出力
+# TODO 見積書詳細画面
+# TODO 注文書登録画面
+# TODO 注文書詳細画面
+# TODO 注文請書登録画面
+# TODO 注文請書詳細画面
+# TODO 請求書登録画面
+# TODO 請求書詳細画面
+
+###############################################################################
+# TODO B/S画面
+###############################################################################
+
+###############################################################################
+# TODO P/L画面
+###############################################################################
+
+###############################################################################
+# TODO C/F画面
+###############################################################################
+
+###############################################################################
+# TODO 税金シミュレーション画面
+###############################################################################
+
+###############################################################################
+# TODO メール送信画面
+###############################################################################
 
 ###############################################################################
 # 静的ファイル
