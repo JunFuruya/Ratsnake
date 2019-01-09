@@ -20,16 +20,18 @@ class CoverLetterController(BaseController):
         super().__init__(request)
         self.set_page_info('送り状管理画面', '送り状データを登録・編集・削除・PDF出力します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = LanguageService()
-        self.__validator = LanguageValidator()
+        #self.__service = CoverLetterService()
+        #self.__validator = CoverLetterValidator()
         pass
 
     def get_pdf(self, cover_letter_id):
+        file_name = 'python.pdf'
+        file_path = './tmp/'
 
-        pdfFile = canvas.Canvas('./python.pdf')
+        pdfFile = canvas.Canvas(file_path + file_name)
         pdfFile.saveState()
 
-        pdfFile.setAuthor('python-izm.com')
+        pdfFile.setAuthor('Jun Furuya')
         pdfFile.setTitle('PDF生成')
         pdfFile.setSubject('サンプル')
  

@@ -320,7 +320,8 @@ def post_journal_entry_delete(journal_entry_id):
 ###############################################################################
 # TODO 受注一覧画面
 # TODO 送り状PDF出力
-@post('/admin/cover-letter/<cover_letter_id>/pdf')
+# @post('/admin/cover-letter/<cover_letter_id>/pdf')
+@get('/admin/cover-letter/<cover_letter_id>/pdf')
 def get_cover_letter_pdf(cover_letter_id):
     return CoverLetterController(request).get_pdf(cover_letter_id)
 
