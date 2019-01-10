@@ -8,26 +8,29 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin">TOPへ</a>
-      <a href="/admin/languages/create">新規登録</a>
-      <table>
-        <thead></thead>
-        <tbody>
-          <th>言語名</th>
-          <th>操作</th>
-          {% for entity in entity.get_language_entity_list() %}
-          <tr>
-            <td>{{ entity.get_language_name() }}</td>
-            <td>
-              <form id="language{{ entity.get_language_id() }}" action="/admin/languages/{{ entity.get_language_id() }}" method="GET">
-                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
-                <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('language{{ entity.get_language_id() }}', '/admin/languages/delete');}" />
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <section class="button_area">
+        <a href="/admin/languages/create"><input type="button" value="新規登録" class="w150" /></a>
+      </section>
+      <section class="table_area">
+        <table>
+          <thead></thead>
+          <tbody>
+            <th class="w200">言語名</th>
+            <th class="w150">操作</th>
+            {% for entity in entity.get_language_entity_list() %}
+            <tr>
+              <td>{{ entity.get_language_name() }}</td>
+              <td>
+                <form id="language{{ entity.get_language_id() }}" action="/admin/languages/{{ entity.get_language_id() }}" method="GET">
+                  <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
+                  <input type="submit" value="詳細" class="w50" />
+                  <input type="button" value="削除" class="w50" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('language{{ entity.get_language_id() }}', '/admin/languages/delete');}" />
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
     </article>
 {% endblock %}

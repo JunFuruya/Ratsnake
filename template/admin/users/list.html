@@ -8,26 +8,29 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <a href="/admin">TOPへ</a>
-      <a href="/admin/users/create">新規登録</a>
-      
-      <table>
-        <thead></thead>
-        <tbody>
-          {% for entity in entity.get_user_entity_list() %}
-          <tr>
-            <td>{{ entity.get_user_id() }}</td>
-            <td>{{ entity.get_user_username() }}</td>
-            <td>
-              <form id="link-category{{ entity.get_user_id() }}" action="/admin/users/{{ entity.get_user_id() }}" method="GET">
-                <input type="hidden" name="user_id" value="{{ entity.get_user_id() }}"/>
-                <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('link-category{{ entity.get_user_id() }}' ,'/admin/users/{{ entity.get_user_id() }}/delete')}" />
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <section class="button_area">
+        <a href="/admin/users/create"><input type="button" value="新規登録" class="w150" /></a>
+      </section>
+      <section class="table_area">
+        <table>
+          <thead></thead>
+          <tbody>
+            <th class="w150">ユーザ名</th>
+            <th class="w150">操作</th>
+            {% for entity in entity.get_user_entity_list() %}
+            <tr>
+              <td>{{ entity.get_user_username() }}</td>
+              <td>
+                <form id="link-category{{ entity.get_user_id() }}" action="/admin/users/{{ entity.get_user_id() }}" method="GET">
+                  <input type="hidden" name="user_id" value="{{ entity.get_user_id() }}" />
+                  <input type="submit" value="詳細" class="w50" />
+                  <input type="button" value="削除" class="w50" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('link-category{{ entity.get_user_id() }}' ,'/admin/users/{{ entity.get_user_id() }}/delete')}" />
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
     </article>
 {% endblock %}

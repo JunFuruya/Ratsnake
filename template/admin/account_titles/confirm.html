@@ -14,12 +14,21 @@
         {% set action = '/admin/account-titles/' + entity.get_account_title_id() + '/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_account_title_name() }}
-        {{ entity.get_account_title_classification_type().get_name() }}
-        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
-        <input type="submit" value="登録"/>
+        <section class="input_area">
+          <div>
+            <div class="label200">勘定科目</div>
+            <div class="inline-block">{{ entity.get_account_title_name() }}</div>
+          </div>
+          <div>
+            <div class="label200">勘定科目分類区分</div>
+            <div class="inline-block">{{ entity.get_account_title_classification_type().get_name() }}</div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/account-titles"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="button" value="戻る" class="w150" onclick="JavaScript:history.back();"/>
+          <input type="submit" value="登録" class="w150" />
+        </section>
       </form>
-      <a href="/admin/account-titles">勘定科目一覧へ</a>
-      
     </article>
 {% endblock %}

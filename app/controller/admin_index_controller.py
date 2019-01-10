@@ -11,7 +11,7 @@ Word Controller Module
 class AdminIndexController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('Hideout管理画面', '', '')
+        self.set_page_info('管理サイトメニュー', '', '')
         self.__user_id = self.get_login_user()
 
     def index(self):

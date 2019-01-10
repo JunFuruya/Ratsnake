@@ -56,16 +56,17 @@ class UserController(BaseController):
             self.set_session('user_id', user_id)
             self.set_session('user_username', user_username)
             self.set_session('user_hashed_password', user_hashed_password)
-            template = './template/admin/link_categories/confirm.html'
+            template = './template/admin/users/confirm.html'
         else:
-            template = './template/admin/link_categories/create.html'
+            # TODO 新規と編集でテンプレート出し分け
+            template = './template/admin/users/create.html'
 
         # TODO Factory Class
         entity = UserEntity()
         entity.set_user_id(user_id)
         entity.set_user_username(user_username)
         entity.set_user_hashed_password(user_hashed_password)
-        entity.set_error_message(error_messages)
+        entity.set_error_messages(error_messages)
         return self.view(template, entity)
 
     def insert(self):
