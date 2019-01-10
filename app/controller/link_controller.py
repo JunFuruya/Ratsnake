@@ -77,7 +77,7 @@ class LinkController(BaseController):
         entity.set_link_site_name(link_site_name)
         entity.set_link_url(link_url)
         entity.set_link_display_order(link_display_order)
-        entity.set_error_message(error_messages)
+        entity.set_error_messages(error_messages)
         return self.view(template, entity=entity)
 
     def insert(self):

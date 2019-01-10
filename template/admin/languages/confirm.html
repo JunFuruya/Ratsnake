@@ -14,11 +14,15 @@
         {% set action = '/admin/languages/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_language_name() }}
-        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
-        <input type="submit" value="登録"/>
+        <section class="input_area">
+          <div class="label200">言語名</div>
+          <div class="label200">{{ entity.get_language_name() }}</div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/languages"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="button" value="戻る" onclick="JavaScript:history.back();" class="w150" />
+          <input type="submit" value="登録" class="w150" />
+        </section>
       </form>
-      <a href="/admin/languages">言語一覧へ</a>
-      
     </article>
 {% endblock %}

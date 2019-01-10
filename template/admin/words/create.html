@@ -8,18 +8,34 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      {{ entity.get_language_name() }}
       <form action="/admin/languages/{{ entity.get_language_id() }}/words/confirm" method="POST">
-        <div>Spell <input type="text" name="word_spell" value="" /></div>
-        <div>Explanation <textarea name="word_explanation"></textarea></div>
-        <div>pronunciation <input type="text" name="word_pronunciation" /></div>
-        <div>Note <textarea name="word_note"></textarea></div>
-        <div>
-          <input type="reset" value="リセット" />
-          <input type="submit" value="確認" />
-        </div>
+        <section class="input_area">
+          <div>
+            <div class="label200">カテゴリ</div>
+            <div class="inline-block">{{ entity.get_language_name() }}</div>
+          </div>
+          <div>
+            <div class="label200">綴り</div>
+            <div class="inline-block"><input type="text" name="word_spell" value="" /></div>
+          </div>
+          <div>
+            <div class="label200">説明</div>
+            <div class="inline-block"><textarea name="word_explanation"></textarea></div>
+          </div>
+          <div>
+            <div class="label200">発音</div>
+            <div class="inline-block"><input type="text" name="word_pronunciation" /></div>
+          </div>
+          <div>
+            <div class="label200">備考</div>
+            <div class="inline-block"><textarea name="word_note"></textarea></div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/languages/{{ entity.get_language_id() }}/words"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="reset" value="リセット" class="w150" />
+          <input type="submit" value="確認" class="w150" />
+        </section>
       </form>
-      <a href="/admin/words">単語一覧へ</a>
-      
     </article>
 {% endblock %}

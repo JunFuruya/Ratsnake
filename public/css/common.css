@@ -119,8 +119,13 @@ section.error_message { color: #E91E63; }
 
 section.button_area { margin-top: 20px; margin-botom: 10px; }
 
-section.input_area           { margin-top: 10px; margin-bottom: 10px; }
-section.input_area div.label { margin-top: 10px; margin-bottom: 10px; }
+section.input_area              { margin-top: 10px; margin-bottom: 10px; }
+section.input_area div.label50  { width:  50px; display: inline-block; }
+section.input_area div.label100 { width: 100px; display: inline-block; }
+section.input_area div.label150 { width: 150px; display: inline-block; }
+section.input_area div.label200 { width: 200px; display: inline-block; }
+section.input_area div.label250 { width: 250px; display: inline-block; }
+section.input_area div.label300 { width: 300px; display: inline-block; }
 
 section.table_area          { margin-top: 10px; margin-bottom: 10px; }
 section.table_area table    { border: 1px solid #333333; border-collapse: collapse; }

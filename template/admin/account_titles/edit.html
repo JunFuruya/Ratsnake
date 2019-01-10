@@ -14,18 +14,30 @@
         {% endfor %}
       {% endif %}
       <form action="/admin/account-titles/confirm" method="POST">
-        勘定科目<input type="text" name="account_title_name" value="{{ entity.get_account_title_name() }}"/>
-        勘定科目分類区分<select name="account_title_classification_type">
-          {# TODO ValueObjectから取得し、ループする #}
-          <option value="1" {% if entity.get_account_title_classification_type() == 1 %}selected{% endif %}>資産</option>
-          <option value="2" {% if entity.get_account_title_classification_type() == 2 %}selected{% endif %}>負債</option>
-          <option value="3" {% if entity.get_account_title_classification_type() == 3 %}selected{% endif %}>資本</option>
-          <option value="4" {% if entity.get_account_title_classification_type() == 4 %}selected{% endif %}>費用</option>
-          <option value="5" {% if entity.get_account_title_classification_type() == 5 %}selected{% endif %}>収益</option>
-        </select>
-        <input type="submit" value="確認" />
+        <section class="input_area">
+          <div>
+            <div class="label200">勘定科目</div>
+            <div class="inline-block"><input type="text" name="account_title_name" value="{{ entity.get_account_title_name() }}"/></div>
+          </div>
+          <div>
+            <div class="label200">勘定科目分類区分</div>
+            <div class="inline-block">
+              <select name="account_title_classification_type">
+                {# TODO ValueObjectから取得し、ループする #}
+                <option value="1" {% if entity.get_account_title_classification_type() == 1 %}selected{% endif %}>資産</option>
+                <option value="2" {% if entity.get_account_title_classification_type() == 2 %}selected{% endif %}>負債</option>
+                <option value="3" {% if entity.get_account_title_classification_type() == 3 %}selected{% endif %}>資本</option>
+                <option value="4" {% if entity.get_account_title_classification_type() == 4 %}selected{% endif %}>費用</option>
+                <option value="5" {% if entity.get_account_title_classification_type() == 5 %}selected{% endif %}>収益</option>
+              </select>
+            </div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/account-titles"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="reset" value="リセット" class="w150" />
+          <input type="submit" value="確認" class="w150" />
+        </section>
       </form>
-      <a href="/admin/account-titles">勘定科目一覧へ</a>
-      
     </article>
 {% endblock %}

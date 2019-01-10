@@ -8,19 +8,17 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <table>
-        {% if entity.get_error_messages()|length > 0 %}
-          {% for error_message in  entity.get_error_messages() %}
-            {{ error_message }}
-          {% endfor %}
-        {% endif %}
-        <form action="/admin/languages/words/csv" method="POST">
+      {% if entity.get_error_messages()|length > 0 %}
+        {% for error_message in  entity.get_error_messages() %}
+          {{ error_message }}
+        {% endfor %}
+      {% endif %}
+      <section class="button_area">
+        <form action="/admin/languages/words/csv" method="POST" class="inline-block">
           <input type="file" name="csv_file" />
-          <input type="submit" value="CSVインポート" />
+          <input type="submit" value="CSVインポート" class="w150" />
         </form>
-        <form method="GET" id="languages" name="languages" />
-          <a href="/admin">TOPへ</a>
-          <a onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/'+$('#language_id option:selected').val()+'/words/create');">新規登録</a>
+        <form method="GET" id="languages" name="languages" class="inline-block" />
           <select id="language_id" name="language_id">
             <option value="">選択してください</option>
             
@@ -29,25 +27,30 @@
             {% endfor %}{{ entity.get_language_id() }}
             <input type="button" value="検索" onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/words');"/>
           </select>
+          <a onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/'+$('#language_id option:selected').val()+'/words/create');"><input type="button" value="新規登録" class="w150" /></a>
         </form>
-        <thead></thead>
-        <tbody>
-          {% for word_entity in entity.get_word_entity_list() %}
-          <tr>
-            <td>{{ word_entity.get_word_id() }}</td>
-            <td>{{ word_entity.get_word_spell() }}</td>
-            <td>
-              <form id="word{{ word_entity.get_word_id() }}" action="/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}" method="GET">
-                <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
-                <input type="hidden" name="word_id" value="{{ word_entity.get_word_id() }}"/>
-                <input type="hidden" name="word_spell" value="{{ word_entity.get_word_spell() }}"/>
-                <input type="submit" value="詳細へ" />
-                <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('word{{ word_entity.get_word_id() }}', '/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}/delete')}" />
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      </section>
+      <section class="table_area">
+        <table>
+          <thead></thead>
+          <tbody>
+            <th>綴り</th>
+            <th>操作</th>
+            {% for word_entity in entity.get_word_entity_list() %}
+            <tr>
+              <td>{{ word_entity.get_word_spell() }}</td>
+              <td>
+                <form id="word{{ word_entity.get_word_id() }}" action="/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}" method="GET">
+                  <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
+                  <input type="hidden" name="word_id" value="{{ word_entity.get_word_id() }}"/>
+                  <input type="hidden" name="word_spell" value="{{ word_entity.get_word_spell() }}"/>
+                  <input type="submit" value="詳細へ" />
+                  <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('word{{ word_entity.get_word_id() }}', '/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}/delete')}" />
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
     </article>
 {% endblock %}

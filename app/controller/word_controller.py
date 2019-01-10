@@ -70,7 +70,7 @@ class WordController(BaseController):
         word_is_learned = self.get_param('word_is_learned', 0)
         word_note = self.get_param('word_note')
         
-        error_messages = self.__validator.get_error_messages(link_category_name, link_category_display_order)
+        error_messages = self.__validator.get_error_messages(word_spell, word_explanation, word_pronunciation, word_is_learned, word_note)
         if(len(error_messages) == 0):
             self.set_session('word_spell', word_spell)
             self.set_session('word_explanation', word_explanation)

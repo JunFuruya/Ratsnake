@@ -9,22 +9,36 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <form action="/admin/links/confirm" method="POST">
-        <div>カテゴリ 
-          <select name="link_category_id">{{ entity.get_link_category_entity_list()|pprint }}
-            {% for link_category_entity in entity.get_link_category_entity_list() %}
-            <option value="{{ link_category_entity.get_link_category_id() }}">{{ link_category_entity.get_link_category_name() }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div>サイト名 <input type="text" name="link_site_name" value="" /></div>
-        <div>URL <input type="text" name="link_url" value="" /></div>
-        <div>表示順 <input type="text" name="link_display_order" value="" /></div>
-        <div>
-          <input type="reset" value="リセット" />
-          <input type="submit" value="確認" />
-        </div>
+        <section class="input_area">
+          <div>
+            <div class="label200">カテゴリ</div>
+            <div class="inline-block">
+              <select name="link_category_id">{{ entity.get_link_category_entity_list()|pprint }}
+                {% for link_category_entity in entity.get_link_category_entity_list() %}
+                <option value="{{ link_category_entity.get_link_category_id() }}">{{ link_category_entity.get_link_category_name() }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="label200">サイト名</div>
+            <div class="inline-block"><input type="text" name="link_site_name" value="" /></div>
+          </div>
+          <div>
+            <div class="label200">URL</div>
+            <div class="inline-block"><input type="text" name="link_url" value="" /></div>
+          </div>
+          <div>
+            <div class="label200">表示順</div>
+            <div class="inline-block"><input type="text" name="link_display_order" value="" /></div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/links"><input type="button" class="w150" value="一覧へ" /></a>
+          <input type="reset" value="リセット" class="w150" />
+          <input type="submit" value="確認" class="w150" />
+        </section>
       </form>
-      <a href="/admin/links">リンク一覧へ</a>
       
     </article>
 {% endblock %}

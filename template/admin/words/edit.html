@@ -7,17 +7,39 @@
     <article>
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
-      
+
       <form action="/admin/languages/{{ entity.get_language_id() }}/words/{{ entity.get_word_id() }}/confirm" method="POST">
-        {{ entity.get_word_id() }}
-        <input type="text" name="word_spell" value="{{ entity.get_word_spell() }}" />
-        <textarea name="word_explanation">{{ entity.get_word_explanation() }}</textarea>
-        <input type="text" name="word_pronunciation" value="{{ entity.get_word_pronunciation() }}" />
-        {{ entity.get_word_is_learned() }}
-        <textarea name="word_note">{{ entity.get_word_note() }}</textarea>
-        <input type="submit" value="確認" />
+        <section class="input_area">
+          <div>
+            <div class="label200">カテゴリ</div>
+            <div class="inline-block">{{ entity.get_language_name() }}</div>
+          </div>
+          <div>
+            <div class="label200">綴り</div>
+            <div class="inline-block"><input type="text" name="word_spell" value="{{ entity.get_word_spell() }}" /></div>
+          </div>
+          <div>
+            <div class="label200">説明</div>
+            <div class="inline-block"><textarea name="word_explanation">{{ entity.get_word_explanation() }}</textarea></div>
+          </div>
+          <div>
+            <div class="label200">発音</div>
+            <div class="inline-block"><input type="text" name="word_pronunciation" value="{{ entity.get_word_pronunciation() }}" /></div>
+          </div>
+          <div>
+            <div class="label200">ステータス</div>
+            <div class="inline-block">{{ entity.get_word_is_learned() }}</div>
+          </div>
+          <div>
+            <div class="label200">備考</div>
+            <div class="inline-block"><textarea name="word_note">{{ entity.get_word_note() }}</textarea></div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/languages/{{ entity.get_language_id() }}/words"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="reset" value="リセット" class="w150" />
+          <input type="submit" value="確認" class="w150" />
+        </section>
       </form>
-      <a href="/admin/languages/{{ entity.get_language_id() }}/words">単語一覧へ</a>
-      
     </article>
 {% endblock %}

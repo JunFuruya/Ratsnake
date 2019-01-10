@@ -13,11 +13,11 @@
       <form action="/admin/link-categories/confirm" method="POST">
         <section class="input_area">
           <div>
-            <div class="w200 inline-block">リンクカテゴリ名称</div>
+            <div class="label200">リンクカテゴリ名称</div>
             <div class="inline-block"><input type="text" name="link_category_name" value="{{ entity.get_link_category_name() }}" class="w300" /></div>
           </div>
           <div>
-            <div class="w200 inline-block">リンクカテゴリ表示順序</div>
+            <div class="label200">リンクカテゴリ表示順序</div>
             <div class="inline-block"><input type="text" name="link_category_display_order" value="{{ entity.get_link_category_display_order() }}" class="w50" /></div>
           </div>
         </section>
