@@ -9,10 +9,20 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <form action="/admin/link-categories/{{ entity.get_link_category_id() }}" method="POST">
-        カテゴリ名称{{ entity.get_link_category_name() }}
-        <input type="submit" value="編集"/>
+        <section class="input_area">
+          <div>
+            <div class="w200 inline-block">リンクカテゴリ名称</div>
+            <div class="w200 inline-block">{{ entity.get_link_category_name() }}</div>
+          </div>
+          <div>
+            <div class="w200 inline-block">リンクカテゴリ表示順序</div>
+            <div class="w200 inline-block">{{ entity.get_link_category_display_order() }}</div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/link-categories"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="submit" value="編集" class="w150" />
+        </section>
       </form>
-      <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>
-      
     </article>
 {% endblock %}
