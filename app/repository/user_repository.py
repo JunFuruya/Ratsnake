@@ -16,8 +16,8 @@ class UsersRepository():
 
     def findByLoginInfo(self, username, password):
         record = self.__db.selectByLoginInfo(username, password)
-        print(record[0])
-        if len(record) > 0:
+        
+        if record is not None:
             return record[0]
         else:
             return None
