@@ -5,8 +5,6 @@ from app.validator.user_validator import UserValidator
 from app.service.user_service import UserService
 from app.entity.user_entity import UserEntity
 
-from app.helper.helper import HashHelper
-
 '''
 User Controller Module
 '''

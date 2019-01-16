@@ -5,8 +5,6 @@ from app.validator.link_category_validator import LinkCategoryValidator
 from app.service.link_category_service import LinkCategoryService
 from app.entity.link_category_entity import LinkCategoryEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Link Category Controller Module
 '''

@@ -2,7 +2,7 @@
 
 from bottle import jinja2_template, redirect
 
-from app.helper.helper import HashHelper
+from app.helper.hash_helper import HashHelper
 
 '''
 Base Controller Module
@@ -17,6 +17,7 @@ class BaseController():
     def __init__(self, request, should_check=True):
         self.__request = request
         self.__session = request.environ.get('beaker.session')
+
         self.__login_user_id = self.get_session(self.LOGIN_SESSION_USER_ID)
         self.check_login_status(should_check)
         pass

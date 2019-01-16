@@ -5,8 +5,6 @@ from app.entity.base_web_entity import BaseWebEntity
 from app.entity.login_entity import LoginEntity
 from app.service.login_service import LoginService
 
-from app.helper.helper import HashHelper
-
 '''
 Admin Login Controller Module
 '''

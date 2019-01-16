@@ -5,8 +5,6 @@ from app.validator.account_title_validator import AccountTitleValidator
 from app.service.account_title_service import AccountTitleService
 from app.entity.account_title_entity import AccountTitleEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Account Title Controller Module
 '''

@@ -10,8 +10,6 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.lib.units import cm
 
-from app.helper.helper import HashHelper
-
 '''
 Cover Letter Controller Module
 '''
