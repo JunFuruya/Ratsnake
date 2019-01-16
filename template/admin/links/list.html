@@ -23,7 +23,7 @@
             <tr>
               {# TODO カテゴリ名を取得する #}
               <td>カテゴリ名</td>
-              <td><a href="{{ entity.get_link_url() }}">{{ entity.get_link_site_name() }}</a></td>
+              <td><a href="{{ entity.get_link_url() }}" target="_blank">{{ entity.get_link_site_name() }}</a></td>
               <td>{{ entity.get_link_url() }}</td>
               <td>
                 <form id="link{{ entity.get_link_id() }}" action="/admin/links/{{ entity.get_link_id() }}" method="GET">
