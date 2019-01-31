@@ -21,7 +21,7 @@ class DbLinks(DbBase):
         return super().selectOne(sql, bindings)
 
     def insert(self, user_id, link_category_id, link_site_name, link_url, link_display_order):
-        sql = 'INSERT INTO m_links(m_user_id, m_link_category_id, m_link_site_name, m_link_url, m_link_display_order) VALUES(%s, %s, %s, %s, %s);'
+        sql = 'INSERT INTO m_links(m_user_id, m_link_category_id, m_link_site_name, m_link_url, m_link_display_order) VALUES (%s, %s, %s, %s, %s);'
         bindings = (user_id, link_category_id, link_site_name, link_url, link_display_order)
         
         # TODO 全体的に例外処理を入れる

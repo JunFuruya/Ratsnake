@@ -6,6 +6,8 @@ dirpath = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(dirpath)
 os.chdir(dirpath)
 
+os.environ['APP_ENV'] = 'PRODUCTION'
+
 import main
 from app import *
 from beaker.middleware import SessionMiddleware
