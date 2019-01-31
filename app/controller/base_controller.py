@@ -29,8 +29,9 @@ class BaseController():
 
     def view(self, tempalte_path, entity):
         entity.set_title(self.__title) 
-        entity.set_description(self.__description) 
-        entity.set_notification(self.__notification) 
+        entity.set_description(self.__description)
+        entity.set_notification(self.__notification)
+        entity.set_login_status(self.__login_user_id)
 
         return jinja2_template(tempalte_path, entity=entity)
     

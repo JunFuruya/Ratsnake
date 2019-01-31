@@ -6,6 +6,7 @@ class BaseWebEntity():
     __notification = ''
     __error_messages = []
     __records = []
+    __login_status = False
 
     def set_title(self, title):
         self.__title = title
@@ -50,3 +51,9 @@ class BaseWebEntity():
             self.get_records(),
             self.get_error_messages()
         ]
+
+    def set_login_status(self, user_id):
+        self.__login_status = True if len(str(user_id)) > 0 else False
+
+    def get_login_status(self):
+        return self.__login_status

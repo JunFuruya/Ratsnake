@@ -3,7 +3,7 @@
       <a href="">Hideout</a>
       <span class="breadcrumb">></span>
       <a href="/admin">管理画面TOP</a>
-      <span id="logout"><a href="/admin/logout">ログアウト</a></span>
+      {% if entity.get_login_status() %}<span id="logout"><a href="/admin/logout">ログアウト</a></span>{% endif %}
     </section>
     <section class="description">
       <p>{{ entity.get_notification() }}</p>
