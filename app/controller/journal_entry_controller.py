@@ -5,8 +5,6 @@ from app.validator.journal_entry_validator import JournalEntryValidator
 from app.service.journal_entry_service import JournalEntryService
 from app.entity.journal_entry_entity import JournalEntryEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Journal Entry Controller Controller Module
 '''

@@ -5,19 +5,19 @@ from app.validator.link_validator import LinkValidator
 from app.service.link_service import LinkService
 from app.entity.link_entity import LinkEntity
 
-from app.helper.helper import HashHelper
+from app.helper.log_helper import LogHelper
 
 '''
 Link Controller Module
 '''
 class LinkController(BaseController):
-
     def __init__(self, request):
         super().__init__(request)
         self.set_page_info('リンク集', 'リンク集を登録・編集・削除します。', 'Please enter your id and password.')
         self.__user_id = self.get_login_user()
         self.__service = LinkService()
         self.__validator = LinkValidator()
+        
         pass
 
     def index(self):
@@ -92,8 +92,16 @@ class LinkController(BaseController):
         self.set_session('link_site_name', '')
         self.set_session('link_url', '')
         self.set_session('link_display_order', '')
-
-        return self.view('./template/admin/links/complete.html', entity=self.__service.create(self.__user_id, link_category_id, link_site_name, link_url, link_display_order))
+        
+        try:
+            entity = self.__service.create(self.__user_id, link_category_id, link_site_name, link_url, link_display_order)
+        except:
+            entity = LinkEntity()
+            entity.set_link_category_entity_list(self.__service.get_link_categories(self.__user_id, 100 ,0).get_link_category_entity_list())
+            log = LogHelper()
+            log.error('DB Error')
+        
+        return self.view('./template/admin/links/complete.html', entity=entity)
 
     def update(self):
         link_id = self.get_session('link_id')

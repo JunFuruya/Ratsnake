@@ -5,8 +5,6 @@ from app.validator.language_validator import LanguageValidator
 from app.service.language_service import LanguageService
 from app.entity.language_entity import LanguageEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Language Controller Module
 '''

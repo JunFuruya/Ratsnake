@@ -5,8 +5,6 @@ from app.validator.word_validator import WordValidator
 from app.service.word_service import WordService
 from app.entity.word_entity import WordEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Word Controller Module
 '''

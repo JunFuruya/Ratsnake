@@ -2,7 +2,7 @@
 
 from app.entity.base_web_entity import BaseWebEntity
 
-from app.helper.helper import HashHelper
+from app.helper.hash_helper import HashHelper
 
 class UserEntity(BaseWebEntity):
     __user_id = None

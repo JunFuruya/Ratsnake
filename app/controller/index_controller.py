@@ -3,8 +3,6 @@
 from app.controller.base_controller import BaseController
 from app.entity.base_web_entity import BaseWebEntity
 
-from app.helper.helper import HashHelper
-
 '''
 Word Controller Module
 '''
