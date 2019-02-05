@@ -1,0 +1,97 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <h3>2018年1月～12月</h3>
+      <table>
+        <tr>
+          <th colspan="2">借方 debit</th>
+          <th colspan="2">貸方 credit</th>
+        </tr>
+        <tr>
+          <td>項目</td>
+          <td>金額</td>
+          <td>項目</td>
+          <td>金額</td>
+        </tr>
+        <tr>
+          <td>資産の部</td>
+          <td>&nbsp;</td>
+          <td>負債の部</td>
+          <td>$nbsp;</td>
+        </tr>
+        <tr>
+          <td>流動資産</td>
+          <td>&nbsp;</td>
+          <td>流動負債</td>
+          <td>$nbsp;</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>固定資産</td>
+          <td>&nbsp;</td>
+          <td>固定負債</td>
+          <td>$nbsp;</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>純資産の部</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>$nbsp;</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>仕訳</td>
+          <td>\10,000</td>
+          <td>仕訳</td>
+          <td>\10,000</td>
+        </tr>
+        <tr>
+          <td>資産合計</td>
+          <td>\10,000</td>
+          <td>負債・純資産合計</td>
+          <td>\10,000</td>
+        </tr>
+      </table>
+    </article>
+{% endblock %}
