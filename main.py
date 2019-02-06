@@ -5,12 +5,14 @@ from bottle import app, error, get, post, request, run, static_file
 from app.controller.account_title_controller import AccountTitleController
 from app.controller.admin_index_controller import AdminIndexController
 from app.controller.admin_login_controller import AdminLoginController
+from app.controller.client_controller import ClientController
 from app.controller.cover_letter_controller import CoverLetterController
 from app.controller.error_controller import ErrorController
 from app.controller.index_controller import IndexController
 from app.controller.language_controller import LanguageController
 from app.controller.link_category_controller import LinkCategoryController
 from app.controller.link_controller import LinkController
+from app.controller.mail_controller import MailController
 from app.controller.journal_entry_controller import JournalEntryController
 from app.controller.user_controller import UserController
 from app.controller.word_controller import WordController
@@ -28,15 +30,15 @@ config = ConfigGetService().get_web_server_config()
 def get_index():
     return IndexController(request).index()
 
+# TODO 自己紹介インフォグラフィック
+# TODO ポートフォリオ
+
 ###############################################################################
 # 管理画面TOP
 ###############################################################################
 @get('/admin')
 def get_link_index():
     return AdminIndexController(request).index()
-
-# TODO 自己紹介インフォグラフィック
-# TODO ポートフォリオ
 
 ###############################################################################
 # ログイン、ログアウト
@@ -276,9 +278,39 @@ def post_account_title_delete(account_title_id):
     return AccountTitleController(request).delete(account_title_id)
 
 ###############################################################################
-# TODO 取引先マスタ
+# 取引先マスタ
 ###############################################################################
+@get('/admin/clients')
+def get_client_list():
+    return ClientController(request).index()
 
+@get('/admin/clients/create')
+def get_client_create():
+    return ClientController(request).create()
+
+@get('/admin/clients/<clients_id>')
+def get_client_detail(clients_id):
+    return ClientController(request).detail(clients_id)
+
+@post('/admin/clients/<clients_id>')
+def post_client_edit(clients_id):
+    return ClientController(request).edit(clients_id)
+
+@post('/admin/clients/confirm')
+def post_client_confirm():
+    return ClientController(request).confirm()
+
+@post('/admin/clients/insert')
+def post_client_insert():
+    return ClientController(request).insert()
+
+@post('/admin/clients/<clients_id>/update')
+def post_client_update(clients_id):
+    return ClientController(request).update(clients_id)
+
+@post('/admin/clients/<clients_id>/delete')
+def post_client_delete(clients_id):
+    return ClientController(request).delete(clients_id)
 
 ###############################################################################
 # 仕分元帳画面
@@ -354,8 +386,13 @@ def get_cover_letter_pdf(cover_letter_id):
 ###############################################################################
 
 ###############################################################################
-# TODO メール送信画面
+# メール送信画面
 ###############################################################################
+@get('/admin/mails')
+def get_mail_list():
+    return MailController(request).index()
+
+# TODO 送信画面
 
 ###############################################################################
 # 静的ファイル
