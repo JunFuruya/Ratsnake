@@ -1,0 +1,34 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      <form>
+        <select>
+          <option>2016”N</option>
+          <option>2017”N</option>
+          <option>2018”N</option>
+        </select>
+        <select>
+          <option>1ŒŽ</option>
+          <option>2ŒŽ</option>
+          <option>3ŒŽ</option>
+          <option>4ŒŽ</option>
+          <option>5ŒŽ</option>
+          <option>6ŒŽ</option>
+          <option>7ŒŽ</option>
+          <option>8ŒŽ</option>
+          <option>9ŒŽ</option>
+          <option>10ŒŽ</option>
+          <option>11ŒŽ</option>
+          <option>12ŒŽ</option>
+        </select>
+      </form>
+
+    </article>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      {% if entity.get_language_id() == '' %}
+        {% set action = '/admin/languages/insert' %}
+      {% else %}
+        {% set action = '/admin/languages/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        <section class="input_area">
+          <div class="label200">言語名</div>
+          <div class="label200">{{ entity.get_language_name() }}</div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/languages"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="button" value="戻る" onclick="JavaScript:history.back();" class="w150" />
+          <input type="submit" value="登録" class="w150" />
+        </section>
+      </form>
+    </article>
+{% endblock %}
