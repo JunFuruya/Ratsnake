@@ -114,15 +114,15 @@ def post_link_confirm():
     return LinkController(request).confirm()
 
 @post('/admin/links/insert')
-def post_link_complete():
+def post_link_insert():
     return LinkController(request).insert()
 
 @post('/admin/links/update')
-def post_link_complete():
+def post_link_update():
     return LinkController(request).update()
 
 @post('/admin/links/delete')
-def post_link_complete():
+def post_link_delete():
     return LinkController(request).delete()
 
 ###############################################################################
