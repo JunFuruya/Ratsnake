@@ -6,10 +6,11 @@ from app.service.login_service import LoginService
 from app.validator.login_validator import LoginValidator
 
 from app.helper.log_helper import LogHelper
+
 '''
-Admin Login Controller Module
+Login Controller Module
 '''
-class AdminLoginController(BaseController):
+class LoginController(BaseController):
     __should_check_login_status = False
     
     def __init__(self, request):
