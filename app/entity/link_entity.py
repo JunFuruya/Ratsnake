@@ -5,6 +5,7 @@ from app.entity.base_web_entity import BaseWebEntity
 class LinkEntity(BaseWebEntity):
     __link_id = ''
     __link_category_id = ''
+    __link_category_name = ''
     __link_site_name = ''
     __link_url = ''
     __link_display_order = ''
@@ -23,6 +24,13 @@ class LinkEntity(BaseWebEntity):
 
     def get_link_category_id(self):
         return self.__link_category_id
+
+    def set_link_category_name(self, link_category_name):
+        self.__link_category_name = link_category_name
+        return self
+
+    def get_link_category_name(self):
+        return self.__link_category_name
 
     def set_url_id(self, link_id):
         self.__link_id = link_id

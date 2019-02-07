@@ -22,7 +22,7 @@
             {% for entity in entity.get_link_entity_list() %}
             <tr>
               {# TODO カテゴリ名を取得する #}
-              <td>カテゴリ名</td>
+              <td>{{ entity.get_link_category_name() }}</td>
               <td><a href="{{ entity.get_link_url() }}" target="_blank">{{ entity.get_link_site_name() }}</a></td>
               <td>{{ entity.get_link_url() }}</td>
               <td>
