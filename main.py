@@ -400,7 +400,7 @@ def mail_list():
 ###############################################################################
 @get('/public/<path:path>')
 def get_static_file(path):
-    return static_file('./public/' + path)
+    return static_file(path, root='./public/')
 
 # TIP 上の get_static_file メソッド名を「get_static_file」にすると、bottle のメソッドを override するため
 #     無限ループが発生する
