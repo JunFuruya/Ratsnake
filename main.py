@@ -17,6 +17,9 @@ from app.controller.journal_entry_controller import JournalEntryController
 from app.controller.user_controller import UserController
 from app.controller.word_controller import WordController
 
+from app.helper.log_helper import LogHelper
+log = LogHelper()
+
 # TODO そのうち消す
 from app.service.web_service import ConfigGetService
 config = ConfigGetService().get_web_server_config()
@@ -302,13 +305,13 @@ def client_confirm():
 def client_insert():
     return ClientController(request).insert()
 
-@post('/admin/clients/<clients_id>/update')
-def client_update(clients_id):
-    return ClientController(request).update(clients_id)
+@post('/admin/clients/<client_id>/update')
+def client_update(client_id):
+    return ClientController(request).update(client_id)
 
-@post('/admin/clients/<clients_id>/delete')
-def client_delete(clients_id):
-    return ClientController(request).delete(clients_id)
+@post('/admin/clients/<client_id>/delete')
+def client_delete(client_id):
+    return ClientController(request).delete(client_id)
 
 ###############################################################################
 # 仕分元帳画面
@@ -396,8 +399,11 @@ def mail_list():
 # 静的ファイル
 ###############################################################################
 @get('/public/<path:path>')
-def static_file(path):
+def get_static_file(path):
     return static_file(path, root='./public/')
+
+# TIP 上の get_static_file メソッド名を「get_static_file」にすると、bottle のメソッドを override するため
+#     無限ループが発生する
 
 ###############################################################################
 # エラー画面
@@ -406,7 +412,7 @@ def static_file(path):
 def error404(error):
     return ErrorController(request).error(404)
 
-@error(500)
+#@error(500)
 def error500(error):
     return ErrorController(request).error(500)
 
@@ -418,5 +424,6 @@ if __name__ == "__main__":
         'session.data_dir': './data',
         'session.auto': True
     }
+
     run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
         debug=config.get_debug(), reloader=config.get_reloader())
