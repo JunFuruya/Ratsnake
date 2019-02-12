@@ -2,9 +2,12 @@
 
 import logging
 
+import g
+
 class LogHelper():
     __logger = logging.getLogger(__name__)
     __file_handler = None
+    __unique_instance = None
     
     def __init__(self):
         if self.__file_handler is None:
@@ -13,6 +16,12 @@ class LogHelper():
             self.__file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
             self.__logger.addHandler(self.__file_handler)
         pass
+
+    @classmethod
+    def get_instance(cls):
+        if not cls.__unique_instance:
+            cls.__unique_instance = cls()
+        return cls.__unique_instance
 
     def debug(self, message):
         self.__logger.setLevel(logging.DEBUG)

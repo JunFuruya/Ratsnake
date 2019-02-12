@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.controller.base_controller import BaseController
 from app.entity.login_entity import LoginEntity
 from app.service.login_service import LoginService
 from app.validator.login_validator import LoginValidator
-
-from app.helper.log_helper import LogHelper
 
 '''
 Login Controller Module
@@ -29,7 +29,7 @@ class LoginController(BaseController):
     def login(self):
         username = self.get_param('username', '')
         password = self.get_param('password', '')
-
+        
         error_messages = self.__validator.get_error_messages(username, password)
         if len(error_messages) == 0:
             self.__user_id = self.__service.findByLoginInfo(username, password)
@@ -42,7 +42,7 @@ class LoginController(BaseController):
             entity.set_username(username)
             entity.set_error_messages(error_messages)
             return self.view('./template/admin/login.html', entity)
-
+        
     def logout(self):
         self.set_session(self.LOGIN_SESSION_USER_ID, '')
         return self.redirect('/admin/login')

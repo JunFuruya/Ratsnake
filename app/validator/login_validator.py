@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.validator.base_validator import BaseValidator
 from app.service.login_service import LoginService
 
@@ -9,11 +11,8 @@ class LoginValidator(BaseValidator):
         
     def get_error_messages(self, username, password):
         self.__username = username
-        self.__password = password
-        
-        service = LoginService()
-        self.__user_id = service.findByLoginInfo(self.__username, self.__password)
-
+        self.__password = password        
+        self.__user_id = LoginService().findByLoginInfo(self.__username, self.__password)
         self.__validate()
 
         return super().get_error_messages()
@@ -26,6 +25,7 @@ class LoginValidator(BaseValidator):
 
         if self.__user_id is None:
             super().error_messages.append('ログインIDかパスワードが間違っています。')
+        
         pass
     
     def get_user_id(self):

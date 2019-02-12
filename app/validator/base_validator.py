@@ -1,14 +1,15 @@
 # -*- coding: UTF-8 -*-
 
-import os.path
-import re
+import os.path, re
+
+import g
 
 class BaseValidator():
     error_messages = []
     def __init__(self):
         self.error_messages = []
         pass
-
+    
     def get_error_messages(self):
         return self.error_messages
 

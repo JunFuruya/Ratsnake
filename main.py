@@ -2,6 +2,8 @@
 
 from bottle import app, error, get, post, request, run, static_file
 
+import g
+
 from app.controller.admin.account_title_controller import AccountTitleController
 from app.controller.admin.index_controller import IndexController as AdminIndexController
 from app.controller.admin.login_controller import LoginController
@@ -16,13 +18,6 @@ from app.controller.admin.journal_entry_controller import JournalEntryController
 from app.controller.admin.user_controller import UserController
 from app.controller.admin.word_controller import WordController
 from app.controller.client.index_controller import IndexController
-
-from app.helper.log_helper import LogHelper
-log = LogHelper()
-
-# TODO そのうち消す
-from app.service.web_service import ConfigGetService
-config = ConfigGetService().get_web_server_config()
 
 ###############################################################################
 # 非ログインユーザ用画面
@@ -412,7 +407,7 @@ def get_static_file(path):
 def error404(error):
     return ErrorController(request).error(404)
 
-#@error(500)
+@error(500)
 def error500(error):
     return ErrorController(request).error(500)
 
@@ -425,5 +420,5 @@ if __name__ == "__main__":
         'session.auto': True
     }
 
-    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
-        debug=config.get_debug(), reloader=config.get_reloader())
+    run(app=SessionMiddleware(app(), session_opts), host=g.config.get_web_host(), port=g.config.get_web_port(),
+        debug=g.config.get_debug(), reloader=g.config.get_reloader())
