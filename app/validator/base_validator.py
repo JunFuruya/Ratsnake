@@ -5,13 +5,16 @@ import os.path, re
 import g
 
 class BaseValidator():
-    error_messages = []
+    __error_messages = []
     def __init__(self):
-        self.error_messages = []
+        self.__error_messages = []
         pass
     
+    def set_error_messages(self, error_messages):
+        self.__error_messages = error_messages
+    
     def get_error_messages(self):
-        return self.error_messages
+        return self.__error_messages
 
     # 必須入力チェック
     def has_empty_error(self, string):

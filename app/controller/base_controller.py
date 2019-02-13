@@ -2,6 +2,8 @@
 
 from bottle import jinja2_template, redirect
 
+import g
+
 from app.helper.hash_helper import HashHelper
 
 '''

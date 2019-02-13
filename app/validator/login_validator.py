@@ -7,6 +7,7 @@ from app.service.login_service import LoginService
 
 class LoginValidator(BaseValidator):
     def __init__(self):
+        super().__init__()
         pass
         
     def get_error_messages(self, username, password):
@@ -16,16 +17,18 @@ class LoginValidator(BaseValidator):
         self.__validate()
 
         return super().get_error_messages()
-
+    
     def __validate(self):
+        error_messages = []
         if(self.has_empty_error(self.__username)):
-            super().error_messages.append('ログインIDが入力されていません。')
+            error_messages.append('ログインIDが入力されていません。')
         if(self.has_empty_error(self.__password)):
-            super().error_messages.append('パスワードが入力されていません。')
+            error_messages.append('パスワードが入力されていません。')
 
         if self.__user_id is None:
-            super().error_messages.append('ログインIDかパスワードが間違っています。')
-        
+            error_messages.append('ログインIDかパスワードが間違っています。')
+            
+        super().set_error_messages(error_messages)
         pass
     
     def get_user_id(self):
