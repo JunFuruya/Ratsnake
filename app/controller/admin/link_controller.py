@@ -36,6 +36,7 @@ class LinkController(BaseController):
     def create(self):
         # TODO validation
         entity = LinkEntity()
+        # TODO limit 100 件で絞っていると全て表示できない。仕様を検討する
         entity.set_link_category_entity_list(self.__service.get_link_categories(self.__user_id, 100 ,0).get_link_category_entity_list())
         return self.view('./template/admin/links/create.html', entity=entity)
 
@@ -49,7 +50,9 @@ class LinkController(BaseController):
 
     def edit(self, link_id):
         link_id = self.get_session('link_id')
-        return self.view('./template/admin/links/edit.html', entity=self.__service.get(self.__user_id, link_id))
+        entity = self.__service.get(self.__user_id, link_id)
+        entity.set_link_category_entity_list(self.__service.get_link_categories(self.__user_id, 100 ,0).get_link_category_entity_list())
+        return self.view('./template/admin/links/edit.html', entity=entity)
 
     def confirm(self):
         link_id = self.get_session('link_id')
@@ -70,10 +73,13 @@ class LinkController(BaseController):
         else:
             template = './template/admin/links/create.html'
 
+        link_category_entity = self.__service.get_link_category(self.__user_id, link_category_id)
+
         # TODO Factory class
         entity = LinkEntity()
         entity.set_link_id(link_id)
         entity.set_link_category_id(link_category_id)
+        entity.set_link_category_name(link_category_entity.get_link_category_name())
         entity.set_link_site_name(link_site_name)
         entity.set_link_url(link_url)
         entity.set_link_display_order(link_display_order)

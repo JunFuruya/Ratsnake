@@ -12,7 +12,15 @@
         <section class="input_area">
           <div>
             <div class="label200">カテゴリ</div>
-            <div class="inline-block"><input type="text" name="link_category_id" value="{{ entity.get_link_category_id() }}" /></div>
+            <div class="inline-block">
+              <select name="link_category_id">{{ entity.get_link_category_entity_list()|pprint }}
+                {% for link_category_entity in entity.get_link_category_entity_list() %}
+                <option value="{{ link_category_entity.get_link_category_id() }}" {% if link_category_entity.get_link_category_id() == entity.get_link_category_id() %}selected{% endif %}>
+                  {{ link_category_entity.get_link_category_name() }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
           </div>
           <div>
             <div class="label200">サイト名</div>

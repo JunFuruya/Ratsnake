@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 class BaseWebEntity():
     __title = ''
     __description = ''

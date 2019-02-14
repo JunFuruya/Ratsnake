@@ -1,15 +1,16 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.controller.base_controller import BaseController
 from app.entity.login_entity import LoginEntity
 from app.service.login_service import LoginService
 from app.validator.login_validator import LoginValidator
 
-from app.helper.log_helper import LogHelper
 '''
-Admin Login Controller Module
+Login Controller Module
 '''
-class AdminLoginController(BaseController):
+class LoginController(BaseController):
     __should_check_login_status = False
     
     def __init__(self, request):
@@ -28,7 +29,7 @@ class AdminLoginController(BaseController):
     def login(self):
         username = self.get_param('username', '')
         password = self.get_param('password', '')
-
+        
         error_messages = self.__validator.get_error_messages(username, password)
         if len(error_messages) == 0:
             self.__user_id = self.__service.findByLoginInfo(username, password)
@@ -41,7 +42,7 @@ class AdminLoginController(BaseController):
             entity.set_username(username)
             entity.set_error_messages(error_messages)
             return self.view('./template/admin/login.html', entity)
-
+        
     def logout(self):
         self.set_session(self.LOGIN_SESSION_USER_ID, '')
         return self.redirect('/admin/login')

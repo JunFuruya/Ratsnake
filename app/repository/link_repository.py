@@ -26,9 +26,10 @@ class LinkRepository():
         if record is not None:
             entity.set_link_id(record[0])
             entity.set_link_category_id(record[1])
-            entity.set_link_site_name(record[2])
-            entity.set_link_url(record[3])
-            entity.set_link_display_order(record[4])
+            entity.set_link_category_name(record[2])
+            entity.set_link_site_name(record[3])
+            entity.set_link_url(record[4])
+            entity.set_link_display_order(record[5])
         return entity
 
     def findList(self, user_id, limit, offset):
@@ -49,8 +50,9 @@ class LinkRepository():
             entity = LinkEntity()
             entity.set_link_id(link_record[0])
             entity.set_link_category_id(link_record[1])
-            entity.set_link_site_name(link_record[2])
-            entity.set_link_url(link_record[3])
+            entity.set_link_category_name(link_record[2])
+            entity.set_link_site_name(link_record[3])
+            entity.set_link_url(link_record[4])
             entities.append(entity)
 
         list_entity.set_link_entity_list(entities)

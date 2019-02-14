@@ -2,27 +2,22 @@
 
 from bottle import app, error, get, post, request, run, static_file
 
-from app.controller.account_title_controller import AccountTitleController
-from app.controller.admin_index_controller import AdminIndexController
-from app.controller.admin_login_controller import AdminLoginController
-from app.controller.client_controller import ClientController
-from app.controller.cover_letter_controller import CoverLetterController
-from app.controller.error_controller import ErrorController
-from app.controller.index_controller import IndexController
-from app.controller.language_controller import LanguageController
-from app.controller.link_category_controller import LinkCategoryController
-from app.controller.link_controller import LinkController
-from app.controller.mail_controller import MailController
-from app.controller.journal_entry_controller import JournalEntryController
-from app.controller.user_controller import UserController
-from app.controller.word_controller import WordController
+import g
 
-from app.helper.log_helper import LogHelper
-log = LogHelper()
-
-# TODO そのうち消す
-from app.service.web_service import ConfigGetService
-config = ConfigGetService().get_web_server_config()
+from app.controller.admin.account_title_controller import AccountTitleController
+from app.controller.admin.index_controller import IndexController as AdminIndexController
+from app.controller.admin.login_controller import LoginController
+from app.controller.admin.client_controller import ClientController
+from app.controller.admin.cover_letter_controller import CoverLetterController
+from app.controller.admin.error_controller import ErrorController
+from app.controller.admin.language_controller import LanguageController
+from app.controller.admin.link_category_controller import LinkCategoryController
+from app.controller.admin.link_controller import LinkController
+from app.controller.admin.mail_controller import MailController
+from app.controller.admin.journal_entry_controller import JournalEntryController
+from app.controller.admin.user_controller import UserController
+from app.controller.admin.word_controller import WordController
+from app.controller.client.index_controller import IndexController
 
 ###############################################################################
 # 非ログインユーザ用画面
@@ -46,15 +41,15 @@ def admin_index():
 ###############################################################################
 @get('/admin/login')
 def admin_login():
-    return AdminLoginController(request).index()
+    return LoginController(request).index()
 
 @post('/admin/login')
 def admin_login_complete():
-    return AdminLoginController(request).login()
+    return LoginController(request).login()
 
 @get('/admin/logout')
 def admin_logout():
-    return AdminLoginController(request).logout()
+    return LoginController(request).logout()
 
 ###############################################################################
 # リンクカテゴリマスタ
@@ -412,7 +407,7 @@ def get_static_file(path):
 def error404(error):
     return ErrorController(request).error(404)
 
-#@error(500)
+@error(500)
 def error500(error):
     return ErrorController(request).error(500)
 
@@ -425,5 +420,5 @@ if __name__ == "__main__":
         'session.auto': True
     }
 
-    run(app=SessionMiddleware(app(), session_opts), host=config.get_web_host(), port=config.get_web_port(),
-        debug=config.get_debug(), reloader=config.get_reloader())
+    run(app=SessionMiddleware(app(), session_opts), host=g.config.get_web_host(), port=g.config.get_web_port(),
+        debug=g.config.get_debug(), reloader=g.config.get_reloader())
