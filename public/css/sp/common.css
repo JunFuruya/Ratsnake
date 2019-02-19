@@ -2,3 +2,75 @@
 
 * { margin: 0px; padding: 0px; color: #333333; }
 
+.spButton {
+  height: 30px;
+  width: 70%;
+}
+
+.spTextBox {
+  width: 70%;
+}
+
+header {
+  color: #FFFFFF;
+  background-color: #191970;
+}
+
+body {
+  height: 100%;
+}
+
+section#main {
+
+}
+section#site_header a:link    { color: #FFFFFF; }
+section#site_header a:visited { color: #FFFFFF; }
+section#site_header a:hover   { color: #FFFFFF; }
+section#site_header a:active  { color: #FFFFFF; }
+
+footer {
+  #background-color: #B1D6DC;
+  color: #FFFFFF;
+  background-color: #191970;
+  font-size: 0.5em;
+}
+
+/***** navi *****/
+.spMenuItem {
+  display: inline-block;
+  width: 180px;
+  height: 180px;
+}
+
+.menu_label {
+
+}
+
+.menu_description {
+
+}
+
+.spMenuIcon_biz {
+  background-image: ;
+}
+
+.spMenuIcon_lang {
+  background-image: ;
+}
+
+.spMenuIcon_db {
+  background-image: ;
+}
+
+/***** word list *****/
+.spSelect {
+  width: 70%;
+}
+
+.spButtonArea {
+  height: 50px;
+}
+
+.spHide {
+  display: none;
+}
