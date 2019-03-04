@@ -24,7 +24,6 @@ class DbBase():
         cursor.execute(sql, bindings)
         row = cursor.fetchone()
         cursor.close()
-        self.__connection.close()
         return row[0]
 
     def select(self, sql, bindings):
@@ -32,7 +31,6 @@ class DbBase():
         cursor.execute(sql, bindings)
         rows = cursor.fetchall()
         cursor.close()
-        self.__connection.close()
         return rows
 
     def selectOne(self, sql, bindings):
@@ -40,7 +38,6 @@ class DbBase():
         cursor.execute(sql, bindings)
         row = cursor.fetchone()
         cursor.close()
-
         return row
 
     def insert(self, sql, bindings):

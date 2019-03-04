@@ -6,6 +6,8 @@ from app.entity.link_entity import LinkEntity
 from app.entity.link_category_entity import LinkCategoryEntity
 from app.entity.link_list_entity import LinkListEntity
 
+import g
+
 '''
 Links Repository Module
 '''
@@ -56,6 +58,17 @@ class LinkRepository():
             entities.append(entity)
 
         list_entity.set_link_entity_list(entities)
+        
+        record_num = self.__link_db.count(user_id)
+
+        max_page = 1
+        record_num = int(record_num)
+        limit = int(limit)
+        if(record_num > 0):
+            max_page = int((record_num - 0.1) / limit) + 1
+        list_entity.set_max_page(max_page)
+
+        self.__link_db.close_connetion()
 
         return list_entity
 

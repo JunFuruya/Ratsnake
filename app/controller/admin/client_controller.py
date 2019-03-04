@@ -2,8 +2,8 @@
 
 from app.controller.base_controller import BaseController
 from app.validator.client_validator import ClientValidator
-from app.service.client_service import ClientService
-from app.entity.client_entity import ClientEntity
+#from app.service.client_service import ClientService
+#from app.entity.client_entity import ClientEntity
 
 # TODO 動くようにする
 
@@ -15,7 +15,7 @@ class ClientController(BaseController):
         super().__init__(request)
         self.set_page_info('取引先マスタ', 'とりひきさきの情報を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = ClientService()
+        #self.__service = ClientService()
         self.__validator = ClientValidator()
         pass
 
