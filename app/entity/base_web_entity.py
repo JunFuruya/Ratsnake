@@ -9,6 +9,8 @@ class BaseWebEntity():
     __error_messages = []
     __records = []
     __login_status = False
+    __current_page = 1
+    __max_page = 1
 
     def set_title(self, title):
         self.__title = title
@@ -56,6 +58,21 @@ class BaseWebEntity():
 
     def set_login_status(self, user_id):
         self.__login_status = True if len(str(user_id)) > 0 else False
+        pass
 
     def get_login_status(self):
         return self.__login_status
+    
+    def set_current_page(self, page):
+        self.__current_page = page
+        pass
+    
+    def get_current_page(self):
+        return self.__current_page
+    
+    def set_max_page(self, max_page):
+        self.__max_page = max_page
+        pass
+    
+    def get_max_page(self):
+        return self.__max_page

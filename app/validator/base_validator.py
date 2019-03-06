@@ -58,7 +58,7 @@ class BaseValidator():
 
     # 半角数字
     def has_half_width_number_characters_error(self, string):
-        return True if (re.search(r'(\d)+', string)) else False 
+        return True if (re.match(r'\D+', str(string))) else False 
 
     # 全角記号
     def has_full_width_special_characters_error(self, string):

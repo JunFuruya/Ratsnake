@@ -4,6 +4,7 @@ from app.controller.base_controller import BaseController
 from app.validator.link_validator import LinkValidator
 from app.service.link_service import LinkService
 from app.entity.link_entity import LinkEntity
+from app.entity.link_list_entity import LinkListEntity
 
 from app.helper.log_helper import LogHelper
 
@@ -11,9 +12,12 @@ from app.helper.log_helper import LogHelper
 Link Controller Module
 '''
 class LinkController(BaseController):
+    RECORD_NUM_PER_PAGE = 30;
+    
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('リンク集', 'リンク集を登録・編集・削除します。', 'Please enter your id and password.')
+        # TODO デザイン変更＋必要な文言のみ表示する
+        self.set_page_info('リンク集', 'リンク集を登録・編集・削除します。', 'リンク集を登録・編集・削除します。')
         self.__user_id = self.get_login_user()
         self.__service = LinkService()
         self.__validator = LinkValidator()
@@ -21,23 +25,29 @@ class LinkController(BaseController):
         pass
 
     def index(self):
-        link_id = self.get_session('link_id')
-        limit = self.get_param('limit', 10)
-        offset = self.get_param('offset', 0)
+        page = int(self.get_param('p', 1))
+
+        error_messages = self.__validator.get_index_error_message(page)
+        if (len(error_messages) > 0):
+            entity.set_error_messages(error_messages)
+            page = 1
+
+        offset = self.get_offset(self.RECORD_NUM_PER_PAGE, page)
+        entity = self.__service.getList(self.__user_id, self.RECORD_NUM_PER_PAGE, offset)
+        entity.set_current_page(page)
 
         self.set_session('link_id', '')
         self.set_session('link_category_id', '')
         self.set_session('link_site_name', '')
         self.set_session('link_url', '')
         self.set_session('link_display_order', '')
-
-        return self.view('./template/admin/links/list.html', entity=self.__service.getList(self.__user_id, limit, offset))
+                
+        return self.view('./template/admin/links/list.html', entity=entity)
 
     def create(self):
-        # TODO validation
         entity = LinkEntity()
-        # TODO limit 100 件で絞っていると全て表示できない。仕様を検討する
-        entity.set_link_category_entity_list(self.__service.get_link_categories(self.__user_id, 100 ,0).get_link_category_entity_list())
+        # TODO limit に暫定で9999件を設定する。仕様を検討する
+        entity.set_link_category_entity_list(self.__service.get_link_categories(self.__user_id ,9999 ,0).get_link_category_entity_list())
         return self.view('./template/admin/links/create.html', entity=entity)
 
     def detail(self, link_id):

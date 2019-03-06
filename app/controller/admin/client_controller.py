@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
-#from app.validator.language_validator import LanguageValidator
-#from app.service.language_service import LanguageService
-#from app.entity.language_entity import LanguageEntity
+from app.validator.client_validator import ClientValidator
+#from app.service.client_service import ClientService
+#from app.entity.client_entity import ClientEntity
 
 # TODO 動くようにする
 
@@ -13,10 +13,10 @@ Client Controller Module
 class ClientController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('言語マスタ', '単語帳を作成する対象の言語を登録・編集・削除します。', '')
+        self.set_page_info('取引先マスタ', 'とりひきさきの情報を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = LanguageService()
-        self.__validator = LanguageValidator()
+        #self.__service = ClientService()
+        self.__validator = ClientValidator()
         pass
 
     def index(self):
@@ -24,74 +24,74 @@ class ClientController(BaseController):
         offset = self.get_param('offset', 0)
 
         # session をクリアする
-        self.set_session('language_id', '')
-        self.set_session('language_name', '')
+        self.set_session('client_id', '')
+        self.set_session('client_name', '')
         
-        return self.view('./template/admin/languages/list.html', self.__service.getList(self.__user_id, limit, offset))
+        return self.view('./template/admin/clients/list.html', self.__service.getList(self.__user_id, limit, offset))
     
     def create(self):
-        return self.view('./template/admin/languages/create.html', LanguageEntity())
+        return self.view('./template/admin/clients/create.html', ClientEntity())
 
-    def detail(self, language_id):
+    def detail(self, client_id):
         # TODO validation
         
-        self.set_session('language_id', language_id)
+        self.set_session('client_id', client_id)
         
-        return self.view('./template/admin/languages/detail.html', self.__service.get(self.__user_id, language_id))
+        return self.view('./template/admin/clients/detail.html', self.__service.get(self.__user_id, client_id))
 
-    def edit(self, language_id):
-        language_id = self.get_session('language_id')
+    def edit(self, client_id):
+        language_id = self.get_session('client_id')
         # TODO validation        
-        return self.view('./template/admin/languages/edit.html', self.__service.get(self.__user_id, language_id))
+        return self.view('./template/admin/clients/edit.html', self.__service.get(self.__user_id, client_id))
     
     def confirm(self):
-        language_id = self.get_session('language_id')
-        language_name = self.get_param('language_name')
+        client_id = self.get_session('client_id')
+        client_name = self.get_param('client_name')
 
-        error_messages = self.__validator.get_error_messages(language_name)
+        error_messages = self.__validator.get_error_messages(client_name)
         if(len(error_messages) == 0):
-            self.set_session('language_name', language_name)
-            template = './template/admin/languages/confirm.html'
+            self.set_session('client_name', client_name)
+            template = './template/admin/clients/confirm.html'
         else:
-            template = './template/admin/languages/create.html'
+            template = './template/admin/clients/create.html'
         
         # TODO Factory Class
-        entity = LanguageEntity()
-        entity.set_language_id(language_id)
-        entity.set_language_name(language_name)
+        entity = ClientEntity()
+        entity.set_client_id(client_id)
+        entity.set_client_name(client_name)
         entity.set_error_message(error_messages)
         return self.view(template, entity)
 
     def insert(self):
-        language_name = self.get_session('language_name')
+        client_name = self.get_session('client_name')
         
         # TODO validation
         
         # session をクリアする
-        self.set_session('language_id', '')
-        self.set_session('language_name', '')
+        self.set_session('client_id', '')
+        self.set_session('client_name', '')
 
-        return self.view('./template/admin/languages/complete.html', self.__service.create(self.__user_id, language_name))
+        return self.view('./template/admin/clients/complete.html', self.__service.create(self.__user_id, client_name))
 
     def update(self):
-        language_id = self.get_session('language_id')
-        language_name = self.get_session('language_name')
+        client_id = self.get_session('client_id')
+        client_name = self.get_session('client_name')
         
         # session をクリアする
-        self.set_session('language_id', '')
-        self.set_session('language_name', '')
+        self.set_session('client_id', '')
+        self.set_session('client_name', '')
 
-        entity = LanguageEntity()
-        entity.set_language_id(self.__service.update(language_id, self.__user_id, language_name))
-        return self.view('./template/admin/languages/complete.html', entity)
+        entity = ClientEntity()
+        entity.set_client_id(self.__service.update(client_id, self.__user_id, client_name))
+        return self.view('./template/admin/clients/complete.html', entity)
     
     def delete(self):
-        language_id = self.get_param('language_id')
+        client_id = self.get_param('client_id')
 
         # session をクリアする
-        self.set_session('language_id', '')
-        self.set_session('language_name', '')
+        self.set_session('client_id', '')
+        self.set_session('client_name', '')
 
-        entity = LanguageEntity()
-        entity.set_language_id(self.__service.delete(language_id, self.__user_id))
+        entity = ClientEntity()
+        entity.set__id(self.__service.delete(_id, self.__user_id))
         return self.view('./template/admin/languages/complete.html', entity)    

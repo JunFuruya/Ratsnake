@@ -74,3 +74,10 @@ class BaseController():
     
     def get_login_user(self):
         return self.__login_user_id
+
+    def get_offset(self, record_num_per_page, page_num):
+        if(int(page_num) == 1):
+            return 0
+        else:
+            return (int(page_num) - 1) * int(record_num_per_page)
+ 
