@@ -56,3 +56,13 @@ class WordValidator(BaseValidator):
             csv_lines.close()
         return super().get_error_messages()
 
+    def get_index_error_message(self, language_id, page):
+        error_messages = []
+        if(len(str(language_id)) > 0 and self.has_half_width_number_characters_error(language_id)):
+            error_messages.append('言語IDには半角の数値を入力してください。')
+            super().set_error_messages(error_messages)
+        if(len(str(page_num)) > 0 and self.has_half_width_number_characters_error(page_num)):
+            error_messages.append('ページ番号には半角の数値を入力してください。')
+            super().set_error_messages(error_messages)
+
+        return super().get_error_messages()

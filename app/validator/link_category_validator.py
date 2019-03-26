@@ -25,3 +25,13 @@ class LinkCategoryValidator(BaseValidator):
             super().error_messages.append('リンクカテゴリ名称は3文字以内で入力してください。')
         pass
     
+    def get_index_error_message(self, link_category_id, page):
+        error_messages = []
+        if(len(str(link_category_id)) > 0 and self.has_half_width_number_characters_error(link_category_id)):
+            error_messages.append('カテゴリIDには半角の数値を入力してください。')
+            super().set_error_messages(error_messages)
+        if(len(str(page_num)) > 0 and self.has_half_width_number_characters_error(page_num)):
+            error_messages.append('ページ番号には半角の数値を入力してください。')
+            super().set_error_messages(error_messages)
+
+        return super().get_error_messages()

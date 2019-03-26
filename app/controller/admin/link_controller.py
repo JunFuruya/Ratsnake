@@ -21,7 +21,6 @@ class LinkController(BaseController):
         self.__user_id = self.get_login_user()
         self.__service = LinkService()
         self.__validator = LinkValidator()
-        
         pass
 
     def index(self):

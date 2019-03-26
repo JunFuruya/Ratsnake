@@ -9,8 +9,11 @@ from app.entity.word_entity import WordEntity
 Word Controller Module
 '''
 class WordController(BaseController):
+    RECORD_NUM_PER_PAGE = 100;
+    
     def __init__(self, request):
         super().__init__(request)
+        # TODO デザイン変更＋必要な文言のみ表示する
         self.set_page_info('単語帳', '選択した言語の単語を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = WordService()
@@ -19,10 +22,18 @@ class WordController(BaseController):
 
     def index(self, language_id=0):
         language_id = self.get_param('language_id') if self.get_param('language_id') != '' else self.get_session('language_id')
-        limit = self.get_param('limit', 10)
-        offset = self.get_param('offset', 0)
+        page = int(self.get_param('p', 1))
         
-        # TODO validation
+        error_messages = self.__validator.get_index_error_message(language_id, page)
+        if (len(error_messages) > 0):
+            entity.set_error_messages(error_messages)
+            page = 1
+
+        offset = self.get_offset(self.RECORD_NUM_PER_PAGE, page)
+        entity = self.__service.getList(self.__user_id,　language_id, self.RECORD_NUM_PER_PAGE, offset)
+        entity.set_language_id(language_id)
+        entity.set_current_page(page)
+
         # session をクリアする
         self.set_session('language_id', '')
         self.set_session('word_id', '')
@@ -32,9 +43,6 @@ class WordController(BaseController):
         self.set_session('word_is_learned', '')
         self.set_session('word_note', '')
 
-        # TODO もっと良い方法を考える
-        entity = self.__service.getList(self.__user_id, language_id, limit, offset)
-        entity.set_language_id(language_id)
         return self.view('./template/admin/words/list.html', entity=entity)
     
     def create(self, language_id):

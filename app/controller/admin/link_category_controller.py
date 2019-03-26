@@ -11,7 +11,8 @@ from app.helper.log_helper import LogHelper
 Link Category Controller Module
 '''
 class LinkCategoryController(BaseController):
-
+    RECORD_NUM_PER_PAGE = 30;
+    
     def __init__(self, request):
         super().__init__(request)
         self.set_page_info('リンクカテゴリマスタ', 'リンクを分類するためのカテゴリを登録・編集・削除します。', '')
@@ -21,18 +22,23 @@ class LinkCategoryController(BaseController):
         self.__logger = LogHelper()
 
     def index(self):
-        limit = self.get_param('limit', 10)
-        offset = self.get_param('offset', 0)
+        page = int(self.get_param('p', 1))
 
         self.set_session('link_category_id', '')
-        
-        entity = self.__service.getList(self.__user_id, limit, offset)
+        error_messages = self.__validator.get_index_error_message(link_category_id, page)
+        if (len(error_messages) > 0):
+            entity.set_error_messages(error_messages)
+
+        offset = self.get_offset(self.RECORD_NUM_PER_PAGE, page)
         try:
-            entity = self.__service.getList(self.__user_id, limit, offset)
+            entity = self.__service.getList(self.__user_id, self.RECORD_NUM_PER_PAGE, offset)
         except:
             self.__logger.critical('DB Error')
-            # TODO 例外をスロー
-            
+            page = 1
+
+        entity.set_language_id(language_id)
+        entity.set_current_page(page)
+
         return self.view('./template/admin/link_categories/list.html', entity=entity)
     
     def create(self):

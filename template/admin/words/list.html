@@ -59,5 +59,23 @@
             {% endfor %}
           </tbody>
         </table>
+      </section>
+      {% if entity.get_max_page() > 1 %}
+      <section>
+        {% if entity.get_current_page() > 1 %}
+        <a href="/admin/links?p=1">&lt;prev</a>
+        {% endif %}
+        {% for num in range(entity.get_max_page()) %}
+          {% if entity.get_current_page() == num + 1 %}
+          <span>{{ num + 1 }}</span>
+          {% else %}
+          <span><a href="/admin/links?p={{ num + 1 }}">{{ num + 1 }}</a></span>
+          {% endif %}
+        {% endfor %}
+        {% if entity.get_current_page() < entity.get_max_page() %}
+        <a href="/admin/links?p={{ entity.get_current_page() + 1 }}">next&gt;</a>
+        {% endif %}
+      </section>
+      {% endif %}
     </article>
 {% endblock %}

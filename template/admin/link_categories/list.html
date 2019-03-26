@@ -8,6 +8,11 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
+      {% if entity.get_error_messages()|length > 0 %}
+        {% for error_message in  entity.get_error_messages() %}
+          {{ error_message }}
+        {% endfor %}
+      {% endif %}
       <section class="button_area">
         <a href="/admin/link-categories/create"><input type="button" value="新規登録" class="w150" /></a>
       </section>
@@ -34,8 +39,22 @@
           </tbody>
         </table>
       </section>
+      {% if entity.get_max_page() > 1 %}
       <section>
-        {# TODO ページング #}
+        {% if entity.get_current_page() > 1 %}
+        <a href="/admin/links?p=1">&lt;prev</a>
+        {% endif %}
+        {% for num in range(entity.get_max_page()) %}
+          {% if entity.get_current_page() == num + 1 %}
+          <span>{{ num + 1 }}</span>
+          {% else %}
+          <span><a href="/admin/links?p={{ num + 1 }}">{{ num + 1 }}</a></span>
+          {% endif %}
+        {% endfor %}
+        {% if entity.get_current_page() < entity.get_max_page() %}
+        <a href="/admin/links?p={{ entity.get_current_page() + 1 }}">next&gt;</a>
+        {% endif %}
       </section>
+      {% endif %}
     </article>
 {% endblock %}
