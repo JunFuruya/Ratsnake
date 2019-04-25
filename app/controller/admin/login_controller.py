@@ -12,6 +12,7 @@ Login Controller Module
 '''
 class LoginController(BaseController):
     __should_check_login_status = False
+    COOKIE_VALID_PERIOD = 86400
     
     def __init__(self, request):
         super().__init__(request, self.__should_check_login_status)
@@ -34,7 +35,7 @@ class LoginController(BaseController):
         if len(error_messages) == 0:
             self.__user_id = self.__service.findByLoginInfo(username, password)
             self.set_session(self.LOGIN_SESSION_USER_ID, self.__validator.get_user_id())
-            self.set_cookie(self.LOGIN_SESSION_USER_ID, self.__user_id , 86400)
+            self.set_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), self.__user_id , self.COOKIE_VALID_PERIOD)
             return self.redirect('/admin')
         else:
             entity = LoginEntity()
