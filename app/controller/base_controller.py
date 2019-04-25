@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from bottle import jinja2_template, redirect
+from bottle import jinja2_template, redirect, response
 
 import g
 
@@ -53,21 +53,32 @@ class BaseController():
         else:
             return self.__request.forms.getunicode(key).strip()
     
+    def set_session(self, key, value):
+        self.__session[HashHelper.hexdigest(key)] = value
+        self.__session.save()
+        pass
+
     def get_session(self, key):
         if HashHelper.hexdigest(key) not in self.__session:
             return ''
         else:
             return self.__session.get(HashHelper.hexdigest(key), False)
     
-    def set_session(self, key, value):
-        self.__session[HashHelper.hexdigest(key)] = value
-        self.__session.save()
+    def set_cookie(self, key, value, max_age):
+        response.set_cookie(key, value, max_age)
         pass
+
+    def get_cookie(self, key):
+            return self.__request.cookies.get(HashHelper.hexdigest(key), 0)
     
     def check_login_status(self, should_check=True):
         if (should_check):
             if(self.__login_user_id == ''):
-                return self.redirect('/admin/login')
+                if (self.get_cookie(self.LOGIN_SESSION_USER_ID)):
+                    self.__login_user_id = self.get_cookie(self.LOGIN_SESSION_USER_ID);
+                    pass
+                else:
+                    return self.redirect('/admin/login')
             pass
         else:
             pass
