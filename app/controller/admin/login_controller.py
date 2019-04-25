@@ -34,8 +34,7 @@ class LoginController(BaseController):
         if len(error_messages) == 0:
             self.__user_id = self.__service.findByLoginInfo(username, password)
             self.set_session(self.LOGIN_SESSION_USER_ID, self.__validator.get_user_id())
-            
-            # TODO cookie 使う
+            self.set_cookie(self.LOGIN_SESSION_USER_ID, self.__user_id , 86400)
             return self.redirect('/admin')
         else:
             entity = LoginEntity()
@@ -45,4 +44,6 @@ class LoginController(BaseController):
         
     def logout(self):
         self.set_session(self.LOGIN_SESSION_USER_ID, '')
+        self.set_cookie(self.LOGIN_SESSION_USER_ID, 0)
+
         return self.redirect('/admin/login')
