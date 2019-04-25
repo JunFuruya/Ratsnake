@@ -15,6 +15,7 @@ class BaseController():
     __notification = ''
     __login_user_id = ''
     LOGIN_SESSION_USER_ID = 'login_user_id'
+    SECRET = 'hideout_secret'
 
     def __init__(self, request, should_check=True):
         self.__request = request
@@ -64,24 +65,21 @@ class BaseController():
         else:
             return self.__session.get(HashHelper.hexdigest(key), False)
     
-    def set_cookie(self, key, value, max_age):
-        response.set_cookie(key, value, max_age)
+    def set_cookie(self, key, value, max_age, secret):
+        response.set_cookie(key, value, max_age, secret=secret)
         pass
 
-    def get_cookie(self, key):
-            return self.__request.cookies.get(HashHelper.hexdigest(key), 0)
+    def get_cookie(self, key, secret):
+            return self.__request.cookies.get(key, secret)
     
     def check_login_status(self, should_check=True):
         if (should_check):
             if(self.__login_user_id == ''):
-                if (self.get_cookie(self.LOGIN_SESSION_USER_ID)):
-                    self.__login_user_id = self.get_cookie(self.LOGIN_SESSION_USER_ID);
-                    pass
+                if(self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), self.SECRET)):
+                    self.__login_user_id = self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), self.SECRET);
                 else:
                     return self.redirect('/admin/login')
-            pass
-        else:
-            pass
+        pass
     
     def get_login_user(self):
         return self.__login_user_id
