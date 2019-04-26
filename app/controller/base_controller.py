@@ -66,17 +66,17 @@ class BaseController():
             return self.__session.get(HashHelper.hexdigest(key), False)
     
     def set_cookie(self, key, value, max_age, secret):
-        response.set_cookie(key, value, max_age, secret=secret)
+        response.set_cookie(key, value, max_age=max_age, secret=secret)
         pass
 
     def get_cookie(self, key, secret):
-            return self.__request.cookies.get(key, secret)
+            return self.__request.get_cookie(key, secret=secret)
     
     def check_login_status(self, should_check=True):
         if (should_check):
             if(self.__login_user_id == ''):
-                if(self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), self.SECRET)):
-                    self.__login_user_id = self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), self.SECRET);
+                if(self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), secret=self.SECRET)):
+                    self.__login_user_id = self.get_cookie(HashHelper.hexdigest(self.LOGIN_SESSION_USER_ID), secret=self.SECRET);
                 else:
                     return self.redirect('/admin/login')
         pass
