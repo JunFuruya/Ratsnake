@@ -30,7 +30,7 @@ class LogHelper():
     
     def info(self, message):
         self.__logger.setLevel(logging.INFO)
-        self.__logger.debug(message)
+        self.__logger.info(message)
         pass
 
     def warn(self, message):
