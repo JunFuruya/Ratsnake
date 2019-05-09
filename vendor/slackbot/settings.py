@@ -2,10 +2,9 @@
 
 import os
 
-# 20180514 added
 from app.infrastructure.slack_yaml_file import SlackConfigYamlFile
 
-aliases, api_token, bit_icon, bot_emoji, debug, default_reply, errors_to, plugins = SlackConfigYamlFile().get_config()
+api_token, aliases, bit_icon, bot_emoji, debug, default_reply, errors_to, plugins = SlackConfigYamlFile().get_config()
 
 DEBUG = debug
 PLUGINS = plugins
