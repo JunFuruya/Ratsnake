@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging
 from glob import glob
 from six import PY2
 from importlib import import_module
+
+import g 
 # 20180515 change include path from "slackbot" to "vendor.slackbot"
 from vendor.slackbot import settings
 from vendor.slackbot.utils import to_utf8
-
-logger = logging.getLogger(__name__)
 
 
 class PluginsManager(object):
@@ -33,7 +32,7 @@ class PluginsManager(object):
             self._load_plugins(plugin)
 
     def _load_plugins(self, plugin):
-        logger.info('loading plugin "%s"', plugin)
+        g.log.info('loading plugin "%s"', plugin)
         path_name = None
 
         if PY2:
@@ -62,7 +61,7 @@ class PluginsManager(object):
                 import_module(module)
             except:
                 # TODO Better exception handling
-                logger.exception('Failed to import %s', module)
+                g.log.exception('Failed to import %s', module)
 
     def get_plugins(self, category, text):
         has_matching_plugin = False
