@@ -27,7 +27,7 @@
             <th class="w150">操作</th>
             {% for entity in entity.get_link_entity_list() %}
             <tr>
-              <td>{{ entity.get_link_id() }}{{ entity.get_link_category_name() }}</td>
+              <td>{{ entity.get_link_category_name() }}</td>
               <td><a href="{{ entity.get_link_url() }}" target="_blank">{{ entity.get_link_site_name() }}</a></td>
               <td>{{ entity.get_link_url() }}</td>
               <td>
