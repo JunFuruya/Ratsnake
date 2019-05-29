@@ -5,6 +5,8 @@ from glob import glob
 from six import PY2
 from importlib import import_module
 
+import sys
+
 import g
 # 20180515 change include path from "slackbot" to "vendor.slackbot"
 from vendor.slackbot import settings
@@ -45,13 +47,12 @@ class PluginsManager(object):
             from importlib.util import find_spec as importlib_find
 
             # 2019/05/16 パスを強制的に指定（指定しないとsite-packageを読みに行くため）
-            #path_name = importlib_find(plugin)
-            # TODO configからPLUGINSを読み込む必要がなくなった
-            path_name = os.path.dirname(os.path.abspath(__file__))+'\plugins'
-            #try:
-                #path_name = path_name.submodule_search_locations[0]
-            #except TypeError:
-                #path_name = path_name.origin
+            path_name = importlib_find(plugin)
+            g.log.info(path_name)
+            try:
+                path_name = path_name.submodule_search_locations[0]
+            except TypeError:
+                path_name = path_name.origin
 
         module_list = [plugin]
         if not path_name.endswith('.py'):
