@@ -11,7 +11,7 @@ class DbDumpRepository():
         pass
     
     def get_dump_file_name(self, folder_path):
-        #return self.__dbdump_file.get_file_names(folder_path)
+        return self.__dbdump_file.get_file_names(folder_path)
         pass
     
     def create(self, file_name):
