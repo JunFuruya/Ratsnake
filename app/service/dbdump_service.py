@@ -9,22 +9,29 @@ from app.service.base_service import BaseService
 Service Module
 '''
 class DbDumpService(BaseService):
-    __dbdump_repository = None
+    MESSAGE_NO_FILE = 'バックアップファイルはないよ。'
 
     def __init__(self):
         self.__dbdump_repository = DbDumpRepository()
-        pass
         
-    def create_dump(self):
-        #datetime_today = datetime.date.today()
-        #file_name = 'dunmp_' + datetime_today.strftime('%Y%m%d')
-        #self.__dbdump_repository.create(file_name)
+    def create_dump(self, message):
+        #self.__dbdump_repository.create()
         pass
 
-    def get_dump_names(self, folder_path):
-        return self.__dbdump_repository.get_dump_file_name(folder_path)
+    def get_dump_names(self, message):
+        file_names = self.__dbdump_repository.get_dump_file_name()
+        if file_names is None or len(file_names) == 0:
+            message.send(self.MESSAGE_NO_FILE)
+        else:
+            message.send('\n'.join(file_names))
+        pass
     
-    def delete_dump(self, file_name):
+    def delete_dump(self, message, file_name):
         #self.__dbdump_repository.delete(file_name)
+
+        #file_names = self.get_dump_names(folder_path)
+        #if file_names is None:
+        #    message.send(message_no_files)
+
         pass
         
