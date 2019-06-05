@@ -15,7 +15,8 @@ class DbDumpService(BaseService):
         self.__dbdump_repository = DbDumpRepository()
         
     def create_dump(self, message):
-        #self.__dbdump_repository.create()
+        self.__dbdump_repository.create()
+        self.get_dump_names(message)
         pass
 
     def get_dump_names(self, message):

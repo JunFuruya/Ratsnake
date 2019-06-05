@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-import subprocess
+import os, subprocess
 
 import g
 
@@ -20,11 +20,15 @@ class DbDumpFile(BaseFile):
         return super().get_file_names(folder_path)
 
     def create(self, folder_path, file_name):
-        #db_config = g.get_config(DB_CONFIG_FILE_NAME)
-        #command = 'mysqldump -u' + db_config['dump']['user'] + ' -p ' + db_config['dump']['database'] \
-        #          + ' > ' + os.path.join(folder_path, file_name)
-        # サンプル mysqldump -uroot -p hideout > /var/dbdump/hideout_201905022.dump
-        subprocess.call(command)
+        db_config = g.get_config(self.DB_CONFIG_FILE_NAME)
+        command = 'mysqldump -u' + db_config['dump']['user'] + ' -p ' + db_config['dump']['database'] \
+                  + ' > ' + os.path.join(folder_path, file_name)
+
+        try:
+            subprocess.call(command)
+        except FileNotFoundError:
+            g.log.error('No file found or no path to mysqldump command')
+            
         pass
     
     def delete(self, folder_path, file_name):
