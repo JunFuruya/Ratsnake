@@ -32,5 +32,6 @@ class DbDumpFile(BaseFile):
         pass
     
     def delete(self, folder_path, file_name):
+        super().delete(folder_path, file_name)
         pass
     

@@ -11,27 +11,24 @@ class DbDumpRepository():
 
     def __init__(self):
         self.__dbdump_file = DbDumpFile()
+
+        self.__db_config = g.get_config(self.DB_CONFIG_FILE_NAME)
+        self.__folder_path = self.__db_config['dump']['folder_path']
         pass
     
     def get_dump_file_name(self):
-        db_config = g.get_config(self.DB_CONFIG_FILE_NAME)
-        folder_path = db_config['dump']['folder_path']
-        return self.__dbdump_file.get_file_names(folder_path)
+        return self.__dbdump_file.get_file_names(self.__folder_path)
     
     def create(self):
-        db_config = g.get_config(self.DB_CONFIG_FILE_NAME)
         
         datetime_today = datetime.date.today()
-        prefix = db_config['dump']['file_name_prefix']
-        extension = db_config['dump']['file_extension']
+        prefix = self.__db_config['dump']['file_name_prefix']
+        extension = self.__db_config['dump']['file_extension']
         file_name = prefix + datetime_today.strftime('%Y%m%d') + extension
-        folder_path = db_config['dump']['folder_path']
         
-        self.__dbdump_file.create(folder_path, file_name)
+        self.__dbdump_file.create(self.__folder_path, file_name)
         pass
     
     def delete(self, file_name):
-        # TODO config から読み込む
-        #folder_name = ''
-        #os.remove(os.path.join(folder_name, file_name))
+        self.__dbdump_file.delete(self.__folder_path, file_name)
         pass

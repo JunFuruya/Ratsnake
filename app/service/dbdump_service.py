@@ -13,6 +13,7 @@ class DbDumpService(BaseService):
 
     def __init__(self):
         self.__dbdump_repository = DbDumpRepository()
+        pass
         
     def create_dump(self, message):
         self.__dbdump_repository.create()
@@ -28,11 +29,7 @@ class DbDumpService(BaseService):
         pass
     
     def delete_dump(self, message, file_name):
-        #self.__dbdump_repository.delete(file_name)
-
-        #file_names = self.get_dump_names(folder_path)
-        #if file_names is None:
-        #    message.send(message_no_files)
-
+        self.__dbdump_repository.delete(file_name)
+        self.get_dump_names(message)
         pass
         
