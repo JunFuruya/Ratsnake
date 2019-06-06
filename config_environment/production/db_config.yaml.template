@@ -1,0 +1,24 @@
+slave:
+  host: localhost
+  port: 3306
+  database: dbname
+  user: dbuser
+  password: dbpassword
+
+master :
+  host: localhost
+  port: 3306
+  database: dbname
+  user: dbuser
+  password: dbpassword
+
+dump:
+  host: localhost
+  port: 3306
+  database: dbname
+  user: dbuser
+  password: dbpassword
+  folder_path: folder_path
+  file_name_prefix: prefix
+  file_extension: extension
+
