@@ -31,6 +31,8 @@ class LinkValidator(BaseValidator):
             error_messages.append('リンク表示順序が入力されていません。')
         if(self.has_too_large_number_error(self.__link_display_order, 200)):
             error_messages.append('リンク表示順序は3桁以内で入力してください。')
+
+        super().set_error_messages(error_messages)
         pass
     
     def get_index_error_message(self, page_num):

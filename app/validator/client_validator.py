@@ -6,17 +6,20 @@ class ClientValidator(BaseValidator):
     def __init__(self):
         pass
         
-    def get_error_messages(self):
-        #self.__language_name = language_name
+    def get_error_messages(self, client):
+        self.__client_name = client_name
 
-        #self.__validate()
+        self.__validate()
 
         return super().get_error_messages()
 
     def __validate(self):
-        #if(self.has_empty_error(self.__language_name)):
-        #    super().error_messages.append('名称が入力されていません。')
-        #if(self.has_too_large_number_error(self.__language_name, 100)):
-        #    super().error_messages.append('名称は50文字以内で入力してください。')
+        error_messages = []
+        if(self.has_empty_error(self.__client_name)):
+            error_messages.append('名称が入力されていません。')
+        if(self.has_too_large_number_error(self.__client_name, 100)):
+            error_messages.append('名称は50文字以内で入力してください。')
+            
+        super().set_error_messages(error_messages)
         pass
     

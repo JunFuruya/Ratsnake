@@ -15,13 +15,26 @@ class LinkCategoryValidator(BaseValidator):
         return super().get_error_messages()
 
     def __validate(self):
+        error_messages = []
         if(self.has_empty_error(self.__link_category_name)):
-            super().error_messages.append('リンクカテゴリ名称が入力されていません。')
+            error_messages.append('リンクカテゴリ名称が入力されていません。')
         if(self.has_too_large_number_error(self.__link_category_name, 100)):
-            super().error_messages.append('リンクカテゴリ名称は100文字以内で入力してください。')
+            error_messages.append('リンクカテゴリ名称は100文字以内で入力してください。')
         if(self.has_empty_error(self.__link_category_display_order)):
-            super().error_messages.append('リンクカテゴリ表示順序が入力されていません。')
+            error_messages.append('リンクカテゴリ表示順序が入力されていません。')
         if(self.has_too_large_number_error(self.__link_category_display_order, 3)):
-            super().error_messages.append('リンクカテゴリ名称は3文字以内で入力してください。')
+            error_messages.append('リンクカテゴリ名称は3文字以内で入力してください。')
+        if(self.has_full_width_hiragana_characters_error(self.__link_category_display_order)):
+            error_messages.append('リンクカテゴリ名称は半角数値で入力してください。')
+        if(self.has_full_width_katakana_characters_error(self.__link_category_display_order)):
+            error_messages.append('リンクカテゴリ名称は半角数値で入力してください。')
+        if(self.has_full_width_number_characters_error(self.__link_category_display_order)):
+            error_messages.append('リンクカテゴリ名称は半角数値で入力してください。')
+        if(self.has_full_width_alphabet_characters_error(self.__link_category_display_order)):
+            error_messages.append('リンクカテゴリ名称は半角数値で入力してください。')
+        if(self.has_full_width_special_characters_error(self.__link_category_display_order)):
+            error_messages.append('リンクカテゴリ名称は半角数値で入力してください。')
+        
+        super().set_error_messages(error_messages)
         pass
     

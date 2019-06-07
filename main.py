@@ -418,7 +418,7 @@ def get_favicon():
 def error404(error):
     return ErrorController(request).error(404)
 
-@error(500)
+error(500)
 def error500(error):
     return ErrorController(request).error(500)
 

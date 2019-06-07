@@ -16,7 +16,10 @@ class JournalEntryValidator(BaseValidator):
         return super().get_error_messages()
 
     def __validate(self):
+        error_messages = []
         if(self.has_too_large_number_error(self.__journal_entry_note, 1000)):
-            super().error_messages.append('備考は1000文字以内で入力してください。')
+            error_messages.append('備考は1000文字以内で入力してください。')
+            
+        super().set_error_messages(error_messages)
         pass
     

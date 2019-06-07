@@ -5,7 +5,7 @@ import os.path, re
 import g
 
 class BaseValidator():
-    __error_messages = []
+
     def __init__(self):
         self.__error_messages = []
         pass
@@ -33,7 +33,7 @@ class BaseValidator():
         return True if (len(string) < min or len(string) > max) else False 
 
     # 平仮名
-    def has_full_width_katakana_characters_error(self, string):
+    def has_full_width_hiragana_characters_error(self, string):
         return True if (re.search(r'[\u3041-\u3093]+', string)) else False 
 
     # 全角カタカナ
@@ -54,7 +54,7 @@ class BaseValidator():
 
     # 全角数字
     def has_full_width_number_characters_error(self, string):
-        return True if (name == '') else False 
+        return True if (re.search(r'(０-９)+', string)) else False 
 
     # 半角数字
     def has_half_width_number_characters_error(self, string):
