@@ -7,7 +7,6 @@ from app.repository.user_repository import UsersRepository
 from app.entity.word_entity import WordEntity
 
 class WordService(BaseService):
-    __language_repository = None
     
     def __init__(self):
         self.__reposiroty = WordRepository()
@@ -34,3 +33,6 @@ class WordService(BaseService):
         language_entity = self.__language_repository.find(user_id, language_id)
         entity.set_language_name(language_entity.get_language_name())
         return entity
+    
+    def consult_dictionary(self, foreign_word):
+        return self.__reposiroty.consult_google_dictionary(foreign_word)
