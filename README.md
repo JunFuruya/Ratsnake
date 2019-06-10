@@ -1,44 +1,28 @@
 # Overview
-- Hideout is a web tool written in Python, expected to be used to manage tasks.
+- Hideout is a web tool to help you make financial reports, learn other languages and develop software. It is written in Python.
 
 # Description
-- It doesn't work as it is under construction.
-- It is going to help you manage your todo list, useful links and .
-- It is going to help you manage virtual machines on cloud platforms using APIs vendors offer.
-
-# Built With
-- python 3.6.1
-- pip 10.0.1
-- bottle 0.12.13
-- Jinja2-2.10
-- pycurl 7.43.0.1
-- slackbot 
+- It is going to help you make financial reports, learn other languages and develop software.
 
 # Usage
 
-Sorry,I am still thinking it...
+- wordlist
+- journal ledger
 
 # Installing
 
-- bottle
+Requitement
+- CentOS
+- php
+- Apache
+- MySQL
+- python 3.6.1
 
-`$ pip install bottle`
-
-- slackbot
-
-`$ pip install slackbot`
-
-- jinja2
-
-` $ pip install Jinja2`
-
-- pycurl
-
-`$ pip install pucurl`
+Need to be added...
 
 # Lisence
 
-Sorry,I am still thinking about it...
+Undefined
 
 # Author
 

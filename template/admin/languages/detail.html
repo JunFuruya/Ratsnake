@@ -9,11 +9,14 @@
       <h3>{{ entity.get_description() }}</h3>
       
       <form action="/admin/languages/{{ entity.get_language_id() }}" method="POST">
-        {{ entity.get_language_id() }}
-        {{ entity.get_language_name() }}
-        <input type="submit" value="編集"/>
+        <section class="input_area">
+          <div class="label200">言語名</div>
+          <div class="inline-block">{{ entity.get_language_name() }}</div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/languages"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="submit" value="編集" class="w150" />
+        </section>
       </form>
-      <a href="/admin/languages">言語一覧へ</a>
-      
     </article>
 {% endblock %}

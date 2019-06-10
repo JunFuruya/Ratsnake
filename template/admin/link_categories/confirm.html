@@ -14,12 +14,21 @@
         {% set action = '/admin/link-categories/' + entity.get_link_category_id() + '/update' %}
       {% endif %}
       <form action="{{ action }}" method="POST">
-        {{ entity.get_link_category_name() }}
-        {{ entity.get_link_category_display_order() }}
-        <input type="button" value="戻る" onclick="JavaScript:history.back();"/>
-        <input type="submit" value="登録"/>
+        <section class="input_area">
+          <div>
+            <div class="w200 inline-block">リンクカテゴリ名称</div>
+            <div class="w200 inline-block">{{ entity.get_link_category_name() }}</div>
+          </div>
+          <div>
+            <div class="w200 inline-block">リンクカテゴリ表示順序</div>
+            <div class="w200 inline-block">{{ entity.get_link_category_display_order() }}</div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/link-categories"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="button" value="戻る" onclick="JavaScript:history.back();" class="w150" />
+          <input type="submit" value="登録" class="w150" />
+        </section>
       </form>
-      <a href="/admin/link-categories">リンクカテゴリ一覧へ</a>
-      
     </article>
 {% endblock %}

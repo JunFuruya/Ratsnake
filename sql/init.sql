@@ -1,4 +1,4 @@
-CREATE DATABASE hideout;
+CREATE DATABASE IF NOT EXISTS hideout;
 
 CREATE TABLE IF NOT EXISTS hideout.m_users (
   m_user_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ユーザID',
@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS hideout.m_account_titles (
 ) engine=InnoDB COMMENT='勘定科目';
 
 CREATE TABLE IF NOT EXISTS hideout.t_journal_entries (
-  m_journal_entry_id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '仕訳ID',
+  t_journal_entry_id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '仕訳ID',
   m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
   m_account_title_id INT(4) NOT NULL DEFAULT 0 COMMENT '勘定科目ID 0:未確定',
-  m_journal_entry_transaction_date DATETIME NOT NULL COMMENT '取引日付',
-  m_journal_entry_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
-  m_journal_entry_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
+  t_journal_entry_transaction_date DATETIME NOT NULL COMMENT '取引日付',
+  t_journal_entry_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
+  t_journal_entry_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
 ) engine=InnoDB COMMENT='仕訳';

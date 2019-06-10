@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
+from app.validator.language_validator import LanguageValidator
 from app.service.language_service import LanguageService
 from app.entity.language_entity import LanguageEntity
 
@@ -15,6 +16,7 @@ class LanguageController(BaseController):
         self.set_page_info('言語マスタ', '単語帳を作成する対象の言語を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = LanguageService()
+        self.__validator = LanguageValidator()
         pass
 
     def index(self):
@@ -46,15 +48,19 @@ class LanguageController(BaseController):
         language_id = self.get_session('language_id')
         language_name = self.get_param('language_name')
 
-        # TODO validation
+        error_messages = self.__validator.get_error_messages(language_name)
+        if(len(error_messages) == 0):
+            self.set_session('language_name', language_name)
+            template = './template/admin/languages/confirm.html'
+        else:
+            template = './template/admin/languages/create.html'
         
-        self.set_session('language_name', language_name)
-        
-        # TODO もっと良い設計があるはず
+        # TODO Factory Class
         entity = LanguageEntity()
         entity.set_language_id(language_id)
         entity.set_language_name(language_name)
-        return self.view('./template/admin/languages/confirm.html', entity)
+        entity.set_error_message(error_messages)
+        return self.view(template, entity)
 
     def insert(self):
         language_name = self.get_session('language_name')

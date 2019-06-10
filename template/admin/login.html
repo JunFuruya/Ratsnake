@@ -6,12 +6,23 @@
 {% block content %}
   <article>
     <form action="/admin/login" method="POST">
-      <section class="error_message">{{ entity.get_error_message() }}
+      <section class="error_message">
+      {% for error_message in entity.get_error_messages() %}
+        {{ error_message }}
+      {% endfor %}
       </section>
       <section>
-        <input name="username" type="text" value=""/>
-        <input name="password" type="password" value=""/>
-        <input type="submit" value="Login" />
+        <div class="mt10">
+          <div class="w100 inline-block">ログインID</div>
+          <div class="inline-block"><input name="username" type="text" value="" class="w200" /></div>
+        </div>
+        <div class="mt5">
+          <div class="w100 inline-block">パスワード</div>
+          <div class="inline-block"><input name="password" type="password" value="" class="w200"/></div>
+        </div>
+        <div class="mt10">
+          <input type="submit" value="サインイン" class="w200" />
+        </div>
       </section>
     </form>
   </article>

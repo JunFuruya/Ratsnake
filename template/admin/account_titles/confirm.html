@@ -1,0 +1,34 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+    <article>
+      <h2>{{ entity.get_title() }}</h2>
+      <h3>{{ entity.get_description() }}</h3>
+      
+      {% if entity.get_account_title_id() == '' %}
+        {% set action = '/admin/account-titles/insert' %}
+      {% else %}
+        {% set action = '/admin/account-titles/' + entity.get_account_title_id() + '/update' %}
+      {% endif %}
+      <form action="{{ action }}" method="POST">
+        <section class="input_area">
+          <div>
+            <div class="label200">勘定科目</div>
+            <div class="inline-block">{{ entity.get_account_title_name() }}</div>
+          </div>
+          <div>
+            <div class="label200">勘定科目分類区分</div>
+            <div class="inline-block">{{ entity.get_account_title_classification_type().get_name() }}</div>
+          </div>
+        </section>
+        <section class="button_area">
+          <a href="/admin/account-titles"><input type="button" value="一覧へ" class="w150" /></a>
+          <input type="button" value="戻る" class="w150" onclick="JavaScript:history.back();"/>
+          <input type="submit" value="登録" class="w150" />
+        </section>
+      </form>
+    </article>
+{% endblock %}
