@@ -8,7 +8,7 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
-      <form action="/admin/languages/{{ entity.get_language_id() }}" method="POST">
+      <form action="/admin/languages/{{ entity.get_language_id() }}/edit" method="POST">
         <section class="input_area">
           <div class="label200">言語名</div>
           <div class="inline-block">{{ entity.get_language_name() }}</div>

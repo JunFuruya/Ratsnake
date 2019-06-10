@@ -136,7 +136,7 @@ def language_create():
 def language_detail(language_id):
     return LanguageController(request).detail(language_id)
 
-@post('/admin/languages/<language_id>')
+@post('/admin/languages/<language_id>/edit')
 def language_edit(language_id):
     return LanguageController(request).edit(language_id)
 
