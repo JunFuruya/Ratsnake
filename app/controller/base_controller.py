@@ -10,10 +10,7 @@ from app.helper.hash_helper import HashHelper
 Base Controller Module
 '''
 class BaseController():
-    __title = ''
-    __description = ''
-    __notification = ''
-    __login_user_id = ''
+    
     LOGIN_SESSION_USER_ID = 'login_user_id'
     SECRET = 'hideout_secret'
 
@@ -30,13 +27,17 @@ class BaseController():
         self.__description = description
         self.__notification = notification
 
-    def view(self, tempalte_path, entity):
+    def set_template_path(self, template_path):
+        self.template_path = template_path
+
+    def view(self, tempalte_file_name, entity):
         entity.set_title(self.__title) 
         entity.set_description(self.__description)
         entity.set_notification(self.__notification)
         entity.set_login_status(self.__login_user_id)
-
-        return jinja2_template(tempalte_path, entity=entity)
+        template_path = self.template_path + tempalte_file_name
+        
+        return jinja2_template(template_path, entity=entity)
     
     def redirect(self, path):
         return redirect(path)

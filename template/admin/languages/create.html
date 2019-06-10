@@ -8,6 +8,9 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
+      {% for error_message in entity.get_error_messages() %}
+        {{ error_message }}
+      {% endfor %}
       <form action="/admin/languages/confirm" method="POST">
         <section class="input_area">
           <div class="label200">言語名</div>

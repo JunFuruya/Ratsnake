@@ -11,6 +11,8 @@ class IndexController(BaseController):
         super().__init__(request)
         self.set_page_info('管理サイトメニュー', '', '')
         self.__user_id = self.get_login_user()
+        self.set_template_path('./template/admin/')
+        pass
 
     def index(self):
-        return self.view('./template/admin/index.html', entity=IndexEntity())
+        return self.view('index.html', entity=IndexEntity())

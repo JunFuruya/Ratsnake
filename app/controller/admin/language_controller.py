@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.controller.base_controller import BaseController
 from app.validator.language_validator import LanguageValidator
 from app.service.language_service import LanguageService
@@ -9,12 +11,14 @@ from app.entity.language_entity import LanguageEntity
 Language Controller Module
 '''
 class LanguageController(BaseController):
+    
     def __init__(self, request):
         super().__init__(request)
         self.set_page_info('言語マスタ', '単語帳を作成する対象の言語を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
         self.__service = LanguageService()
         self.__validator = LanguageValidator()
+        self.set_template_path('./template/admin/languages/')
         pass
 
     def index(self):
@@ -25,22 +29,30 @@ class LanguageController(BaseController):
         self.set_session('language_id', '')
         self.set_session('language_name', '')
         
-        return self.view('./template/admin/languages/list.html', self.__service.getList(self.__user_id, limit, offset))
+        return self.view('list.html', self.__service.getList(self.__user_id, limit, offset))
     
     def create(self):
-        return self.view('./template/admin/languages/create.html', LanguageEntity())
+        entity = LanguageEntity()
+        entity.set_error_messages(self.get_session('error_messages'))
+        self.set_session('error_messages', '')
+        return self.view('create.html', entity=entity)
 
     def detail(self, language_id):
         # TODO validation
         
         self.set_session('language_id', language_id)
         
-        return self.view('./template/admin/languages/detail.html', self.__service.get(self.__user_id, language_id))
+        return self.view('detail.html', self.__service.get(self.__user_id, language_id))
 
     def edit(self, language_id):
         language_id = self.get_session('language_id')
-        # TODO validation        
-        return self.view('./template/admin/languages/edit.html', self.__service.get(self.__user_id, language_id))
+        entity = self.__service.get(self.__user_id, language_id)
+        entity.set_error_messages(self.get_session('error_messages'))
+
+        self.set_session('error_messages', '')
+        
+        # TODO validation
+        return self.view('edit.html', entity=entity)
     
     def confirm(self):
         language_id = self.get_session('language_id')
@@ -49,9 +61,13 @@ class LanguageController(BaseController):
         error_messages = self.__validator.get_error_messages(language_name)
         if(len(error_messages) == 0):
             self.set_session('language_name', language_name)
-            template = './template/admin/languages/confirm.html'
+            template = 'confirm.html'
         else:
-            template = './template/admin/languages/create.html'
+            self.set_session('error_messages', error_messages)
+            if language_id == '':
+                self.redirect('/admin/languages/create')
+            else:
+                self.redirect('/admin/languages/' + language_id)
         
         # TODO Factory Class
         entity = LanguageEntity()
@@ -69,7 +85,7 @@ class LanguageController(BaseController):
         self.set_session('language_id', '')
         self.set_session('language_name', '')
 
-        return self.view('./template/admin/languages/complete.html', self.__service.create(self.__user_id, language_name))
+        return self.view('complete.html', self.__service.create(self.__user_id, language_name))
 
     def update(self):
         language_id = self.get_session('language_id')
@@ -81,7 +97,7 @@ class LanguageController(BaseController):
 
         entity = LanguageEntity()
         entity.set_language_id(self.__service.update(language_id, self.__user_id, language_name))
-        return self.view('./template/admin/languages/complete.html', entity)
+        return self.view('complete.html', entity)
     
     def delete(self):
         language_id = self.get_param('language_id')
@@ -92,4 +108,4 @@ class LanguageController(BaseController):
 
         entity = LanguageEntity()
         entity.set_language_id(self.__service.delete(language_id, self.__user_id))
-        return self.view('./template/admin/languages/complete.html', entity)    
+        return self.view('complete.html', entity)    

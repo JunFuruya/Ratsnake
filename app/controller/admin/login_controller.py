@@ -20,13 +20,15 @@ class LoginController(BaseController):
         self.set_page_info('Hideoutログイン', 'ログイン', 'ログインに必要な情報を入力してください。')
         self.__service = LoginService()
         self.__validator = LoginValidator()
+        self.set_template_path('./template/admin/')
+
         pass
     
     def index(self):
         entity = LoginEntity()
         entity.set_username('')
         entity.set_error_messages('')
-        return self.view('./template/admin/login.html', entity)
+        return self.view('login.html', entity)
 
     def login(self):
         username = self.get_param('username', '')
@@ -42,7 +44,7 @@ class LoginController(BaseController):
             entity = LoginEntity()
             entity.set_username(username)
             entity.set_error_messages(error_messages)
-            return self.view('./template/admin/login.html', entity)
+            return self.view('login.html', entity)
         
     def logout(self):
         user_id = self.get_session(self.LOGIN_SESSION_USER_ID)
