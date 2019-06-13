@@ -1,20 +1,22 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
-from app.validator.client_validator import ClientValidator
-from app.service.client_service import ClientService
-from app.entity.client_entity import ClientEntity
+from app.validator.client_address_validator import ClientAddressValidator
+from app.service.client_address_service import ClientAddressService
+from app.entity.client_address_entity import ClientAddressEntity
+
+# TODO 動くようにする
 
 '''
-Client Controller Module
+Client Address Controller Module
 '''
-class ClientController(BaseController):
+class ClientAddressController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('取引先マスタ', 'とりひきさきの情報を登録・編集・削除します。', '')
+        self.set_page_info('取引先住所マスタ', '取引先の住所を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = ClientService()
-        self.__validator = ClientValidator()
+        self.__service = ClientAddressService()
+        self.__validator = ClientAddressValidator()
         pass
 
     def index(self):
@@ -28,7 +30,7 @@ class ClientController(BaseController):
         return self.view('./template/admin/clients/list.html', self.__service.getList(self.__user_id, limit, offset))
     
     def create(self):
-        return self.view('./template/admin/clients/create.html', ClientEntity())
+        return self.view('./template/admin/clients/create.html', ClientAddressEntity())
 
     def detail(self, client_id):
         # TODO validation
@@ -54,7 +56,7 @@ class ClientController(BaseController):
             template = './template/admin/clients/create.html'
         
         # TODO Factory Class
-        entity = ClientEntity()
+        entity = ClientAddressEntity()
         entity.set_client_id(client_id)
         entity.set_client_name(client_name)
         entity.set_error_message(error_messages)
@@ -79,7 +81,7 @@ class ClientController(BaseController):
         self.set_session('client_id', '')
         self.set_session('client_name', '')
 
-        entity = ClientEntity()
+        entity = ClientAddressEntity()
         entity.set_client_id(self.__service.update(client_id, self.__user_id, client_name))
         return self.view('./template/admin/clients/complete.html', entity)
     
@@ -90,6 +92,6 @@ class ClientController(BaseController):
         self.set_session('client_id', '')
         self.set_session('client_name', '')
 
-        entity = ClientEntity()
+        entity = ClientAddressEntity()
         entity.set__id(self.__service.delete(_id, self.__user_id))
         return self.view('./template/admin/clients/complete.html', entity)    

@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from app.service.base_service import BaseService
-from app.repository.language_repository import ClienteRepository
-from app.repository.user_repository import UsersRepository
+from app.repository.client_repository import ClientRepository
 
 class ClientService(BaseService):
     def __init__(self):

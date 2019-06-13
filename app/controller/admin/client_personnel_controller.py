@@ -1,20 +1,20 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
-from app.validator.client_validator import ClientValidator
-from app.service.client_service import ClientService
-from app.entity.client_entity import ClientEntity
+from app.validator.client_personnel_validator import ClientPersonnelValidator
+from app.service.client_personnel_service import ClientPersonnelService
+from app.entity.client_personnel_entity import ClientPersonnelEntity
 
 '''
-Client Controller Module
+Client Personnel Controller Module
 '''
-class ClientController(BaseController):
+class ClientPersonnelController(BaseController):
     def __init__(self, request):
         super().__init__(request)
         self.set_page_info('取引先マスタ', 'とりひきさきの情報を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = ClientService()
-        self.__validator = ClientValidator()
+        self.__service = ClientPersonnelService()
+        self.__validator = ClientPersonnelValidator()
         pass
 
     def index(self):
