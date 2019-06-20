@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.infrastructure.base_db import DbBase
 
 '''
@@ -15,9 +17,10 @@ class DbClients(DbBase):
         bindings = (username, password)
         return super().selectOne(sql, bindings)
 
-    def selectAll(self, limit, offset):
-        sql = 'SELECT m_user_id, m_user_username, m_user_hashed_password FROM m_users LIMIT %s OFFSET %s;'
-        bindings = (limit, offset)
+    def selectAll(self, user_id, limit, offset):
+        sql = 'SELECT m_user_id, m_client_id, m_client_name, m_client_document_prefix FROM m_users WHERE m_user_id = %s LIMIT %s OFFSET %s;'
+        g.log.info(sql)
+        bindings = (user_id, limit, offset)
         return super().select(sql, bindings)
 
     def selectOne(self, user_id):

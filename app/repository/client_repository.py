@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.entity.client_list_entity import ClientListEntity
 from app.entity.client_entity import ClientEntity
 from app.infrastructure.client_db import DbClients
@@ -22,20 +24,21 @@ class ClientRepository():
         else:
             return None
 
-    def findList(self, limit, offset):
-        records = self.__db.selectAll(limit, offset)
+    def findList(self, user_id, limit, offset):
+        g.log.info('findList')
+        records = self.__db.selectAll(user_id, limit, offset)
         
         list_entity = ClientListEntity()
         entities = []
         for record in records:
             entity = UserEntity()
-            entity.set_user_id(record[0])
-            entity.set_user_username(record[1])
-            entity.set_user_hashed_password(record[2])
+            entity.set_client_id(record[0])
+            entity.set_client_name(record[1])
+            entity.set_client_document_prefix(record[2])
             entities.append(entity)
             
-        return list_entity.set_user_entity_list(entities);
-
+        return list_entity.set_client_entity_list(entities);
+    '''
     def find(self, user_id):
         record = self.__db.selectOne(user_id)
 
@@ -57,3 +60,4 @@ class ClientRepository():
 
     def delete(self, user_id):
         return self.__db.delete(user_id)
+'''

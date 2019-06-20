@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.service.base_service import BaseService
 from app.repository.client_repository import ClientRepository
 
@@ -9,8 +11,9 @@ class ClientService(BaseService):
         pass
 
     def getList(self, user_id, limit, oiffset):
+        g.log.info('getList')
         return self.__reposiroty.findList(user_id, limit, oiffset)
-
+'''
     def get(self, user_id, client_id):
         return self.__reposiroty.find(user_id, client_id)
 
@@ -22,3 +25,4 @@ class ClientService(BaseService):
 
     def delete(self, client_id, user_id):
         return self.__reposiroty.delete(client_id, user_id)
+'''
