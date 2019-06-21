@@ -9,6 +9,7 @@ class BaseYamlFile():
     __yaml_data = None
 
     def __init__(self, file_name):
+        # TODO g.py の定義で差し替える
         config_folder_path = '../../config/'
         app_env = os.getenv('APP_ENV', 'DEVELOPMENT')
         if(app_env == 'PRODUCTION'):

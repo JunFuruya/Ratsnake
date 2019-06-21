@@ -9,6 +9,7 @@
       <h3>{{ entity.get_description() }}</h3>
 
       <form action="/admin/languages/{{ entity.get_language_id() }}/words/{{ entity.get_word_id() }}/confirm" method="POST">
+        <input id="google_api_search" type="button" value="検索する" class="w150" />
         <section class="input_area">
           <div>
             <div class="label200">カテゴリ</div>
@@ -16,15 +17,15 @@
           </div>
           <div>
             <div class="label200">綴り</div>
-            <div class="inline-block"><input type="text" name="word_spell" value="{{ entity.get_word_spell() }}" /></div>
+            <div class="inline-block"><input id="word_spell" type="text" name="word_spell" value="{{ entity.get_word_spell() }}" /></div>
           </div>
           <div>
             <div class="label200">説明</div>
-            <div class="inline-block"><textarea name="word_explanation">{{ entity.get_word_explanation() }}</textarea></div>
+            <div class="inline-block"><textarea id="word_explanation" name="word_explanation">{{ entity.get_word_explanation() }}</textarea></div>
           </div>
           <div>
             <div class="label200">発音</div>
-            <div class="inline-block"><input type="text" name="word_pronunciation" value="{{ entity.get_word_pronunciation() }}" /></div>
+            <div class="inline-block"><input id="word_pronunciation" type="text" name="word_pronunciation" value="{{ entity.get_word_pronunciation() }}" /></div>
           </div>
           <div>
             <div class="label200">ステータス</div>

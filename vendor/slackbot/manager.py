@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import os
-import logging
 from glob import glob
 from six import PY2
 from importlib import import_module
+
+import sys
+
+import g
 # 20180515 change include path from "slackbot" to "vendor.slackbot"
 from vendor.slackbot import settings
 from vendor.slackbot.utils import to_utf8
-
-logger = logging.getLogger(__name__)
 
 
 class PluginsManager(object):
@@ -33,7 +34,6 @@ class PluginsManager(object):
             self._load_plugins(plugin)
 
     def _load_plugins(self, plugin):
-        logger.info('loading plugin "%s"', plugin)
         path_name = None
 
         if PY2:
@@ -46,7 +46,9 @@ class PluginsManager(object):
         else:
             from importlib.util import find_spec as importlib_find
 
+            # 2019/05/16 パスを強制的に指定（指定しないとsite-packageを読みに行くため）
             path_name = importlib_find(plugin)
+            g.log.info(path_name)
             try:
                 path_name = path_name.submodule_search_locations[0]
             except TypeError:
@@ -61,8 +63,7 @@ class PluginsManager(object):
             try:
                 import_module(module)
             except:
-                # TODO Better exception handling
-                logger.exception('Failed to import %s', module)
+                g.log.error('Failed to import {}'.format(module))
 
     def get_plugins(self, category, text):
         has_matching_plugin = False

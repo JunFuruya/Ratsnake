@@ -6,6 +6,8 @@ from app.entity.link_entity import LinkEntity
 from app.entity.link_category_entity import LinkCategoryEntity
 from app.entity.link_list_entity import LinkListEntity
 
+import g
+
 '''
 Links Repository Module
 '''
@@ -26,9 +28,10 @@ class LinkRepository():
         if record is not None:
             entity.set_link_id(record[0])
             entity.set_link_category_id(record[1])
-            entity.set_link_site_name(record[2])
-            entity.set_link_url(record[3])
-            entity.set_link_display_order(record[4])
+            entity.set_link_category_name(record[2])
+            entity.set_link_site_name(record[3])
+            entity.set_link_url(record[4])
+            entity.set_link_display_order(record[5])
         return entity
 
     def findList(self, user_id, limit, offset):
@@ -49,11 +52,23 @@ class LinkRepository():
             entity = LinkEntity()
             entity.set_link_id(link_record[0])
             entity.set_link_category_id(link_record[1])
-            entity.set_link_site_name(link_record[2])
-            entity.set_link_url(link_record[3])
+            entity.set_link_category_name(link_record[2])
+            entity.set_link_site_name(link_record[3])
+            entity.set_link_url(link_record[4])
             entities.append(entity)
 
         list_entity.set_link_entity_list(entities)
+        
+        record_num = self.__link_db.count(user_id)
+
+        max_page = 1
+        record_num = int(record_num)
+        limit = int(limit)
+        if(record_num > 0):
+            max_page = int((record_num - 0.1) / limit) + 1
+        list_entity.set_max_page(max_page)
+
+        self.__link_db.close_connetion()
 
         return list_entity
 

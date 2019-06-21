@@ -14,20 +14,27 @@
         {% endfor %}
       {% endif %}
       <section class="button_area">
-        <form action="/admin/languages/words/csv" method="POST" class="inline-block">
-          <input type="file" name="csv_file" />
-          <input type="submit" value="CSVインポート" class="w150" />
-        </form>
+        <section class="spHide">
+          <form action="/admin/languages/words/csv" method="POST" class="inline-block">
+            <input type="file" name="csv_file" class="spButton" />
+            <input type="submit" value="CSVインポート" class="w150 spButton" />
+          </form>
+        </section>
         <form method="GET" id="languages" name="languages" class="inline-block" />
-          <select id="language_id" name="language_id">
-            <option value="">選択してください</option>
-            
-            {% for language_entity in entity.get_language_entity_list() %}
-            <option value="{{ language_entity.get_language_id() }}"{% if entity.get_language_id() == language_entity.get_language_id()|string %} selected{% endif %} >{{ language_entity.get_language_name() }}</option>
-            {% endfor %}{{ entity.get_language_id() }}
-            <input type="button" value="検索" onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/words');"/>
-          </select>
-          <a onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/'+$('#language_id option:selected').val()+'/words/create');"><input type="button" value="新規登録" class="w150" /></a>
+          <section class="spButtonArea">
+            <select id="language_id" name="language_id" class="spSelect">
+              <option value="">選択してください</option>
+              {% for language_entity in entity.get_language_entity_list() %}
+              <option value="{{ language_entity.get_language_id() }}"{% if entity.get_language_id() == language_entity.get_language_id()|string %} selected{% endif %} >{{ language_entity.get_language_name() }}</option>
+              {% endfor %}{{ entity.get_language_id() }}
+            </select>
+          </section>
+          <section class="spButtonArea">
+            <input type="button" value="検索" onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/words');" class="spButton"/>
+          </section>
+          <section class="spButtonArea">
+            <a onclick="JavaScript:submitByGetMethod('languages', '/admin/languages/'+$('#language_id option:selected').val()+'/words/create');"><input type="button" value="新規登録" class="w150 spButton" /></a>
+          </section>
         </form>
       </section>
       <section class="table_area">
@@ -44,8 +51,8 @@
                   <input type="hidden" name="language_id" value="{{ entity.get_language_id() }}"/>
                   <input type="hidden" name="word_id" value="{{ word_entity.get_word_id() }}"/>
                   <input type="hidden" name="word_spell" value="{{ word_entity.get_word_spell() }}"/>
-                  <input type="submit" value="詳細へ" />
-                  <input type="button" value="削除" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('word{{ word_entity.get_word_id() }}', '/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}/delete')}" />
+                  <input type="submit" value="詳細へ" class="spButton" />
+                  <input type="button" value="削除" class="spButton" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('word{{ word_entity.get_word_id() }}', '/admin/languages/{{ entity.get_language_id() }}/words/{{ word_entity.get_word_id() }}/delete')}" />
                 </form>
               </td>
             </tr>

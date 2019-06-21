@@ -33,3 +33,6 @@ class LinkService(BaseService):
 
     def get_link_categories(self, user_id, limit, offset):
         return self.__link_category_repository.findList(user_id, limit, offset)
+    
+    def get_link_category(self, user_id, link_category_id):
+        return self.__link_category_repository.find(user_id, link_category_id)

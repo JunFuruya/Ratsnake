@@ -9,18 +9,18 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_RANDOM_ROOT_PASSWORD: no
-          MYSQL_DATABASE: circle_test
-        command: [
-          --character-set-server=utf8,
-          --collation-server=utf8_general_ci,
-          --default-storage-engine=innodb,
-          --explicit_defaults_for_timestamp,
-          --initialize-insecure,
-        ]
+      #- image: circleci/mysql:5.7.23
+        #environment:
+        #  MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        #  MYSQL_RANDOM_ROOT_PASSWORD: no
+        #  MYSQL_DATABASE: circle_test
+        #command: [
+        #  --character-set-server=utf8,
+        #  --collation-server=utf8_general_ci,
+        #  --default-storage-engine=innodb,
+        #  --explicit_defaults_for_timestamp,
+        #  --initialize-insecure,
+        #]
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -63,11 +63,11 @@ jobs:
             # 20180523 add
             export APP_ENV=TEST
             cp -pf /home/circleci/repo/config_environment/test/db_server.ini.template /home/circleci/repo/config_environment/test/db_server.ini
-            cp -pf /home/circleci/repo/config_environment/test/idcf_cloud_config.yaml.template /home/circleci/repo/config_environment/test/idcf_cloud_config.yaml
             cp -pf /home/circleci/repo/config_environment/test/slack_config.yaml.template /home/circleci/repo/config_environment/test/slack_config.yaml
             cp -pf /home/circleci/repo/config_environment/test/web_server.yaml.template /home/circleci/repo/config_environment/test/web_server.yaml
             . venv/bin/activate
             python -m unittest tests.main
+            #python -m unittest tests.service.dbdump_service
 
       - store_artifacts:
           path: test-reports

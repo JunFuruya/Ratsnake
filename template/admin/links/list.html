@@ -8,6 +8,12 @@
       <h2>{{ entity.get_title() }}</h2>
       <h3>{{ entity.get_description() }}</h3>
       
+      <section class="error_message">
+      {% for error_message in entity.get_error_messages() %}
+        {{ error_message }}
+      {% endfor %}
+      </section>
+
       <section class="button_area">
         <a href="/admin/links/create"><input type="button" value="新規登録" class="w150" /></a>
       </section>
@@ -21,9 +27,8 @@
             <th class="w150">操作</th>
             {% for entity in entity.get_link_entity_list() %}
             <tr>
-              {# TODO カテゴリ名を取得する #}
-              <td>カテゴリ名</td>
-              <td><a href="{{ entity.get_link_url() }}">{{ entity.get_link_site_name() }}</a></td>
+              <td>{{ entity.get_link_category_name() }}</td>
+              <td><a href="{{ entity.get_link_url() }}" target="_blank">{{ entity.get_link_site_name() }}</a></td>
               <td>{{ entity.get_link_url() }}</td>
               <td>
                 <form id="link{{ entity.get_link_id() }}" action="/admin/links/{{ entity.get_link_id() }}" method="GET">
@@ -37,5 +42,22 @@
           </tbody>
         </table>
       </section>
+      {% if entity.get_max_page() > 1 %}
+      <section>
+        {% if entity.get_current_page() > 1 %}
+        <a href="/admin/links?p=1">&lt;prev</a>
+        {% endif %}
+        {% for num in range(entity.get_max_page()) %}
+          {% if entity.get_current_page() == num + 1 %}
+          <span>{{ num + 1 }}</span>
+          {% else %}
+          <span><a href="/admin/links?p={{ num + 1 }}">{{ num + 1 }}</a></span>
+          {% endif %}
+        {% endfor %}
+        {% if entity.get_current_page() < entity.get_max_page() %}
+        <a href="/admin/links?p={{ entity.get_current_page() + 1 }}">next&gt;</a>
+        {% endif %}
+      </section>
+      {% endif %}
     </article>
 {% endblock %}

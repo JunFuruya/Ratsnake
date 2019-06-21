@@ -1,11 +1,20 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 class BaseWebEntity():
     __title = ''
     __description = ''
     __notification = ''
     __error_messages = []
     __records = []
+    __login_status = False
+    __current_page = 1
+    __max_page = 1
+    __js_files = []
+
+    def __init__(self):
+        self.__js_files = []
 
     def set_title(self, title):
         self.__title = title
@@ -50,3 +59,30 @@ class BaseWebEntity():
             self.get_records(),
             self.get_error_messages()
         ]
+
+    def set_login_status(self, user_id):
+        self.__login_status = True if len(str(user_id)) > 0 else False
+        pass
+
+    def get_login_status(self):
+        return self.__login_status
+    
+    def set_current_page(self, page):
+        self.__current_page = page
+        pass
+    
+    def get_current_page(self):
+        return self.__current_page
+    
+    def set_max_page(self, max_page):
+        self.__max_page = max_page
+        pass
+    
+    def get_max_page(self):
+        return self.__max_page
+    
+    def set_js_files(self, js_files):
+        self.__js_files.append(js_files)
+    
+    def get_js_files(self):
+        return self.__js_files

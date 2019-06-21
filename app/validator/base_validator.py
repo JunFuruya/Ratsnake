@@ -1,16 +1,20 @@
 # -*- coding: UTF-8 -*-
 
-import os.path
-import re
+import os.path, re
+
+import g
 
 class BaseValidator():
-    error_messages = []
+    __error_messages = []
     def __init__(self):
-        self.error_messages = []
+        self.__error_messages = []
         pass
-
+    
+    def set_error_messages(self, error_messages):
+        self.__error_messages = error_messages
+    
     def get_error_messages(self):
-        return self.error_messages
+        return self.__error_messages
 
     # 必須入力チェック
     def has_empty_error(self, string):
@@ -54,7 +58,7 @@ class BaseValidator():
 
     # 半角数字
     def has_half_width_number_characters_error(self, string):
-        return True if (re.search(r'(\d)+', string)) else False 
+        return True if (re.match(r'\D+', str(string))) else False 
 
     # 全角記号
     def has_full_width_special_characters_error(self, string):
