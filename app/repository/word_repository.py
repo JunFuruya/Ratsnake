@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+from app.infrastructure.google_dictionary_api import GoogleDictionaryApi
 from app.infrastructure.language_db import DbLanguages
 from app.infrastructure.word_db import DbWords
 from app.entity.language_entity import LanguageEntity
@@ -10,12 +11,11 @@ from app.entity.word_list_entity import WordListEntity
 Word Repository Module
 '''
 class WordRepository():
-    __word_db = None
-    __language_db = None
     
     def __init__(self):
         self.__word_db = DbWords()
         self.__language_db = DbLanguages()
+        self.__google_dictionary_api = GoogleDictionaryApi()
         pass
 
     def find(self, user_id, language_id, word_id):
@@ -74,3 +74,11 @@ class WordRepository():
             return word_id
         else:
             return ''
+        
+    def consult_google_dictionary(self, foreign_word):
+        meaning_list = self.__google_dictionary_api.get(foreign_word)
+        for key in meaning_list.keys():
+            print(meaning_list[key])
+            # TODO entityにつめる
+        
+        return []

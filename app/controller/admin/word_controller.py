@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 
+import g
+
 from app.controller.base_controller import BaseController
 from app.validator.word_validator import WordValidator
 from app.service.word_service import WordService
@@ -52,6 +54,7 @@ class WordController(BaseController):
 
         entity = WordEntity()
         entity.set_language_id(language_id)
+        entity.set_js_files('words.js')
         return self.view('./template/admin/words/create.html', entity=entity)
 
     def detail(self, language_id, word_id):
@@ -64,7 +67,9 @@ class WordController(BaseController):
         return self.view('./template/admin/words/detail.html', entity=self.__service.get(self.__user_id, language_id, word_id))
 
     def edit(self, language_id, word_id):
-        return self.view('./template/admin/words/edit.html', entity=self.__service.get(self.__user_id, language_id, word_id))
+        entity = self.__service.get(self.__user_id, language_id, word_id)
+        entity.set_js_files('words.js')
+        return self.view('./template/admin/words/edit.html', entity=entity)
     
     def confirm(self, language_id):
         language_id = self.get_session('language_id')
@@ -173,3 +178,10 @@ class WordController(BaseController):
                 self.__service.create(self.__user_id, language_id, word_spell, word_explanation, word_pronunciation, word_is_learned, word_note)
             csv_lines.close()
         return self.view('./template/admin/words/detail.html', entity=entity.set_error_messages(error_messages))
+    
+    def ajax_google_dictionary_api(self, foreign_word):
+        g.log.info(foreign_word)
+        entity = self.__service.consult_dictionary(foreign_word)
+        
+        # TODO entity を json に変換して return する
+        return ['a', 'b', 'c']

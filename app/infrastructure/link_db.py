@@ -15,7 +15,7 @@ class DbLinks(DbBase):
               'FROM m_links ' \
               'INNER JOIN m_link_categories USING(m_link_category_id) ' \
               'WHERE m_links.m_user_id = %s ' \
-              'ORDER BY m_link_display_order, m_link_id ' \
+              'ORDER BY m_link_category_display_order, m_link_display_order, m_link_id ' \
               'LIMIT %s OFFSET %s'
         bindings = (user_id, limit, offset)
         return super().select(sql, bindings)

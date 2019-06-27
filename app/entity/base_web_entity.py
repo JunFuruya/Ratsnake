@@ -11,6 +11,10 @@ class BaseWebEntity():
     __login_status = False
     __current_page = 1
     __max_page = 1
+    __js_files = []
+
+    def __init__(self):
+        self.__js_files = []
 
     def set_title(self, title):
         self.__title = title
@@ -76,3 +80,9 @@ class BaseWebEntity():
     
     def get_max_page(self):
         return self.__max_page
+    
+    def set_js_files(self, js_files):
+        self.__js_files.append(js_files)
+    
+    def get_js_files(self):
+        return self.__js_files

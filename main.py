@@ -136,7 +136,7 @@ def language_create():
 def language_detail(language_id):
     return LanguageController(request).detail(language_id)
 
-@post('/admin/languages/<language_id>')
+@post('/admin/languages/<language_id>/edit')
 def language_edit(language_id):
     return LanguageController(request).edit(language_id)
 
@@ -202,6 +202,10 @@ def word_delete(language_id, word_id):
 @post('/admin/languages/words/csv')
 def word_import_csv():
     return WordController(request).import_csv()
+
+@get('/admin/languages/words/ajax/dictionary/<foreign_word>')
+def word_import_csv(foreign_word):
+    return WordController(request).ajax_google_dictionary_api(foreign_word)
 
 ###############################################################################
 # ユーザマスタ
@@ -397,8 +401,15 @@ def mail_list():
 def get_static_file(path):
     return static_file(path, root='./public/')
 
-# TIP 上の get_static_file メソッド名を「get_static_file」にすると、bottle のメソッドを override するため
-#     無限ループが発生する
+# TIP 上の get_static_file メソッド名を「static_file」にすると、
+#     bottle のメソッドを override するため無限ループが発生する
+
+###############################################################################
+# favicon
+###############################################################################
+@get('/favicon.ico')
+def get_favicon():
+    return static_file('favicon.ico', root='./')
 
 ###############################################################################
 # エラー画面
