@@ -1,20 +1,20 @@
 # -*- coding: UTF-8 -*-
 
 import logging
+from app.infrastructure.log_file import LogFile
 
-import g
 
-class LogHelper():
+class LogHelper:
     __logger = logging.getLogger(__name__)
-    __file_handler = None
     __unique_instance = None
-    
+
     def __init__(self):
-        if self.__file_handler is None:
-            # TODO ログファイルの位置を config で変更できるようにする
-            self.__file_handler = logging.FileHandler('./logs/hideout.log')
-            self.__file_handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)8s %(message)s"))
-            self.__logger.addHandler(self.__file_handler)
+        # TODO ログファイルの位置を config で変更できるようにする
+        log_folder = './logs'
+        log_file_path = log_folder + '/hideout.log'
+        log_file = LogFile(log_folder, log_file_path)
+
+        self.__logger.addHandler(log_file.get_file_handler())
         pass
 
     @classmethod
@@ -27,7 +27,7 @@ class LogHelper():
         self.__logger.setLevel(logging.DEBUG)
         self.__logger.debug(message)
         pass
-    
+
     def info(self, message):
         self.__logger.setLevel(logging.INFO)
         self.__logger.info(message)
@@ -47,4 +47,3 @@ class LogHelper():
         self.__logger.setLevel(logging.CRITICAL)
         self.__logger.critical(message)
         pass
- 
