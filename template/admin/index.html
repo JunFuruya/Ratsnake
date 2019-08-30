@@ -43,119 +43,252 @@ ABCDEFGHIJ</textarea>
         </div>
       </section>
       <h2>チートシート</h2>
-      <section>
-        <h3>git</h3>
-        <ul class="console">
-          <li>$ git config --global user.name "John Doe"</li>
-          <li>$ git config --global user.email johndoe@example.com</li>
-          <li>$ git config --global core.autocrlf input</li>
-          <li>$ git config core.filemode false ←permission を無視する</li>
-          <li>$ git config credential.helper store ←認証情報の保存</li>
-          <li>$ git clone git@github.com::nttresonant/gooblog.git</li>
-          <li>$ git status</li>
-          <li>$ git add</li>
-          <li>$ git commit</li>
-          <li>$ git commit --amend</li>
-          <li>$ git reset HEAD</li>
-          <li>$ git cherry-pick 546de2cc727fcae02646c6af637f401e4238feef</li>
-          <li>$ git clean -n 削除されるであろうファイルを一覧表示する</li>
-          <li>$ git clean -f configに削除できない設定があっても、強制的に未追跡ファイルを削除する</li>
-          <li>$ git branch --set-upstream-to=origin/develop develop</li>
-          <li>$ git tag タグの一覧</li>
-          <li>$ git tag -a v1.0 -m 'message' タグの生成</li>
-          <li>$ git tag -a v1.0 -m 'message' (check sum) タグの後付</li>
-          <li>$ git tag -d v1.0 タグの削除</li>
-          <li>$ git log --abbrev-commit --pretty=oneline 省略形でログの一覧を表示する</li>
-        </ul>
+      <section class="console">
+        <pre>
+■ドキュメントフロー
+      要求定義（RFP）
+      要件定義
+        運用フロー
+        画面デザイン
+        機能一覧
+          見積金額
+          WBS
+        基本設計書
+          機能要件
+            詳細設計（インフラ、ミドルウェア、アプリ）
+            テーブル定義書
+
+          非機能要件（インフラ、ミドルウェア、アプリ）
+            性能要件
+            セキュリティ要件
+            運用要件
+        テスト仕様書兼作業報告書
+          単体テスト
+          セキュリティテスト
+          性能試験
+        </pre>
       </section>
       <section>
-        <h3>mysql</h3>
-        <ul class="console">
-          <li>$ mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev</li>
-          <li># mysqldump -uroot -B test > dump_20170510.dmp</li>
-          <li># mysql -uroot -D test < ./tests/sql/dump/20171024_campaign.dmp</li>
-          <li># source （sqlファイルフルパス）</li>
-          <li># LOAD DATA LOCAL INFILE 'csvファイルフルパス' INTO TABLE （スキーマ）.（テーブル） FIELDS TERMINATED BY '（区切り文字）' ENCLOSED BY '（囲み文字）' IGNORE 1 LINES;</li>
-        </ul>
+        <h2>Red Hat Enterprise Linux/Centos</h2>
+        <section>
+          <h3>ユーザ管理</h3>
+          <section class="console">
+            <pre>
+id ユーザー名
+useradd 新規ユーザ名
+usermod 修正対象のユーザ名
+userdel 削除対象のユーザ名
+groupadd 新規グループ名
+groupmod 修正対象のグループ名
+groupdel 削除対象のグループ名
+chownコマンド
+chgrpコマンド
+chmodコマンド
+passwd
+            </pre>
+          </section>
+          <h3>SSH key 生成</h3>
+          <section class="console">
+            <pre>
+ssh-keygen -yf /Users/hoge/private_key > public_key
+ssh-keygen -yf C:\Users\junfuruya\.vagrant.d\boxes\base\0\virtualbox\private_key > public_key
+            </pre>
+          </section>
+          <h3>ネットワーク</h3>
+          <section class="console">
+            <pre>
+nmtui CentOS7 ネットワーク設定
+ip addr show CentOS7 ipアドレス表示
+firewall-cmd --zone=public --add-service=http --permanent
+firewall-cmd --zone=public --add-port=81/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-all
+
+yum -y install bind-utils
+            </pre>
+          </section>
+          <h3>プロセス</h3>
+          <section class="console">
+            <pre>
+lsof -n -P -p [PID] | grep TCP
+            </pre>
+          </section>
+        <h3>時刻設定</h3>
+        <section class="console">
+          <pre>
+timedatectl
+          </pre>
+        </section>
       </section>
       <section>
         <h3>Vagrant</h3>
-        <ul class="console">
-          <li>$ vagrant box add base C:\Users\junfuruya\boxes\base.box ← プロジェクト開始時に作業した</li>
-          <li>$ vagrant up</li>
-          <li>$ vagrant halt</li>
-          <li>$ vagrant ssh</li>
-        </ul>
+        <section class="console">
+          <pre>
+vagrant box add base C:\Users\junfuruya\boxes\base.box ← プロジェクト開始時に作業した
+vagrant up
+vagrant halt
+vagrant ssh
+          </pre>
+        </section>
       </section>
       <section>
         <h3>Docker</h3>
-        <ul class="console">
-          <li>$ docker run --privileged -p 18080:80 -d --name gooblog3 -v /home/vagrant/repository/gooblog3:/var/www/html/gooblog3 gooblog3:v1 /sbin/init 新規コンテナを作成し、コマンドを実行する</li>
-          <li>$ docker exec コンテナ内でコマンドを実行する（当然、コンテナが起動していることが前提）</li>
-          <li>$ docker pull allinone DockerイメージかRepositoryをResistoryからPullする</li>
-          <li>$ docker ps</li>
-          <li>$ docker start gooblog3</li>
-          <li>$ docker start -a 0a21d7d1da2b</li>
-          <li>$ docker stop angry_stonebraker</li>
-          <li>$ docker build -t gooblog3:v1 ./</li>
-          <li>$ docker commit コンテナをDockerイメージを作成</li>
-          <li>$ sudo docker-compose down</li>
-          <li>$ sudo docker login -u admin -p Harbor12345 dev.harbor.mama000.goo.ne.jp</li>
-          <li>$ sudo docker pull dev.harbor.mama000.goo.ne.jp/dmama/allinone:latest</li>
-          <li>$ sudo docker pull dev.harbor.mama000.goo.ne.jp/dmama/elasticsearch:latest</li>
-          <li>$ sudo docker-compose up -d</li>
-        </ul>
+        <section class="console">
+          <pre>
+docker run --privileged -p 18080:80 -d --name gooblog3 -v /home/vagrant/repository/gooblog3:/var/www/html/gooblog3 gooblog3:v1 /sbin/init 新規コンテナを作成し、コマンドを実行する
+docker exec コンテナ内でコマンドを実行する（当然、コンテナが起動していることが前提）
+docker pull allinone DockerイメージかRepositoryをResistoryからPullする
+docker ps
+docker start gooblog3
+docker start -a 0a21d7d1da2b
+docker stop angry_stonebraker
+docker build -t gooblog3:v1 ./
+docker commit コンテナをDockerイメージを作成
+docker-compose up -d
+docker-compose logs -f
+docker-compose down
+docker login -u admin -p Harbor12345 dev.harbor.mama000.goo.ne.jp
+docker pull dev.harbor.mama000.goo.ne.jp/dmama/allinone:latest
+docker pull dev.harbor.mama000.goo.ne.jp/dmama/elasticsearch:latest
+
+docker search registory
+docker pull registry:2.0
+docker images registory
+Docker Compose: 複数のコンテナをまとめて管理
+docker-compose up/scale/ps/logs/run/start/kill/rm/
+Docker Machine: マスチホスト環境でのDocker 環境構築
+Docker Swarm: クラスタリングしたDockerを一元管理
+docker-machine create/ls/status/ssh/env/start/stop/restart/scp/rm/kill/ip/inspect
+
+Docker Kitematic, Docker Hub,
+docker pull
+docker images
+docker inspect, tag, search, rmi. login, push, logout, create, run, start stop, rm, ps, resatart, pause, unpause, attach, exec, top, port
+docker rename
+docker cp
+docker diff, version, info, commit, export, import, save, loal, build
+
+DOCKER_CONTENT_TRUST
+dockerfile: FROM centos:centos, MAINTAIN, RUN, CMD, LABEL, EXPOSE, ENV, ADD, COPY, VOLUME. ENTERPOINT, USER, WORKDIR, ONBUILD```
+ディザスタリカバリ、Recovery Time Objective(RTO)、Recovery Point Objective(RPO)```
+          </pre>
+        </section>
+      </section>
+      <section>
+        <h3>git</h3>
+        <section class="console">
+          <pre>
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
+git config --global core.autocrlf input
+git config core.filemode false ←permission を無視する
+git config credential.helper store ←認証情報の保存
+git clone git@github.com::nttresonant/gooblog.git
+git status
+git add
+git commit
+git commit --amend
+git reset HEAD
+git cherry-pick 546de2cc727fcae02646c6af637f401e4238feef
+git clean -n 削除されるであろうファイルを一覧表示する
+git clean -f configに削除できない設定があっても、強制的に未追跡ファイルを削除する
+git branch --set-upstream-to=origin/develop develop
+git tag タグの一覧
+git tag -a v1.0 -m 'message' タグの生成
+git tag -a v1.0 -m 'message' (check sum) タグの後付
+git tag -d v1.0 タグの削除
+git log --abbrev-commit --pretty=oneline 省略形でログの一覧を表示する
+          </pre>
+        </section>
+      </section>
+      <section>
+        <h2>Web Server</h2>
+        <h3>Apache</h3>
+        <section class="console">
+          <pre>
+htdigest -c /etc/httpd/.htdigest '領域名' USERNAME
+.htaccess
+
+AuthUserFile /etc/httpd/conf/.htpasswd
+AuthGroupFile /dev/null
+AuthName "Secret"
+AuthType Basic
+require user USERNAME
+          </pre>
+        </section>
+      </section>
+      <section>
+        <h3>DB</h3>
+        <h3>mysql</h3>
+        <section class="console">
+          <pre>
+vim /etc/yum.repos.d/mariadb.repo
+```# MariaDB 10.1 CentOS repository list - created 2016-01-06 10:34 UTC
+# http://mariadb.org/mariadb/repositories/
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+enabled=1```
+$ yum -y install mariadb-devel mariadb-client mariadb-server
+```[mysqld]
+character-set-server = utf8```
+
+mysql_secure_installation
+vim /etc/my.cnf.d/server.cnf
+systemctl start mariadb
+
+mysql -u dbmaster -p7mh72d2y -h master.dev-db.node.ms.consul dmama_dev
+mysqldump -uroot -B test > dump_20170510.dmp
+mysql -uroot -D test < ./tests/sql/dump/20171024_campaign.dmp
+source （sqlファイルフルパス）
+LOAD DATA LOCAL INFILE 'csvファイルフルパス' INTO TABLE （スキーマ）.（テーブル） FIELDS TERMINATED BY '（区切り文字）' ENCLOSED BY '（囲み文字）' IGNORE 1 LINES;
+          </pre>
+        </section>
       </section>
       <section>
         <h3>Redis</h3>
-        <p class="console">
-          <ul class="console">
-            <li># which redis-server</li>
-            <li>/usr/bin/redis-server</li>
-            <li># reids-server ← サーバ起動</li>
-            <li>$ for i in `seq 6374 6379`;do redis-cli -p $i keys *Ranking*;done</li>
-            <li>$ redis-cli -c</li>
-          </ul>
-        </p>
-        設定<br/>
-        <ul class="console">
-          <li># vi /repository/dmama/docker/allinone/conf/redis/redis.conf.org</li>
-        </ul>
+        <section class="console">
+          <pre>
+which redis-server
+/usr/bin/redis-server
+reids-server ← サーバ起動
+for i in `seq 6374 6379`;do redis-cli -p $i keys *Ranking*;done
+redis-cli -c
+
+設定
+vi /repository/dmama/docker/allinone/conf/redis/redis.conf.org
+          </pre>
+        </section>
       </section>
       <section>
+        <h2>php</h2>
         <h3>phpunit</h3>
-        <ul class="console">
-          <li>$ ./vendor/phpunit/phpunit/phpunit</li>
-          <li>$ ./vendor/phpunit/phpunit/phpunit -version</li>
-          <li>$ ./vendor/phpunit/phpunit/phpunit ./tests/app/Front/UserInterface/Http/Controller/Api/FrontApiMeControllerTest.php</li>
-          <li>$ ./vendor/phpunit/phpunit/phpunit （phpファイルのパス）--filter ◯◯できること</li>
-          <li>$ ./vendor/phpunit/phpunit/phpunit -c phpunit_monitor.xml</li>
-        </ul>
+        <section class="console">
+          <pre>
+phpunit
+phpunit -version
+phpunit ./tests/app/Front/UserInterface/Http/Controller/Api/FrontApiMeControllerTest.php
+phpunit （phpファイルのパス）--filter ◯◯できること
+phpunit -c phpunit_monitor.xml
+          </pre>
+        </section>
       </section>
       <section>
         <h3>composer</h3>
-        <ul class="console">
-          <li>$ composer dump-autoload</li>
-          <li>$ composer update</li>
-          <li>$ composer require kreait/firebase-php ^4.17.0</li>
-          <li>$ composer require predis/predis ^1.1.1</li>
-        </ul>
-      </section>
-      <section>
-        <h3>プロセス</h3>
-        <ul class="console">
-          <li>$ lsof -n -P -p [PID] | grep TCP</li>
-        </ul>
-      </section>
-      <section>
-        <h3>pip install</h3>
-        <ul class="console">
-          <li>$ pip install bottle</li>
-          <li>$ pip install -r requirements.txt</li>
-          <li>$ pip freeze > requirements.txt</li>
-          <li>$ python -m pip install --upgrade pip</li>
-          <li>$ python -m unittest tests.main</li>
-        </ul>
+        <section class="console">
+          <pre>
+php -r “copy(‘https://getcomposer.org/installer)’, ‘composer-setup.php’);”
+php composer-setup.php
+php -r “unlink(‘composer-setup.php’);”
+
+composer dump-autoload
+composer update
+composer require kreait/firebase-php ^4.17.0
+composer require predis/predis ^1.1.1
+          </pre>
+        </section>
       </section>
       <section>
         <h2>Laravel の機能</h2>
@@ -163,28 +296,79 @@ ABCDEFGHIJ</textarea>
           <h3>providor</h3>
           /Front/Application/Provider/AppServiceProvider.php
           <h3>Artisan</h3>
-          <ul class="console">
-            <li>$ cd /home/vagrant/repository/dmama-webapp/artisan</li>
-            <li>$ php artisan list</li>
-            <li>$ php artisan route:clear</li>
-            <li>$ php artisan config:cache</li>
-            <li>$ php artisan make:console HogeCommand</li>
-            <li>$ php artisan command:push_notification</li>
-            <li>$ php artisan queue:listen push_notification</li>
-          </ul>
+          <section class="console">
+            <pre>
+cd /home/vagrant/repository/dmama-webapp/artisan
+php artisan list
+php artisan route:clear
+php artisan config:cache
+php artisan make:console HogeCommand
+php artisan command:push_notification
+php artisan queue:listen push_notification
+php artisan command:point-revocation
+php artisan command:postal-code-import
+php artisan command:subscribe-check-order
+php artisan command:subscribe-create-order
+            </pre>
+          </section>
         </section>
       </section>
       <section>
-        <h2>SSH key 生成</h2>
-        <p class="console">
-          $ ssh-keygen -yf /Users/hoge/private_key > public_key<br/>
-          $ ssh-keygen -yf C:\Users\junfuruya\.vagrant.d\boxes\base\0\virtualbox\private_key > public_key
-        </p>
+        <h2>python</h2>
+        <h3>簡易サーバ</h3>
+        <section class="console">
+          <pre>
+python -m http.server 8000 ※3系
+python -m SimpleHTTPServer 8000 ※2系
+          </pre>
+        </section>
+
+        <h3>pip install</h3>
+        <section class="console">
+          <pre>
+pip install bottle
+pip install -r requirements.txt
+pip freeze > requirements.txt
+python -m pip install --upgrade pip
+python -m unittest tests.main
+          </pre>
+        </section>
+      </section>
+
+      <section>
+        <h2>Microsoft Office</h2>
+        <h3>Powerpoint</h3>
+        <ul>
+          <li>ショートカットキー</li>
+          <li>表示(W)→スライドマスター(M)</li>
+          <li>表示(W)→ルーラー(R)</li>
+          <li>スライドマスター(M)→スライドマスターを閉じる(C)</li>
+          <li>挿入(N)→新しいスライド(SI)</li>
+          <li>shift を押しながら、図形の書式(JD)→配置(AA)→左揃え(L)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Google Cloud Platform</h2>
+        <section class="console">
+          <pre>
+gcloud init
+gcloud config list
+gcloud config set compute/region asia-northeast1-a
+gcloud config set compute/zone asia-northeast1-a
+          </pre>
+        </section>
+      </section>
+
+
+      <section>
+        <h2>Android</h2>
+export PATH=$PATH:/Android SDKのパス/platform-tools
+
+インストール
+C:\Users\junfuruya\AppData\Local\Android\sdk\platform-tools\adb install C:\Users\junfuruya\AndroidStudioProjects\PushTest\app\build\outputs\apk\debug\app-debug.apk
+
+ナンバーを7回タップ
       </section>
     </article>
-    
-    
-    
-    
-    
 {% endblock %}
