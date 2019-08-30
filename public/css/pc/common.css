@@ -82,7 +82,7 @@ header section.description {
 }
 
 #main nav#menu ul li section.menu_label{
-  font-weight: bold;
+  font-weight: bold;console
   font-size: small;
 }
 
@@ -94,15 +94,13 @@ header section.description {
 #main article {
   padding-left: 15px;
 }
-#main article section.console {
-  background-color: #000000;
-  display: inline-block;
+
+section.console {
+  background-color: #333333;
 }
 
-#main article section ul.console li {
-  color: #FFFFFF;
-  background-color: #000000;
-  display: inline-block;
+pre {
+  color: white;
 }
 
 footer {
@@ -149,4 +147,3 @@ section.table_area table td { border: 1px solid #333333; }
 .mb5  { margin-bottom:  5px; }
 .ml5  { margin-left:    5px; }
 .mr5  { margin-right:   5px; }
-
