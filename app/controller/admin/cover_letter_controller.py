@@ -1,14 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 from app.controller.base_controller import BaseController
+from app.helper.pdf_helper import PdfHelper
 #from app.validator.language_validator import LanguageValidator
 #from app.service.language_service import LanguageService
 #from app.entity.language_entity import LanguageEntity
-# TODO インフラ層に移動
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.cidfonts import UnicodeCIDFont
-from reportlab.lib.units import cm
 
 '''
 Cover Letter Controller Module
@@ -22,33 +18,11 @@ class CoverLetterController(BaseController):
         #self.__validator = CoverLetterValidator()
         pass
 
+    # PDFファイル作成
     def get_pdf(self, cover_letter_id):
-        file_name = 'python.pdf'
-        file_path = './tmp/'
-
-        pdfFile = canvas.Canvas(file_path + file_name)
-        pdfFile.saveState()
-
-        pdfFile.setAuthor('Jun Furuya')
-        pdfFile.setTitle('PDF生成')
-        pdfFile.setSubject('サンプル')
- 
-        # A4
-        pdfFile.setPageSize((21.0*cm, 29.7*cm))
-        # B5
-        # pdfFile.setPageSize((18.2*cm, 25.7*cm))
-
-        pdfFile.setFillColorRGB(0, 0, 100)
-        pdfFile.rect(2*cm, 2*cm, 6*cm, 6*cm, stroke=1, fill=1)
-        pdfFile.setFillColorRGB(0, 0, 0)
-
-        pdfFile.setLineWidth(1)
-        pdfFile.line(10*cm, 20*cm, 10*cm, 10*cm)
-
-        pdfmetrics.registerFont(UnicodeCIDFont('HeiseiKakuGo-W5'))
-        pdfFile.setFont('HeiseiKakuGo-W5', 12)
-        pdfFile.drawString(5*cm, 25*cm, 'あいうえおー')
-
-        pdfFile.restoreState()
-        pdfFile.save()
+        items = {
+          #{"item": "●●機能追加", "num": 1, "amount": 100000}
+        }
+        notes = {}
+        PdfHelper.create_estimate_pdf('estimate', '/var/www/html/hideout/public/pdf/', items, notes)
         pass

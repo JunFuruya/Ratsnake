@@ -2,6 +2,7 @@
 *.yaml
 *.lnk
 *.pyc
+/public/pdf/*.pdf
 .idea/*
 logs/*
 data/*
