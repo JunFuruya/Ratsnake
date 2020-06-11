@@ -1,22 +1,20 @@
 # -*- coding: UTF-8 -*-
 
-import g
-
 from app.controller.base_controller import BaseController
-from app.validator.client_validator import ClientValidator
-from app.service.client_service import ClientService
-from app.entity.client_entity import ClientEntity
+from app.validator.client_personnel_validator import ClientPersonnelValidator
+from app.service.client_personnel_service import ClientPersonnelService
+from app.entity.client_personnel_entity import ClientPersonnelEntity
 
 '''
-Client Controller Module
+Client Personnel Controller Module
 '''
-class ClientController(BaseController):
+class ClientPersonnelController(BaseController):
     def __init__(self, request):
         super().__init__(request)
-        self.set_page_info('取引先マスタ', '取引先の情報を登録・編集・削除します。', '')
+        self.set_page_info('取引先マスタ', 'とりひきさきの情報を登録・編集・削除します。', '')
         self.__user_id = self.get_login_user()
-        self.__service = ClientService()
-        #self.__validator = ClientValidator()
+        self.__service = ClientPersonnelService()
+        self.__validator = ClientPersonnelValidator()
         pass
 
     def index(self):
@@ -27,13 +25,8 @@ class ClientController(BaseController):
         self.set_session('client_id', '')
         self.set_session('client_name', '')
         
-        try:
-            entity = self.__service.getList(self.__user_id, limit, offset)
-        except Exception as e:
-            g.log.error(e.message)
-            
-        return self.view('./template/admin/clients/list.html', entity=entity)
-    '''
+        return self.view('./template/admin/clients/list.html', self.__service.getList(self.__user_id, limit, offset))
+    
     def create(self):
         return self.view('./template/admin/clients/create.html', ClientEntity())
 
@@ -99,5 +92,4 @@ class ClientController(BaseController):
 
         entity = ClientEntity()
         entity.set__id(self.__service.delete(_id, self.__user_id))
-        return self.view('./template/admin/clients/complete.html', entity)
-        '''
+        return self.view('./template/admin/clients/complete.html', entity)    

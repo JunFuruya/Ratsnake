@@ -23,18 +23,27 @@ CREATE TABLE IF NOT EXISTS hideout.t_words (
   t_word_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
 ) engine=InnoDB COMMENT='単語';
 
-CREATE TABLE IF NOT EXISTS hideout.m_account_titles (
-  m_account_title_id INT(4) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '勘定科目ID',
+CREATE TABLE hideout.m_clients (
   m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
-  m_account_title_name VARCHAR(20) NOT NULL COMMENT '勘定科目',
-  m_account_title_classification_type TINYINT(1) NOT NULL COMMENT '勘定科目分類区分 1: 資産, 2: 負債, 3: 資本, 4:費用, 5:収益'
-) engine=InnoDB COMMENT='勘定科目';
+  m_client_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '取引先ID',
+  m_client_name VARCHAR(100) NOT NULL COMMENT '取引先名称',
+  m_client_document_prefix VARCHAR(4) NOT NULL COMMENT '帳票用接頭辞'
+) engine=InnoDB COMMENT='取引先マスタ';
 
-CREATE TABLE IF NOT EXISTS hideout.t_journal_entries (
-  t_journal_entry_id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '仕訳ID',
+CREATE TABLE hideout.m_client_addresses (
   m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
-  m_account_title_id INT(4) NOT NULL DEFAULT 0 COMMENT '勘定科目ID 0:未確定',
-  t_journal_entry_transaction_date DATETIME NOT NULL COMMENT '取引日付',
-  t_journal_entry_note VARCHAR(1000) NOT NULL DEFAULT '' COMMENT '備考',
-  t_journal_entry_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登録日'
-) engine=InnoDB COMMENT='仕訳';
+  m_client_address_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '取引先住所ID',
+  m_client_id INT(3) NOT NULL COMMENT '取引先ID',
+  m_client_postal_code INT(7) NOT NULL COMMENT '郵便番号',
+  m_client_prefecture INT(2) NOT NULL COMMENT '都道府県コード',
+  m_client_city VARCHAR(200) NOT NULL COMMENT '市区町村',
+  m_client_address VARCHAR(200) NOT NULL COMMENT '番地',
+  m_client_building VARCHAR(200) NOT NULL COMMENT '建物名等'
+) engine=InnoDB COMMENT='取引先住所マスタ';
+
+CREATE TABLE hideout.m_client_personnels (
+  m_user_id INT(3) NOT NULL COMMENT 'ユーザID',
+  m_client_id INT(3) NOT NULL COMMENT '取引先ID',
+  m_client_personnel_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '取引先ID',
+  m_client_personnel_name VARCHAR(100) NOT NULL COMMENT '取引先名称'
+) engine=InnoDB COMMENT='取引先担当者マスタ';

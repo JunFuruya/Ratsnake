@@ -8,6 +8,8 @@ from app.controller.admin.account_title_controller import AccountTitleController
 from app.controller.admin.index_controller import IndexController as AdminIndexController
 from app.controller.admin.login_controller import LoginController
 from app.controller.admin.client_controller import ClientController
+from app.controller.admin.client_address_controller import ClientAddressController
+from app.controller.admin.client_personnel_controller import ClientPersonnelController
 from app.controller.admin.cover_letter_controller import CoverLetterController
 from app.controller.admin.error_controller import ErrorController
 from app.controller.admin.language_controller import LanguageController
@@ -243,41 +245,6 @@ def user_delete(user_id):
     return UserController(request).delete(user_id)
 
 ###############################################################################
-# 勘定科目マスタ
-###############################################################################
-@get('/admin/account-titles')
-def account_title_list():
-    return AccountTitleController(request).index()
-
-@get('/admin/account-titles/create')
-def account_title_create():
-    return AccountTitleController(request).create()
-
-@get('/admin/account-titles/<account_title_id>')
-def account_title_detail(account_title_id):
-    return AccountTitleController(request).detail(account_title_id)
-
-@post('/admin/account-titles/<account_title_id>')
-def account_title_edit(account_title_id):
-    return AccountTitleController(request).edit(account_title_id)
-
-@post('/admin/account-titles/confirm')
-def account_title_confirm():
-    return AccountTitleController(request).confirm()
-
-@post('/admin/account-titles/insert')
-def account_title_insert():
-    return AccountTitleController(request).insert()
-
-@post('/admin/account-titles/<account_title_id>/update')
-def account_title_update(account_title_id):
-    return AccountTitleController(request).update(account_title_id)
-
-@post('/admin/account-titles/<account_title_id>/delete')
-def account_title_delete(account_title_id):
-    return AccountTitleController(request).delete(account_title_id)
-
-###############################################################################
 # 取引先マスタ
 ###############################################################################
 @get('/admin/clients')
@@ -311,6 +278,111 @@ def client_update(client_id):
 @post('/admin/clients/<client_id>/delete')
 def client_delete(client_id):
     return ClientController(request).delete(client_id)
+
+###############################################################################
+# 取引先住所マスタ
+###############################################################################
+@get('/admin/clients/<short_name>/adresses')
+def client_address_list():
+    return ClientAddressController(request).index()
+
+@get('/admin/clients/<short_name>/adresses/create')
+def client_address_create():
+    return ClientAddressController(request).create()
+
+@get('/admin/clients/<short_name>/adresses/<client_address_id>')
+def client_address_detail(client_address_id):
+    return ClientAddressController(request).detail(client_address_id)
+
+@post('/admin/clients/<short_name>/adresses/<client_address_id>/edit')
+def client_address_edit(client_address_id):
+    return ClientAddressController(request).edit(client_address_id)
+
+@post('/admin/clients/<short_name>/adresses/confirm')
+def client_address_confirm():
+    return ClientAddressController(request).confirm()
+
+@post('/admin/clients/<short_name>/adresses/insert')
+def client_address_insert():
+    return ClientAddressController(request).insert()
+
+@post('/admin/clients/<short_name>/adresses/<client_address_id>/update')
+def client_address_update(client_address_id):
+    return ClientAddressController(request).update(client_address_id)
+
+@post('/admin/clients/<short_name>/adresses/<client_address_id>/delete')
+def client_address_delete(client_address_id):
+    return ClientAddressController(request).delete(client_address_id)
+
+###############################################################################
+# 取引先担当者マスタ
+###############################################################################
+@get('/admin/clients/<short_name>/pic')
+def client_personnel_list():
+    return ClientPersonnelController(request).index()
+
+@get('/admin/clients/<short_name>/pic/create')
+def client_personnel_create():
+    return ClientPersonnelController(request).create()
+
+@get('/admin/clients/<short_name>/pic/<pic_id>')
+def client_personnel_detail(pic_id):
+    return ClientPersonnelController(request).detail(pic_id)
+
+@post('/admin/clients/<short_name>/pic/<pic_id>')
+def client_personnel_edit(pic_id):
+    return ClientPersonnelController(request).edit(pic_id)
+
+@post('/admin/clients/<short_name>/pic/confirm')
+def client_personnel_confirm():
+    return ClientPersonnelController(request).confirm()
+
+@post('/admin/clients/<short_name>/pic/insert')
+def client_personnel_insert():
+    return ClientPersonnelController(request).insert()
+
+@post('/admin/clients/<short_name>/pic/<pic_id>/update')
+def client_personnel_update(pic_id):
+    return ClientPersonnelController(request).update(pic_id)
+
+@post('/admin/clients/<short_name>/pic/<pic_id>/delete')
+def client_personnel_delete(pic_id):
+    return ClientPersonnelController(request).delete(pic_id)
+
+###############################################################################
+# 勘定科目マスタ
+###############################################################################
+@get('/admin/account-titles')
+def account_title_list():
+    return AccountTitleController(request).index()
+
+@get('/admin/account-titles/create')
+def account_title_create():
+    return AccountTitleController(request).create()
+
+@get('/admin/account-titles/<account_title_id>')
+def account_title_detail(account_title_id):
+    return AccountTitleController(request).detail(account_title_id)
+
+@post('/admin/account-titles/<account_title_id>')
+def account_title_edit(account_title_id):
+    return AccountTitleController(request).edit(account_title_id)
+
+@post('/admin/account-titles/confirm')
+def account_title_confirm():
+    return AccountTitleController(request).confirm()
+
+@post('/admin/account-titles/insert')
+def account_title_insert():
+    return AccountTitleController(request).insert()
+
+@post('/admin/account-titles/<account_title_id>/update')
+def account_title_update(account_title_id):
+    return AccountTitleController(request).update(account_title_id)
+
+@post('/admin/account-titles/<account_title_id>/delete')
+def account_title_delete(account_title_id):
+    return AccountTitleController(request).delete(account_title_id)
 
 ###############################################################################
 # 仕分元帳画面
