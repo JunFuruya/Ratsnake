@@ -401,6 +401,10 @@ def mail_list():
 def get_static_file(path):
     return static_file(path, root='./public/')
 
+@get('/download/pdf/<path:path>')
+def get_download_pdf_file(path):
+    return static_file(path, root='./public/pdf/')
+
 # TIP 上の get_static_file メソッド名を「static_file」にすると、
 #     bottle のメソッドを override するため無限ループが発生する
 
