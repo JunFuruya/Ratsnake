@@ -126,7 +126,7 @@ class PdfHelper:
         # TODO 位置の修正
         pdf.drawString(13*cm, 26*cm, '前提条件')
         for note in notes:
-            pdf.drawString(13*cm, 26*cm, '・' + )
+            pdf.drawString(13*cm, 26*cm, '・')
         pdf.drawString(13*cm, 26*cm, '以上')
 
         return pdf
