@@ -2,6 +2,7 @@
 *.yaml
 *.lnk
 *.pyc
+*.log
 .idea/*
 logs/*
 data/*

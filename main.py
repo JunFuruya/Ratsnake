@@ -15,6 +15,7 @@ from app.controller.admin.link_category_controller import LinkCategoryController
 from app.controller.admin.link_controller import LinkController
 from app.controller.admin.mail_controller import MailController
 from app.controller.admin.journal_entry_controller import JournalEntryController
+from app.controller.admin.project_controller import ProjectController
 from app.controller.admin.user_controller import UserController
 from app.controller.admin.word_controller import WordController
 from app.controller.client.index_controller import IndexController
@@ -348,8 +349,25 @@ def journal_entry_delete(journal_entry_id):
     return JournalEntryController(request).delete(journal_entry_id)
 
 ###############################################################################
+# プロジェクト管理表画面
+###############################################################################
+@get('/admin/projects')
+def project_list():
+    return ProjectController(request).index()
+
+@get('/admin/projects/create')
+def project_insert():
+    return ProjectController(request).insert()
+
+###############################################################################
 # 受注管理表画面
 ###############################################################################
+
+# 見積管理画面
+@get('/admin/estimates')
+def estimate_list():
+    return EstimateController(request).index()
+
 # TODO 受注一覧画面
 # TODO 送り状PDF出力
 # @post('/admin/cover-letter/<cover_letter_id>/pdf')
@@ -418,18 +436,18 @@ def get_favicon():
 def error404(error):
     return ErrorController(request).error(404)
 
-@error(500)
+error(500)
 def error500(error):
     return ErrorController(request).error(500)
 
-if __name__ == "__main__":
-    from beaker.middleware import SessionMiddleware
-    session_opts = {
-        'session.type': 'file',
-        'session.cookie_expires': 300,
-        'session.data_dir': './data',
-        'session.auto': True
-    }
-
-    run(app=SessionMiddleware(app(), session_opts), host=g.config.get_web_host(), port=g.config.get_web_port(),
-        debug=g.config.get_debug(), reloader=g.config.get_reloader())
+#if __name__ == "__main__":
+#    from beaker.middleware import SessionMiddleware
+#    session_opts = {
+#        'session.type': 'file',
+#        'session.cookie_expires': 300,
+#        'session.data_dir': './data',
+#        'session.auto': True
+#    }
+#
+#    run(app=SessionMiddleware(app(), session_opts), host=g.config.get_web_host(), port=g.config.get_web_port(),
+#        debug=g.config.get_debug(), reloader=g.config.get_reloader())

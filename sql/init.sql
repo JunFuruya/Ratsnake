@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS hideout;
-
+m_users
 CREATE TABLE IF NOT EXISTS hideout.m_users (
   m_user_id INT(3) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'ユーザID',
   m_user_username VARCHAR(100) NOT NULL COMMENT 'ユーザ名称',

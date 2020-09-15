@@ -1,0 +1,72 @@
+{% extends "template/layout/base.html" %}
+{% block navi %}
+  {% include 'template/layout/navi.html' %}
+{% endblock %}
+
+{% block content %}
+  <article>
+    <h2>{{ entity.get_title() }}</h2>
+    <h3>{{ entity.get_description() }}</h3>
+    <section class="button_area">
+      <a href="/admin/projects/create"><input type="button" value="新規登録" class="w150" /></a>
+    </section>
+
+    <section class="table_area">
+      <table>
+        <thead></thead>
+        <tbody>
+          <tr>
+            <th class="">案件名</th>
+            <th class="">取引先名称</th>
+            <th class="">SES/受託</th>
+            <th class="">見積書No</th>
+            <th class="">見積書発行日付</th>
+            <th class="">見積金額</th>
+            <th class="">発注書No</th>
+            <th class="">発注書発行日付</th>
+            <th class="">発注金額</th>
+            <th class="">発注請書No</th>
+            <th class="">発注請発行日付</th>
+            <th class="">検収書No</th>
+            <th class="">検収書発行日付</th>
+            <th class="">請求書No</th>
+            <th class="">請求書発行日付</th>
+            <th class="">請求金額</th>
+            <th class="">操作</th>
+          </tr>
+          <tr>
+            <td>ロイヤルカナン様GMO決済案件</a></td>
+            <td>エスキュービズム様</td>
+            <td>受託</td>
+            <td>SC-E-XXXXXXXXXXXXXXX</td>
+            <td>2016/04/01</td>
+            <td>\1,000,000</td>
+            <td>SC-XXXXXXXXXXXXXXX</td>
+            <td>2016/04/15</td>
+            <td>\1,200,000</td>
+            <td>XXXXXXXXXXXXXXXX</td>
+            <td>SC-201604-01</td>
+            <td>XXXXXXXXXXXXXXXX</td>
+            <td>2016/04/25</td>
+            <td>XXXXXXXXXXXXXXXX</td>
+            <td>2016/04/30</td>
+            <td>\1,200,000</td>
+            <td>
+              <form id="linkentity.get_link_id()" action="/admin/links/entity.get_link_id()" method="GET">
+                <input type="hidden" name="link_id" value="entity.get_link_id()"/>
+                <input type="submit" value="詳細" class="w50" />
+                <input type="submit" value="見積書編集" class="w50" />
+                <input type="submit" value="発注書編集" class="w50" />
+                <input type="submit" value="発注請書編集" class="w50" />
+                <input type="submit" value="検収書編集" class="w50" />
+                <input type="submit" value="請求書編集" class="w50" />
+                <input type="button" value="削除" class="w50" onclick="JavaScript:if(confirm('削除してもよろしいですか。')){submitByPostMethod('linkentity.get_link_id()', '/admin/links/delete')}" />
+            </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </article>
+{% endblock %}
