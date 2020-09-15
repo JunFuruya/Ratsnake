@@ -415,9 +415,22 @@ def mail_list():
 ###############################################################################
 # 静的ファイル
 ###############################################################################
+@get('/sphinx/<path:path>')
+def get_static_file(path):
+    return static_file(path, root='./public/sphinx/')
+
+@get('/projects/<path:path>')
+def get_static_file(path):
+    return static_file(path, root='./public/projects/')
+
+# TODO public フォルダ自体を晒すのをやめたい
 @get('/public/<path:path>')
 def get_static_file(path):
     return static_file(path, root='./public/')
+
+@get('/download/pdf/<path:path>')
+def get_download_pdf_file(path):
+    return static_file(path, root='./public/pdf/')
 
 # TIP 上の get_static_file メソッド名を「static_file」にすると、
 #     bottle のメソッドを override するため無限ループが発生する
