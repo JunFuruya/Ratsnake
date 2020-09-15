@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 
+import os
 import logging
 from app.infrastructure.log_file import LogFile
 
@@ -12,6 +13,15 @@ class LogHelper:
         # TODO ログファイルの位置を config で変更できるようにする
         log_folder = './logs'
         log_file_path = log_folder + '/hideout.log'
+
+        # パスが存在しなければ、フォルダとファイルを作成する。
+        if (not os.path.exists(log_folder)):
+            os.mkdir(log_folder, mode=0o777)
+
+        if (not os.path.exists(log_file_path)):
+            f = open(log_file_path, 'w')
+            f.close()
+
         log_file = LogFile(log_folder, log_file_path)
 
         self.__logger.addHandler(log_file.get_file_handler())
