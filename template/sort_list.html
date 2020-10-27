@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+  moveUp = function (elem) {
+    var tableElem = document.getElementById("list");
+    var trElems = document.getElementsByTagName("tr");
+    
+    // 配列に変換
+    var trElemArray = [].slice.call(trElems);
+    var index = trElemArray.indexOf(elem.parentNode.parentNode);
+    
+    // 先頭より上に行くとindexがマイナスになるので
+    if (index - 1 < 1) {
+      return 0;
+    }
+    
+    // 入れ替える
+    tmpUpperTrElem = trElems[index - 1].innerHTML;
+    tmpLowerTrElem = trElems[index].innerHTML;
+    
+    trElems[index - 1].innerHTML = tmpLowerTrElem;
+    trElems[index].innerHTML = tmpUpperTrElem;
+  }
+  
+  moveDown = function(elem) {
+    var tableElem = document.getElementById("list");
+    var trElems = document.getElementsByTagName("tr");
+    
+    // 配列に変換
+    var trElemArray = [].slice.call(trElems);
+    var index = trElemArray.indexOf(elem.parentNode.parentNode);
+    
+    // 末尾より下に行くとindexが配列のサイズを超えるので
+    if (index + 1 > trElemArray.length) {
+      return 0;
+    }
+    
+    // 入れ替える
+    tmpUpperTrElem = trElems[index].innerHTML;
+    tmpLowerTrElem = trElems[index + 1].innerHTML;
+    
+    trElems[index].innerHTML = tmpLowerTrElem;
+    trElems[index + 1].innerHTML = tmpUpperTrElem;
+  }
+  </script>
+</head>
+<body>
+  <table id="list">
+    <tr>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
+    </tr>
+    <tr>
+      <td>11111111</td>
+      <td>aaaaaaaa</td>
+      <td><input type="button" value="▲" onclick="JavaScript:moveUp(this)"; /></td>
+      <td><input type="button" value="▼" onclick="JavaScript:moveDown(this)"; /></td>
+    </tr>
+    <tr>
+      <td>22222222</td>
+      <td>bbbbbbbb</td>
+      <td><input type="button" value="▲" onclick="JavaScript:moveUp(this)"; /></td>
+      <td><input type="button" value="▼" onclick="JavaScript:moveDown(this)"; /></td>
+    </tr>
+    <tr>
+      <td>33333333</td>
+      <td>cccccccc</td>
+      <td><input type="button" value="▲" onclick="JavaScript:moveUp(this)"; /></td>
+      <td><input type="button" value="▼" onclick="JavaScript:moveDown(this)"; /></td>
+    </tr>
+    <tr>
+      <td>44444444</td>
+      <td>dddddddd</td>
+      <td><input type="button" value="▲" onclick="JavaScript:moveUp(this)"; /></td>
+      <td><input type="button" value="▼" onclick="JavaScript:moveDown(this)"; /></td>
+    </tr>
+  </table>
+</body>
+</html>
