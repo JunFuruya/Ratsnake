@@ -24,7 +24,7 @@ PyYAML==5.1.1
 reportlab==3.5.12
 requests==2.22.0
 requests-oauthlib==1.2.0
-rsa==4.0
+rsa==4.1
 six==1.11.0
 slackbot==0.5.1
 slacker==0.9.60
