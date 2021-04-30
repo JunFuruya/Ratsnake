@@ -29,5 +29,5 @@ six==1.11.0
 slackbot==0.5.1
 slacker==0.9.60
 uritemplate==3.0.0
-urllib3==1.25.3
+urllib3==1.25.8
 websocket-client==0.46.0
